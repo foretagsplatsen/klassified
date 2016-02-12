@@ -1,4 +1,4 @@
-# objectjs
+# ObjectJS
 
 A simple object model for JavaScript.
 
