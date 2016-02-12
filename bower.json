@@ -1,0 +1,26 @@
+{
+  "name": "objectjs",
+  "authors": [
+    "Nicolas Petton <nicolas@petton.fr>",
+    "Benjamen Van Ryseghem <benjamin.vanryseghem@gmail.com>"
+  ],
+  "description": "Simple Object model in JavaScript",
+  "main": "src/object.js",
+  "moduleType": [],
+  "keywords": [
+    "object"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mocha": "^2.4.5",
+    "chai": "^3.5.0"
+  }
+}
