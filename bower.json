@@ -2,7 +2,7 @@
   "name": "objectjs",
   "authors": [
     "Nicolas Petton <nicolas@petton.fr>",
-    "Benjamin Van Ryseghem <benjamin.vanryseghem@gmail.com>"
+    "Benjamin Van Ryseghem <benjamin@vanryseghem.com>"
   ],
   "description": "Simple Object model in JavaScript",
   "main": "src/object.js",
