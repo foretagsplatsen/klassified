@@ -61,6 +61,12 @@ define(function(){
 			throw new Error("Subclass responsibility");
 		};
 
+		// install extensions by hand for object, since we do not have the
+		// extension installation of the subclasses
+		that.klass.extensions.forEach(function(extension) {
+			extension(that, spec, my);
+		});
+
 		return that;
 	}
 
@@ -83,6 +89,11 @@ define(function(){
 	};
 
 	/**
+	 * Return an array of all extensions of the class, see `object.extend`.
+	 */
+	object.extensions = [];
+
+	/**
 	 * Return a new subclass, and register it to the array of `subclasses`.
 	 *
 	 * @param{function} builder Function used to build new instances of the
@@ -103,6 +114,10 @@ define(function(){
 			instance.super = Object.assign({}, instance);
 			my.super = Object.assign({}, my);
 
+			that.extensions.forEach(function(extension) {
+				extension(instance, spec, my);
+			});
+
 			builder(instance, spec, my);
 			instance.initialize();
 
@@ -116,6 +131,10 @@ define(function(){
 		that.subclasses.push(klass);
 
 		return klass;
+	};
+
+	object.extend = function(builder) {
+		this.extensions.push(builder);
 	};
 
 	/**
