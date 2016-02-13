@@ -133,6 +133,11 @@ define(function(){
 		return klass;
 	};
 
+	/**
+	 * Extend the class with new methods/properties.
+	 * @param{function} builder takes the same arguments as
+	 * `object.subclass`: `that`, `spec` and `my`.
+	 */
 	object.extend = function(builder) {
 		this.extensions.push(builder);
 	};
