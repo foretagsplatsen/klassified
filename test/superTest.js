@@ -7,7 +7,7 @@ define(function(require) {
 
     test('super can be called within public methods', function() {
 		var animal = object.subclass(function(that, spec, my) {
-			that.initialize = function() {
+			my.initialize = function() {
 				my.name = spec.name;
 			};
 			that.getName = function() {
@@ -28,7 +28,7 @@ define(function(require) {
 
 	test('super can be called within protected methods', function() {
 		var animal = object.subclass(function(that, spec, my) {
-			that.initialize = function() {
+			my.initialize = function() {
 				my.name = spec.name;
 			};
 			that.toString = function() {

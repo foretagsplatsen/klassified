@@ -45,6 +45,9 @@ define(function(){
 	 * @return {object}
 	 */
 	function object(spec, my) {
+		spec = spec || {};
+		my = my || {};
+
 		var that = {};
 
 		that.klass = object;
@@ -52,7 +55,7 @@ define(function(){
 		/**
 		 * initialize is called by the framework upon object instantiation.
 		 */
-		that.initialize = function() {};
+		my.initialize = function() {};
 
 		/**
 		 * Throws an error because the method should have been overridden.
@@ -119,7 +122,7 @@ define(function(){
 			});
 
 			builder(instance, spec, my);
-			instance.initialize();
+			my.initialize();
 
 			return instance;
 		}
