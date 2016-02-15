@@ -118,8 +118,8 @@ define(function(){
 				extension(instance, spec, my);
 			});
 
-			builder(instance, spec, my);
-			instance.initialize();
+			builder(instance, my);
+			instance.initialize(spec);
 
 			return instance;
 		}

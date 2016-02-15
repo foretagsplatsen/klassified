@@ -5,9 +5,9 @@ A simple object model for JavaScript.
 ## Usage example:
 
 ```js
-var animal = object.subclass(function(that, spec, my) {
+var animal = object.subclass(function(that, my) {
 
-    that.initialize = function() {
+    that.initialize = function(spec) {
         my.name = spec.name;
     }
 
@@ -16,7 +16,7 @@ var animal = object.subclass(function(that, spec, my) {
     };
 });
 
-var dog = animal.subclass(function(that, spec, my) {
+var dog = animal.subclass(function(thatf, my) {
 
     that.getName = function() {
         return 'dog named' + that.super.getName();
