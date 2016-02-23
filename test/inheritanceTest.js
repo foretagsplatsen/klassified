@@ -7,7 +7,7 @@ define(function(require) {
 
     test('Methods should be inherited', function() {
 		var animal = object.subclass(function(that, spec, my) {
-			that.initialize = function() {
+			my.initialize = function() {
 				my.name = spec.name;
 			};
 			that.getName = function() {
@@ -27,7 +27,7 @@ define(function(require) {
 
 	test('Methods can be overridden', function() {
 		var animal = object.subclass(function(that, spec, my) {
-			that.initialize = function() {
+			my.initialize = function() {
 				my.name = spec.name;
 			};
 			that.getName = function() {
@@ -51,7 +51,7 @@ define(function(require) {
 
 	test('Protected methods should be inherited', function() {
 		var animal = object.subclass(function(that, spec, my) {
-			that.initialize = function() {
+			my.initialize = function() {
 				my.name = spec.name;
 			};
 			that.toString = function() {
@@ -71,7 +71,7 @@ define(function(require) {
 
 	test('Protected methods can be overridden', function() {
 		var animal = object.subclass(function(that, spec, my) {
-			that.initialize = function() {
+			my.initialize = function() {
 				my.name = spec.name;
 			};
 			that.toString = function() {

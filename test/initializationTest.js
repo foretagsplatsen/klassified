@@ -9,7 +9,7 @@ define(function(require) {
 		var initialized = false;
 
 		var animal = object.subclass(function(that, spec, my) {
-			that.initialize = function() {
+			my.initialize = function() {
 				initialized = true;
 			};
 		});
