@@ -105,11 +105,11 @@ define(function(){
 	object.subclass = function(builder) {
 		var that = this;
 
-		function klass(spec, my) {
+		function klass(spec, my, notFinal) {
 			spec = spec || {};
 			my = my || {};
 
-			var instance = that(spec, my);
+			var instance = that(spec, my, true);
 
 			instance.class = klass;
 
@@ -122,7 +122,10 @@ define(function(){
 			});
 
 			builder(instance, spec, my);
-			my.initialize();
+
+			if(!notFinal) {
+				my.initialize();
+			}
 
 			return instance;
 		}
