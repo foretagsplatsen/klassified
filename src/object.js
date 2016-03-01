@@ -121,10 +121,10 @@ define(function(){
 				extension(instance, spec, my);
 			});
 
-			builder(instance, spec, my);
+			builder(instance, my);
 
 			if(!notFinal) {
-				my.initialize();
+				my.initialize(spec);
 			}
 
 			return instance;
