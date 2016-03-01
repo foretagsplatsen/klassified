@@ -16,7 +16,7 @@ var animal = object.subclass(function(that, my) {
     };
 });
 
-var dog = animal.subclass(function(thatf, my) {
+var dog = animal.subclass(function(that, my) {
 
     that.getName = function() {
         return 'dog named' + that.super.getName();
