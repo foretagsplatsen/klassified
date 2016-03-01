@@ -1,2 +1,3 @@
-/test/.tern-port
+test/.tern-port
+src/.tern-port
 bower_components/*
