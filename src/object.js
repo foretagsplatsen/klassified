@@ -150,8 +150,8 @@ define(function(){
 		var superCallRegex = /\bsuper\b/;
 
 		Object.keys(obj).forEach(function(name) {
-			if (typeof obj[name] === "function" &&
-				typeof proto[name] === "function" &&
+			if (typeof proto[name] === "function" &&
+				typeof obj[name] === "function" &&
 				superCallRegex.test(obj[name])) {
 				var superFn = proto[name];
 				obj[name] = (function(name, fn) {
