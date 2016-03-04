@@ -141,6 +141,11 @@ define(function(){
 		return klass;
 	};
 
+	/**
+	 * Mutate public functions of `obj` that make use of `super()` by binding
+	 * `super` from within each public function of `obj` to the function in
+	 * `proto`.
+	 */
 	function installSuper(obj, proto) {
 		var superCallRegex = /\bsuper\b/;
 
