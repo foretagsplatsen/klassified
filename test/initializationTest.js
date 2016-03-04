@@ -64,13 +64,14 @@ define(function(require) {
 	test('can call super from initialize', function() {
 		var animal = object.subclass(function(that, my) {
 			my.initialize = function() {
+				my.super();
 				that.foo = 1;
 			};
 		});
 
 		var dog = animal.subclass(function(that, my) {
 			my.initialize = function() {
-				my.super.initialize();
+				my.super();
 				that.bar = 2;
 			};
 		});

@@ -8,6 +8,7 @@ define(function(require) {
     test('super can be called within public methods', function() {
 	    var animal = object.subclass(function(that, my) {
 		    my.initialize = function(spec) {
+				my.super();
 				my.name = spec.name;
 			};
 			that.getName = function() {
@@ -17,7 +18,7 @@ define(function(require) {
 
 	    var dog = animal.subclass(function(that, my) {
 			that.getName = function() {
-				return 'dog named ' + that.super.getName();
+				return 'dog named ' + that.super();
 			};
 		});
 
@@ -29,11 +30,14 @@ define(function(require) {
 	test('super can be called within protected methods', function() {
 		var animal = object.subclass(function(that, my) {
 			my.initialize = function(spec) {
+				my.super();
 				my.name = spec.name;
 			};
+
 			that.toString = function() {
 				return my.getName();
 			};
+
 			my.getName = function() {
 				return my.name;
 			};
@@ -41,7 +45,7 @@ define(function(require) {
 
 		var dog = animal.subclass(function(that, my) {
 			my.getName = function() {
-				return 'dog named ' + my.super.getName();
+				return 'dog named ' + my.super();
 			};
 		});
 
@@ -49,4 +53,31 @@ define(function(require) {
 
 		assert.equal(milou.toString(), 'dog named milou');
     });
+
+	test('super rebinds calls to that correctly', function() {
+		var animal = object.subclass(function(that, my) {
+
+			that.toString = function() {
+				return my.getName();
+			};
+
+			my.getName = function() {
+				return my.name;
+			};
+		});
+
+		var dog = animal.subclass(function(that, my) {
+			that.toString = function() {
+				return 'a dog named: ' + that.super();
+			};
+
+			my.getName = function() {
+				return 'milou';
+			};
+		});
+
+		var milou = dog();
+
+		assert.equal(milou.toString(), 'a dog named: milou');
+	});
 });

@@ -114,14 +114,16 @@ define(function(){
 			instance.class = klass;
 
 			// access to super for public and protected properties.
-			instance.super = Object.assign({}, instance);
-			my.super = Object.assign({}, my);
+			var superInstance = Object.assign({}, instance);
+			var superMy = Object.assign({}, my);
 
 			that.extensions.forEach(function(extension) {
 				extension(instance, spec, my);
 			});
 
 			builder(instance, my);
+			installSuper(instance, superInstance);
+			installSuper(my, superMy);
 
 			if(!notFinal) {
 				my.initialize(spec);
@@ -138,6 +140,29 @@ define(function(){
 
 		return klass;
 	};
+
+	function installSuper(obj, proto) {
+		var superCallRegex = /\bsuper\b/;
+
+		Object.keys(obj).forEach(function(name) {
+			if (typeof obj[name] === "function" &&
+				typeof proto[name] === "function" &&
+				superCallRegex.test(obj[name])) {
+				var superFn = proto[name];
+				obj[name] = (function(name, fn) {
+					return function() {
+						var tmp = obj.super;
+						obj.super = superFn;
+						var returnValue = fn.apply(obj, arguments);
+						obj.super = tmp;
+
+						return returnValue;
+					};
+				})(name, obj[name]);
+			}
+		});
+	}
+
 
 	/**
 	 * Extend the class with new methods/properties.
