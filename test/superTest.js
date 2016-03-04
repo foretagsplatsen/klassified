@@ -80,4 +80,24 @@ define(function(require) {
 
 		assert.equal(milou.toString(), 'a dog named: milou');
 	});
+
+	test('super can be used with arguments', function() {
+		var animal = object.subclass(function(that, my) {
+
+			that.foo = function(number) {
+				return number;
+			};
+		});
+
+		var dog = animal.subclass(function(that, my) {
+			that.foo = function(number) {
+				return that.super(number) + 1;
+			};
+		});
+
+		var milou = dog();
+		var foo = milou.foo(4);
+
+		assert.equal(foo, 5);
+	});
 });
