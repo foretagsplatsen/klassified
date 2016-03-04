@@ -9,7 +9,8 @@ var testModules = [
 	'initializationTest',
 	'inheritanceTest',
 	'superTest',
-	'extensionTest'
+	'extensionTest',
+	'allSubclassesTest'
 ];
 
 require(testModules, function () {

@@ -82,7 +82,7 @@ define(function(){
 	 * Return an array of all subclasses.
 	 */
 	object.allSubclasses = function() {
-		var allSubclasses = this.subclasses.splice();
+		var allSubclasses = this.subclasses.slice();
 		this.subclasses.forEach(function(klass) {
 			klass.allSubclasses().forEach(function(subclass) {
 				allSubclasses.push(subclass);
