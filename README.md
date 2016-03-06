@@ -39,6 +39,7 @@ Instances can be created by calling a class function like the following:
 
 ```js
 var milou = dog({name: 'milou'});
+milou.getName(); // => 'milou
 ```
 
 ## Initialization
