@@ -96,6 +96,8 @@ define(function(){
 	 */
 	object.extensions = [];
 
+	var superCallRegex = /\bsuper\b/;
+
 	/**
 	 * Return a new subclass, and register it to the array of `subclasses`.
 	 *
@@ -122,8 +124,10 @@ define(function(){
 			});
 
 			builder(instance, my);
-			installSuper(instance, superInstance);
-			installSuper(my, superMy);
+			if(superCallRegex.test(builder)) {
+				installSuper(instance, superInstance);
+				installSuper(my, superMy);
+			}
 
 			if(!notFinal) {
 				my.initialize(spec);
@@ -147,7 +151,6 @@ define(function(){
 	 * `proto`.
 	 */
 	function installSuper(obj, proto) {
-		var superCallRegex = /\bsuper\b/;
 
 		Object.keys(obj).forEach(function(name) {
 			if (typeof proto[name] === "function" &&
