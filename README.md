@@ -26,7 +26,7 @@ var dog = animal.subclass(function(that, my) {
 });
 ```
 
-`that` represent the receiver (the instance).
+`that` represents the receiver (the instance).
 
 ## Public and protected properties
 
