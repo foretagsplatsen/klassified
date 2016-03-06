@@ -67,7 +67,7 @@ define(function(){
 		// install extensions by hand for object, since we do not have the
 		// extension installation of the subclasses
 		that.klass.extensions.forEach(function(extension) {
-			extension(that, spec, my);
+			extension(that, my);
 		});
 
 		return that;
@@ -120,7 +120,7 @@ define(function(){
 			var superMy = Object.assign({}, my);
 
 			that.extensions.forEach(function(extension) {
-				extension(instance, spec, my);
+				extension(instance, my);
 			});
 
 			builder(instance, my);
