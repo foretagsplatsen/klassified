@@ -1,0 +1,53 @@
+{
+  "name": "objectjs",
+  "version": "1.0.2",
+  "description": "A simple object model for JavaScript",
+  "main": "src/object.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/foretagsplatsen/objectjs.git"
+  },
+  "keywords": [
+    "js",
+    "crockford",
+    "object"
+  ],
+  "contributors": [
+      {
+          "name": "Nicolas Petton",
+          "email": "nicolas@petton.fr",
+          "url": "http://nicolas-petton.fr/"
+      },
+      {
+          "name": "Benjamin Van Ryseghem",
+          "email": "benjamin@vanryseghem.com",
+          "url": "http://benjamin.vanryseghem.com"
+      }
+  ],
+  "author": "See `authors`",
+  "authors": [
+      {
+          "name": "Nicolas Petton",
+          "email": "nicolas@petton.fr",
+          "url": "http://nicolas-petton.fr/"
+      },
+      {
+          "name": "Benjamin Van Ryseghem",
+          "email": "benjamin@vanryseghem.com",
+          "url": "http://benjamin.vanryseghem.com"
+      }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/foretagsplatsen/objectjs/issues"
+  },
+  "homepage": "https://github.com/foretagsplatsen/objectjs#readme",
+  "dependencies": {
+    "mocha": "^2.4.5",
+    "chai": "^3.5.0"
+  },
+  "engines": {}
+}
