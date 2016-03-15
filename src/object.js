@@ -51,7 +51,9 @@ define([
 
 		var that = {};
 
-		that.klass = object;
+		that.getClass = function() {
+			return object;
+		};
 
 		/**
 		 * initialize is called by the framework upon object instantiation.
@@ -67,7 +69,7 @@ define([
 
 		// install extensions by hand for object, since we do not have the
 		// extension installation of the subclasses
-		that.klass.extensions.forEach(function(extension) {
+		that.getClass().extensions.forEach(function(extension) {
 			extension(that, my);
 		});
 
@@ -114,7 +116,9 @@ define([
 
 			var instance = that(spec, my, true);
 
-			instance.class = klass;
+			instance.getClass = function() {
+				return klass;
+			};
 
 			// access to super for public and protected properties.
 			var superInstance = Object.assign({}, instance);
