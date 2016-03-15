@@ -1,6 +1,4 @@
 node_modules/
-test/.tern-port
-src/.tern-port
 bower_components/*
 /GPATH
 /GRTAGS
