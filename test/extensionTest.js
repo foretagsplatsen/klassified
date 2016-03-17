@@ -38,15 +38,15 @@ define(function(require) {
             };
         });
 
-        var dog = animal.subclass(function(that, my) {
-            that.isDog = function() {
-                return true;
-            };
-        });
-
         animal.extend(function(that, my) {
             that.isDog = function() {
                 return false;
+            };
+        });
+
+        var dog = animal.subclass(function(that, my) {
+            that.isDog = function() {
+                return true;
             };
         });
 
@@ -59,10 +59,16 @@ define(function(require) {
         assert.ok(d.isDog());
     });
 
-	test('Can extend my', function() {
+	test('Can extend my on object', function() {
         var animal = object.subclass(function(that, my) {
             that.foo = function() {
                 return my.bar();
+            };
+        });
+
+        animal.extend(function(that, my) {
+            that.isDog = function() {
+                return false;
             };
         });
 
@@ -81,14 +87,6 @@ define(function(require) {
 			that.foo = function() {
                 return my.foo();
             };
-		});
-
-		var dog = animal.subclass(function(that, my) {
-
-			my.foo = function() {
-				return true;
-			};
-
 		});
 
 		animal.extend(function(that, my) {

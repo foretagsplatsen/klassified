@@ -124,7 +124,7 @@ define([
 			var superInstance = Object.assign({}, instance);
 			var superMy = Object.assign({}, my);
 
-			that.extensions.forEach(function(extension) {
+			klass.extensions.forEach(function(extension) {
 				extension(instance, my);
 			});
 
@@ -141,13 +141,44 @@ define([
 			return instance;
 		}
 
-		// static inheritance
-		Object.assign(klass, that);
-
+		klass.superclass = that;
 		klass.subclasses = [];
 		that.subclasses.push(klass);
 
+		// static inheritance
+		klass.classBuilder = that.classBuilder;
+		klass.classBuilder(klass);
+
 		return klass;
+	};
+
+	object.class = function(builder) {
+		var that = this;
+
+		if(that === object) {
+			throw new Error('object class should not be extended.');
+		}
+
+		var superClassBuilder = that.classBuilder;
+		that.classBuilder = function(klass) {
+			superClassBuilder(klass);
+			builder(klass);
+
+			if (superCallRegex.test(builder)) {
+				installSuper(that, klass.superclass);
+			}
+		};
+
+		that.classBuilder(that);
+	};
+
+	object.classBuilder = function(that) {
+		// TODO: use Object.assign?
+		that.class = object.class;
+		that.subclass = object.subclass;
+		that.allSubclasses = object.allSubclasses;
+		that.extend = object.extend;
+		that.extensions = [];
 	};
 
 	/**
@@ -156,7 +187,6 @@ define([
 	 * `proto`.
 	 */
 	function installSuper(obj, proto) {
-
 		Object.keys(obj).forEach(function(name) {
 			if (typeof proto[name] === "function" &&
 				typeof obj[name] === "function" &&

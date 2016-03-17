@@ -27,4 +27,22 @@ define(function(require) {
 
         assert.equal(d.getClass(), dog);
 	});
+
+	test('Can refer to class-side methods from an instance', function() {
+		var animal = object.subclass(function(that, my) {
+			that.foo = function() {
+				return that.getClass().foo();
+			};
+		});
+
+		animal.class(function(that) {
+			that.foo = function() {
+				return true;
+			};
+		});
+
+        var a = animal();
+
+        assert.ok(a.foo());
+	});
 });

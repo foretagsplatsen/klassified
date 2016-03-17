@@ -8,9 +8,9 @@ define(function(require) {
     test('Can get all subclasses of a class', function() {
 	    var animal = object.subclass(function() {});
 	    var dog = animal.subclass(function() {});
-		var shepard = dog.subclass(function() {});
+		var shepherd = dog.subclass(function() {});
 	    var cat = animal.subclass(function() {});
 
-		assert.deepEqual(animal.allSubclasses(), [dog, cat, shepard]);
+		assert.deepEqual(animal.allSubclasses(), [dog, cat, shepherd]);
     });
 });
