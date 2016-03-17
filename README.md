@@ -18,6 +18,12 @@ var animal = object.subclass(function(that, my) {
     };
 });
 
+animal.class(function(that) {
+    that.named = function(name) {
+        return that({name: name});
+    };
+});
+
 var dog = animal.subclass(function(that, my) {
 
     that.getName = function() {
@@ -26,7 +32,8 @@ var dog = animal.subclass(function(that, my) {
 });
 ```
 
-`that` represents the receiver (the instance).
+`that` represents the receiver (the instance or the class depending on the
+context).
 
 ## Public and protected properties
 
