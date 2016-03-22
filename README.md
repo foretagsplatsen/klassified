@@ -9,7 +9,7 @@ Objectjs provides a base class `object` that can be subclassed using its
 var animal = object.subclass(function(that, my) {
 
     my.initialize = function(spec) {
-        my.super();
+        my.super(spec);
         my.name = spec.name;
     }
 
