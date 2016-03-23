@@ -1,30 +1,20 @@
-require.config({
-    paths: {
-        'chai': '../bower_components/chai/chai'
-    }
-});
-
-var testModules = [
-	'subclassCreationTest',
-	'initializationTest',
-	'inheritanceTest',
-	'superTest',
-	'extensionTest',
-	'allSubclassesTest',
-	'classInheritanceTest',
-	'classReferenceTest',
-	'abstractSubclassTest',
-	'getterSetterTest',
-	'singletonTest',
-	'testCaseTest'
-];
-
-require(testModules, function () {
-    if (window.mochaPhantomJS) {
-        window.mochaPhantomJS.run();
-    }
-    else {
-        //mocha.checkLeaks();
-        mocha.run();
-    }
+define([], function() {
+	var files = [
+		"test/src/subclassCreationSpec",
+		"test/src/initializationSpec",
+		"test/src/inheritanceSpec",
+		"test/src/superSpec",
+		"test/src/extensionSpec",
+		"test/src/allSubclassesSpec",
+		"test/src/classInheritanceSpec",
+		"test/src/classReferenceSpec",
+		"test/src/abstractSubclassSpec",
+		"test/src/getterSetterSpec",
+		"test/src/singletonSpec",
+		"test/src/testCaseSpec"
+	];
+	return {
+		files: files,
+		config: {}
+	};
 });

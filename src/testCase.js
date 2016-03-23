@@ -1,5 +1,5 @@
 define([
-	'./object'
+	"./object"
 ], function(object) {
 
 	/**
@@ -51,7 +51,7 @@ define([
 			var testRegex = /\bmy.it\b/;
 
 			Object.keys(my).forEach(function(name) {
-				if (typeof my[name] === 'function' &&
+				if (typeof my[name] === "function" &&
 					testRegex.test(my[name])) {
 					result.push(my[name]);
 				}
@@ -70,7 +70,7 @@ define([
 					callback();
 				});
 			}
-		};
+		}
 	});
 
 	testCase.class(function(that) {
@@ -79,7 +79,7 @@ define([
 		};
 
 		// All test classes are singletons.
-		// TODO: Refactor with a super call when we'll have super on class-side.
+		// TODO: Refactor with a super call when we"ll have super on class-side.
 		that.subclass = (function(superSubclass) {
 			return function(builder) {
 				var klass = superSubclass.apply(that, [builder]);
