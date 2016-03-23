@@ -1,19 +1,18 @@
+<!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <title>ObjectJS Tests</title>
-        <link rel="stylesheet" href="../bower_components/mocha/mocha.css"/>
-    </head>
-    <body>
-        <div id="mocha"></div>
+<head>
+  <title>Jasmine Spec Runner</title>
+  <link rel="stylesheet" href="../node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+</head>
+<body>
+<script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+<script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+<script src="./custom-boot.js"></script>
 
-        <script src="../bower_components/mocha/mocha.js" type="text/javascript" charset="utf-8"></script>
-        <script type="text/javascript">
-         // MOCHA SETUP
-         mocha.setup('qunit');
-        </script>
-        <script data-main="tests" src="../lib/require.js"></script>
-    </body>
+<!-- include source files here... -->
+
+<!-- include spec files here... -->
+<!--<script src="spec/testSpec.js"></script>-->
+<script data-main="./run-jasmine" src="../node_modules/requirejs/require.js"></script>
+</body>
 </html>
-
-

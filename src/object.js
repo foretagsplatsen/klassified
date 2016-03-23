@@ -1,5 +1,4 @@
-define([
-], function() {
+define([], function() {
 
 	/**
 	 * `object` is the base class of the object model.
@@ -29,19 +28,19 @@ define([
 	 *    var dog = animal.subclass(function(that, my) {
 	 *
 	 *        that.getName = function() {
-	 *            return 'dog ' + that.super();
+	 *            return "dog " + that.super();
 	 *        };
 	 *
 	 *        that.say = function(something) {
-	 *            return 'Woof Woof, ' + something;
+	 *            return "Woof Woof, " + something;
 	 *        };
 	 *    });
 	 *
 	 * Creating instances:
 	 *
 	 *    var milou = dog({name: milou});
-	 *    milou.say('hello Tintin'); // => 'Woof Woof, hello Tintin'
-	 *    milou.getName(); // => 'dog milou'
+	 *    milou.say("hello Tintin"); ;; => "Woof Woof, hello Tintin"
+	 *    milou.getName(); // => "dog milou"
 	 *
 	 * @param{{}} spec
 	 * @param{{}} my
@@ -76,7 +75,7 @@ define([
 					return my[propName];
 				};
 			}
-			that['get' + capitalized(propName)] = getter;
+			that["get" + capitalized(propName)] = getter;
 		};
 
 		my.set = function(propName, setter) {
@@ -86,7 +85,7 @@ define([
 					return value;
 				};
 			}
-			that['set' + capitalized(propName)] = setter;
+			that["set" + capitalized(propName)] = setter;
 		};
 
 		// install extensions by hand for object, since we do not have the
@@ -160,12 +159,12 @@ define([
 			});
 
 			builder(instance, my);
-			if(superCallRegex.test(builder)) {
+			if (superCallRegex.test(builder)) {
 				installSuper(instance, superInstance);
 				installSuper(my, superMy);
 			}
 
-			if(!notFinal) {
+			if (!notFinal) {
 				my.initialize(spec);
 			}
 
@@ -203,8 +202,8 @@ define([
 	object.class = function(builder) {
 		var that = this;
 
-		if(that === object) {
-			throw new Error('object class should not be extended.');
+		if (that === object) {
+			throw new Error("object class should not be extended.");
 		}
 
 		var superClassBuilder = that.classBuilder;
@@ -271,22 +270,21 @@ define([
 	};
 
 	function throwAbstractClassError(klass) {
-		throw new Error('Cannot instantiate an instance of an abstract class');
+		throw new Error("Cannot instantiate an instance of an abstract class");
 	}
 
 	function throwSingletonClassError(klass) {
-		throw new Error('Cannot create new instances of a singleton class, use `instance` instead.');
+		throw new Error("Cannot create new instances of a singleton class, use `instance` instead.");
 	}
 
 	/**
 	 * Polyfill for Object.assign
 	 */
-	if (typeof Object.assign != 'function') {
-		(function () {
-			Object.assign = function (target) {
-				'use strict';
+	if (typeof Object.assign !== "function") {
+		(function() {
+			Object.assign = function(target) {
 				if (target === undefined || target === null) {
-					throw new TypeError('Cannot convert undefined or null to object');
+					throw new TypeError("Cannot convert undefined or null to object");
 				}
 
 				var output = Object(target);
