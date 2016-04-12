@@ -20,7 +20,7 @@ define([
 	 *        };
 	 *
 	 *        that.say = function(something) {
-	 *            that.subclassResponsibility();
+	 *            my.subclassResponsibility();
 	 *        };
 	 *    });
 	 *
@@ -63,7 +63,7 @@ define([
 		/**
 		 * Throws an error because the method should have been overridden.
 		 */
-		that.subclassResponsibility = function() {
+		my.subclassResponsibility = function() {
 			throw new Error("Subclass responsibility");
 		};
 
