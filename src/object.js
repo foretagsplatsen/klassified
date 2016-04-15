@@ -9,9 +9,10 @@ define([
 	 *
 	 * Creating subclasses & using inheritance:
 	 *
-	 *    var animal = object.subclass(function(that, spec, my) {
+	 *    var animal = object.subclass(function(that, my) {
 	 *
-	 *        that.initialize = function() {
+	 *        my.initialize = function(spec) {
+	 *            my.super();
 	 *            my.name = spec.name;
 	 *        };
 	 *
@@ -25,10 +26,10 @@ define([
 	 *    });
 	 *
 	 *
-	 *    var dog = animal.subclass(function(that, spec, my) {
+	 *    var dog = animal.subclass(function(that, my) {
 	 *
 	 *        that.getName = function() {
-	 *            return 'dog ' + that.super.getName();
+	 *            return 'dog ' + that.super();
 	 *        };
 	 *
 	 *        that.say = function(something) {
@@ -39,7 +40,8 @@ define([
 	 * Creating instances:
 	 *
 	 *    var milou = dog({name: milou});
-	 *    milou.say('hello Tintin'); ;; => 'Woof Woof, hello Tintin'
+	 *    milou.say('hello Tintin'); // => 'Woof Woof, hello Tintin'
+	 *    milou.getName(); // => 'dog milou'
 	 *
 	 * @param{{}} spec
 	 * @param{{}} my
