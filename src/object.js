@@ -116,6 +116,10 @@ define([
 			spec = spec || {};
 			my = my || {};
 
+			if(klass.isAbstract && !notFinal) {
+				throwAbstractClassError(that);
+			}
+
 			var instance = that(spec, my, true);
 
 			instance.getClass = function() {
@@ -151,6 +155,12 @@ define([
 		klass.classBuilder = that.classBuilder;
 		klass.classBuilder(klass);
 
+		return klass;
+	};
+
+	object.abstractSubclass = function(builder) {
+		var klass = object.subclass(builder);
+		klass.isAbstract = true;
 		return klass;
 	};
 
@@ -208,7 +218,6 @@ define([
 		});
 	}
 
-
 	/**
 	 * Extend the class with new methods/properties.
 	 * @param{function} builder takes the same arguments as
@@ -217,6 +226,10 @@ define([
 	object.extend = function(builder) {
 		this.extensions.push(builder);
 	};
+
+	function throwAbstractClassError(klass) {
+		throw new Error('Cannot instantiate an instance of an abstract class');
+	}
 
 	/**
 	 * Polyfill for Object.assign

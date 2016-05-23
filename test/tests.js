@@ -12,7 +12,8 @@ var testModules = [
 	'extensionTest',
 	'allSubclassesTest',
 	'classInheritanceTest',
-	'classReferenceTest'
+	'classReferenceTest',
+	'abstractSubclassTest'
 ];
 
 require(testModules, function () {

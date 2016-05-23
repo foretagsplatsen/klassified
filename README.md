@@ -76,3 +76,23 @@ methods or `my.super` for protected methods.
 - `object.allSubclasses` method that returns all the subclasess of a class.
 - `object.subclass` method used to create a new subclass of a class.
 
+## Abstract classes
+
+ObjectJS supports abstract classes using `abstractSubclass`:
+
+```js
+var animal = object.abstractSubclass(function(that, my) {
+
+    // [...]
+
+});
+
+var dog = animal.subclass(function(that, my) {
+
+    // [...]
+
+});
+
+animal(); // => Error: Cannot instantiate an instance of an abstract class
+dog(); // => New dog instance
+```
