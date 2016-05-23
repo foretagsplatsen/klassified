@@ -69,6 +69,28 @@ define([
 			throw new Error("Subclass responsibility");
 		};
 
+		/**
+		 * Getter/Setter generation
+		 */
+		my.get = function(propName, getter) {
+			if(!getter) {
+				getter = function() {
+					return my[propName];
+				};
+			}
+			that['get' + capitalized(propName)] = getter;
+		};
+
+		my.set = function(propName, setter) {
+			if(!setter) {
+				setter = function(value) {
+					my[propName] = value;
+					return value;
+				};
+			}
+			that['set' + capitalized(propName)] = setter;
+		};
+
 		// install extensions by hand for object, since we do not have the
 		// extension installation of the subclasses
 		that.getClass().extensions.forEach(function(extension) {
@@ -256,6 +278,14 @@ define([
 				return output;
 			};
 		})();
+	}
+
+	/**
+	 * Helpers
+	 */
+
+	function capitalized(string) {
+		return string[0].toUpperCase() + string.slice(1);
 	}
 
 	return object;
