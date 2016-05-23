@@ -13,7 +13,8 @@ var testModules = [
 	'allSubclassesTest',
 	'classInheritanceTest',
 	'classReferenceTest',
-	'abstractSubclassTest'
+	'abstractSubclassTest',
+	'getterSetterTest'
 ];
 
 require(testModules, function () {

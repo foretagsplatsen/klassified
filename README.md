@@ -96,3 +96,40 @@ var dog = animal.subclass(function(that, my) {
 animal(); // => Error: Cannot instantiate an instance of an abstract class
 dog(); // => New dog instance
 ```
+
+## Getters and setters generation
+
+ObjectJS can generate getters and setters for protected properties on `my`, as
+below:
+
+```js
+var animal = object.subclass(function(that, my) {
+	my.initialize = function(spec) {
+		my.name = spec.name;
+	};
+   
+	my.get('name');
+    my.set('name');
+});
+
+var a = animal();
+a.setName('milou');
+a.getName(); // => 'milou'
+```
+
+Custom getters and setters are also supported:
+
+```js
+var dog = animal.subclass(function(that, my) {
+	my.get('name', function() {
+        return 'A dog named ' + my.name;
+    });
+    my.set('name', function(value) {
+        my.name = value.toUpperCase();
+    });
+});
+
+var a = animal();
+a.setName('milou');
+a.getName(); // => 'A dog named MILOU'
+```
