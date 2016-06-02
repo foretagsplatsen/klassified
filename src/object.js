@@ -65,9 +65,7 @@ define([
 		/**
 		 * Throws an error because the method should have been overridden.
 		 */
-		my.subclassResponsibility = function() {
-			throw new Error("Subclass responsibility");
-		};
+		my.subclassResponsibility = subclassResponsibility;
 
 		/**
 		 * Getter/Setter generation
@@ -117,6 +115,8 @@ define([
 		});
 		return allSubclasses;
 	};
+
+	object.subclassResponsibility = subclassResponsibility;
 
 	/**
 	 * Return an array of all extensions of the class, see `object.extend`.
@@ -211,6 +211,7 @@ define([
 		that.class = object.class;
 		that.subclass = object.subclass;
 		that.allSubclasses = object.allSubclasses;
+		that.subclassResponsibility = subclassResponsibility;
 		that.extend = object.extend;
 		that.extensions = [];
 	};
@@ -292,6 +293,14 @@ define([
 
 	function capitalized(string) {
 		return string[0].toUpperCase() + string.slice(1);
+	}
+
+	/**
+	 * Throw an error when a method should have been overridden in a concrete
+	 * subclass.
+	 */
+	function subclassResponsibility() {
+		throw new Error("Subclass responsibility");
 	}
 
 	return object;

@@ -31,4 +31,14 @@ define(function(require) {
 		var concreteSubclass = abstractClass.subclass(function(that, my) {});
 		assert.isNotOk(concreteSubclass.isAbstract);
     });
+
+	test('Abstract methods should throw exceptions', function() {
+        var abstractClass = object.abstractSubclass(function(that, my) {});
+		abstractClass.class(function(that) {
+			that.foo = function() {
+				that.subclassResponsibility();
+			};
+		});
+		assert.throws(abstractClass.foo);
+    });
 });
