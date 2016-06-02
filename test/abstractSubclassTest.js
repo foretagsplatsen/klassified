@@ -26,6 +26,12 @@ define(function(require) {
 		assert.doesNotThrow(concreteSubclass);
 	});
 
+	test('Can create abstract subclasses of abstract classes', function() {
+        var abstractClass = object.abstractSubclass(function(that, my) {});
+		var abstractSubclass = abstractClass.abstractSubclass(function(that, my) {});
+		assert(abstractSubclass.isAbstract);
+	});
+
 	test('Concrete subclasses should not be abstract', function() {
         var abstractClass = object.abstractSubclass(function(that, my) {});
 		var concreteSubclass = abstractClass.subclass(function(that, my) {});

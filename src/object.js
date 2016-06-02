@@ -210,6 +210,7 @@ define([
 		// TODO: use Object.assign?
 		that.class = object.class;
 		that.subclass = object.subclass;
+		that.abstractSubclass = object.abstractSubclass;
 		that.allSubclasses = object.allSubclasses;
 		that.subclassResponsibility = subclassResponsibility;
 		that.extend = object.extend;
