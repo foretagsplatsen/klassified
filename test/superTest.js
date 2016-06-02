@@ -100,4 +100,23 @@ define(function(require) {
 
 		assert.equal(foo, 5);
 	});
+
+	test('super should be uninstalled after being used', function() {
+		var animal = object.subclass(function(that, my) {
+
+			that.foo = function() {};
+		});
+
+		var dog = animal.subclass(function(that, my) {
+			that.foo = function(number) {
+				that.super();
+			};
+		});
+
+		var milou = dog();
+		milou.foo();
+
+		var keys = Object.keys(milou);
+		assert.equal(keys.indexOf('super'), -1);
+	});
 });

@@ -233,6 +233,12 @@ define([
 						var returnValue = fn.apply(obj, arguments);
 						obj.super = tmp;
 
+						// We reached the top of the stack regarding super
+						// calls, so cleanup the namespace.
+						if (obj.super === undefined) {
+							delete obj.super;
+						}
+
 						return returnValue;
 					};
 				})(name, obj[name]);
