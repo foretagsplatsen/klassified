@@ -148,7 +148,6 @@ define([
 				return klass;
 			};
 
-			// access to super for public and protected properties.
 			var superInstance = Object.assign({}, instance);
 			var superMy = Object.assign({}, my);
 
@@ -197,10 +196,6 @@ define([
 		that.classBuilder = function(klass) {
 			superClassBuilder(klass);
 			builder(klass);
-
-			if (superCallRegex.test(builder)) {
-				installSuper(that, klass.superclass);
-			}
 		};
 
 		that.classBuilder(that);
@@ -226,7 +221,8 @@ define([
 		Object.keys(obj).forEach(function(name) {
 			if (typeof proto[name] === "function" &&
 				typeof obj[name] === "function" &&
-				superCallRegex.test(obj[name])) {
+				superCallRegex.test(obj[name]) &&
+				!obj[name].superInstalled) {
 				var superFn = proto[name];
 				obj[name] = (function(name, fn) {
 					return function() {
@@ -244,6 +240,7 @@ define([
 						return returnValue;
 					};
 				})(name, obj[name]);
+				obj[name].superInstalled = true;
 			}
 		});
 	}

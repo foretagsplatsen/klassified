@@ -111,34 +111,4 @@ define(function(require) {
 		assert.equal(dog.named('milou').getClass(), dog);
 		assert.equal(animal.named('babar').getClass(), animal);
 	});
-
-	test('super is bound correctly on class-side methods', function() {
-		var animal = object.subclass(function(that, my) {
-			my.initialize = function(spec) {
-				my.name = spec.name;
-			};
-
-			that.getName = function() {
-				return my.name;
-			};
-		});
-
-		animal.class(function(that) {
-			that.named = function(name) {
-				return that({
-					name: name
-				});
-			};
-		});
-
-		var dog = animal.subclass(function() {});
-
-		dog.class(function(that) {
-			that.named = function(name) {
-				return that.super('dog named ' + name);
-			};
-		});
-
-		assert.equal(dog.named('milou').getName(), 'dog named milou');
-	});
 });
