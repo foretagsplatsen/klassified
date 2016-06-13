@@ -180,7 +180,7 @@ define([
 	};
 
 	object.abstractSubclass = function(builder) {
-		var klass = object.subclass(builder);
+		var klass = this.subclass(builder);
 		klass.isAbstract = true;
 		return klass;
 	};

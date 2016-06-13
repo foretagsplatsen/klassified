@@ -91,5 +91,22 @@ define(function(require) {
 		var milou = dog({name: 'milou'});
 
 		assert.equal(milou.toString(), 'Woof');
-    });
+	});
+
+	test('Multiple level of inheritance works for abstract classes', function() {
+		var animal = object.subclass(function(that) {
+			that.notPreviouslyDefinedFunction = function() {
+				return true;
+			};
+		});
+
+		var mammal = animal.abstractSubclass(function() {});
+		var dog = mammal.abstractSubclass(function() {});
+		var sheperd = dog.subclass(function() {});
+
+		var milou = sheperd();
+
+		assert.equal(milou.notPreviouslyDefinedFunction(), true);
+
+	});
 });
