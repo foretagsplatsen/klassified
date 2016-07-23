@@ -5,7 +5,7 @@ require.config({
 });
 
 var testModules = [
-    'subclassCreationTest',
+	'subclassCreationTest',
 	'initializationTest',
 	'inheritanceTest',
 	'superTest',
@@ -14,7 +14,8 @@ var testModules = [
 	'classInheritanceTest',
 	'classReferenceTest',
 	'abstractSubclassTest',
-	'getterSetterTest'
+	'getterSetterTest',
+	'singletonTest'
 ];
 
 require(testModules, function () {

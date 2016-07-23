@@ -142,6 +142,10 @@ define([
 				throwAbstractClassError(that);
 			}
 
+			if(klass.isSingleton && !notFinal) {
+				throwSingletonClassError(that);
+			}
+
 			var instance = that(spec, my, true);
 
 			instance.getClass = function() {
@@ -179,6 +183,17 @@ define([
 		return klass;
 	};
 
+	object.singletonSubclass = function(builder) {
+		var klass = this.subclass(builder);
+		var instance = klass();
+		klass.isSingleton = true;
+		klass.instance = function() {
+			return instance;
+		};
+
+		return klass;
+	};
+
 	object.abstractSubclass = function(builder) {
 		var klass = this.subclass(builder);
 		klass.isAbstract = true;
@@ -205,6 +220,7 @@ define([
 		// TODO: use Object.assign?
 		that.class = object.class;
 		that.subclass = object.subclass;
+		that.singletonSubclass = object.singletonSubclass;
 		that.abstractSubclass = object.abstractSubclass;
 		that.allSubclasses = object.allSubclasses;
 		that.subclassResponsibility = subclassResponsibility;
@@ -256,6 +272,10 @@ define([
 
 	function throwAbstractClassError(klass) {
 		throw new Error('Cannot instantiate an instance of an abstract class');
+	}
+
+	function throwSingletonClassError(klass) {
+		throw new Error('Cannot create new instances of a singleton class, use `instance` instead.');
 	}
 
 	/**
