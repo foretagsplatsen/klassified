@@ -179,6 +179,65 @@ define([
 		return klass;
 	};
 
+	object.singleton = function(builder, options) {
+		var that = this;
+		options = options || {};
+		var singletonInstance;
+
+		function klass(spec, my, notFinal) {
+			spec = spec || {};
+			my = my || {};
+
+			if (klass.isAbstract && !notFinal) {
+				throwAbstractClassError(that);
+			}
+
+			if (!notFinal && singletonInstance) {
+				return singletonInstance;
+			}
+
+			var instance = that(spec, my, true);
+
+			instance.getClass = function() {
+				return klass;
+			};
+
+			var superInstance = Object.assign({}, instance);
+			var superMy = Object.assign({}, my);
+
+			klass.extensions.forEach(function(extension) {
+				extension(instance, my);
+			});
+
+			builder(instance, my);
+			if (superCallRegex.test(builder)) {
+				installSuper(instance, superInstance);
+				installSuper(my, superMy);
+			}
+
+			if (!notFinal) {
+				my.initialize(spec);
+				singletonInstance = instance;
+			}
+
+			return instance;
+		}
+
+		klass.superclass = that;
+		klass.subclasses = [];
+		that.subclasses.push(klass);
+
+		// static inheritance
+		klass.classBuilder = that.classBuilder;
+		klass.classBuilder(klass);
+
+		if (options.spec || options.initializeAtCreation) {
+			klass(options.spec);
+		}
+
+		return klass;
+	};
+
 	object.abstractSubclass = function(builder) {
 		var klass = this.subclass(builder);
 		klass.isAbstract = true;
@@ -205,6 +264,7 @@ define([
 		// TODO: use Object.assign?
 		that.class = object.class;
 		that.subclass = object.subclass;
+		that.singleton = object.singleton;
 		that.abstractSubclass = object.abstractSubclass;
 		that.allSubclasses = object.allSubclasses;
 		that.subclassResponsibility = subclassResponsibility;
