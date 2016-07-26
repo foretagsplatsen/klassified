@@ -15,7 +15,8 @@ var testModules = [
 	'classReferenceTest',
 	'abstractSubclassTest',
 	'getterSetterTest',
-	'singletonTest'
+	'singletonTest',
+	'testCaseTest'
 ];
 
 require(testModules, function () {
