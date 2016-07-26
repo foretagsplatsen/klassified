@@ -8,7 +8,7 @@ define(function(require) {
     test('Can create a subclass', function() {
 		var animal = object.subclass(function() {});
 
-		assert.deepEqual(object.subclasses, [animal]);
+		assert.include(object.subclasses, animal);
     });
 
 	test('Can create a subclass of a subclass', function() {
