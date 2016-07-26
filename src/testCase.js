@@ -11,24 +11,31 @@ define([
 	 */
 	var testCase = object.abstractSubclass(function(that, my) {
 
+		my.initialize = function(spec) {
+			my.super(spec);
+			var tests = my.registeredTests();
+			suite(my.name(), function() {
+				beforeEach(my.beforeEach);
+				afterEach(my.afterEach);
+				beforeAll(my.beforeAll);
+				afterAll(my.afterAll);
+				tests.forEach(function(test) {
+					test();
+				});
+			});
+		};
+
 		my.force = function() {
 			return false;
 		};
 
+		my.beforeEach = function() {};
+		my.beforeAll = function() {};
+		my.afterEach = function() {};
+		my.afterAll = function() {};
+
 		my.name = function() {
 			return my.subclassResponsibility;
-		};
-
-		my.describe = function(name, callback) {
-			if (my.force()) {
-				fdescribe(name, function() {
-					callback();
-				});
-			} else {
-				describe(name, function() {
-					callback();
-				});
-			}
 		};
 
 		my.it = function(name, callback) {
@@ -37,16 +44,6 @@ define([
 
 		my.expect = function(object) {
 			return expect(object);
-		};
-
-		my.initialize = function(spec) {
-			my.super(spec);
-			var tests = my.registeredTests();
-			my.describe(my.name(), function() {
-				tests.forEach(function(test) {
-					test();
-				});
-			});
 		};
 
 		my.registeredTests = function() {
@@ -61,6 +58,18 @@ define([
 			});
 
 			return result;
+		};
+
+		function suite(name, callback) {
+			if (my.force()) {
+				fdescribe(name, function() {
+					callback();
+				});
+			} else {
+				describe(name, function() {
+					callback();
+				});
+			}
 		};
 	});
 

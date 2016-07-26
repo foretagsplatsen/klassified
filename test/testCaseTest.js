@@ -10,13 +10,22 @@ define(function(require) {
 	 * describe, it and expect are globals.
 	 */
 
+	var beforeEachCallback = function() {};
+	var beforeAllCallback = function() {};
+	var afterEachCallback = function() {};
+	var afterAllCallback = function() {};
+
 	describe = function(name, callback) {
 		suite(name);
+		beforeAllCallback();
 		callback();
+		afterAllCallback();
 	};
 
 	it = function(name, callback) {
+		beforeEachCallback();
 		test(name, callback);
+		afterEachCallback();
 	};
 
 	expect = function(expected) {
@@ -27,11 +36,32 @@ define(function(require) {
 		};
 	};
 
+	beforeEach = function(callback) {
+		beforeEachCallback = callback;
+	};
+
+	afterEach = function(callback) {
+		afterEachCallback = callback;
+	};
+
+	beforeAll = function(callback) {
+		beforeAllCallback = callback;
+	};
+
+	afterAll = function(callback) {
+		afterAllCallback = callback;
+	};
+
+
 	var bTestCaseCount;
 
 	var a = testCase.subclass(function(that, my) {
 		my.name = function() {
 			return 'TestCase - A';
+		};
+
+		my.beforeEach = function() {
+			that.isA = true;
 		};
 
 		my.isFoo = function() {
@@ -55,10 +85,19 @@ define(function(require) {
 	});
 
 	var b = a.subclass(function(that, my) {
+		my.initialize = function(spec) {
+			bTestCaseCount = 0;
+			my.super(spec);
+			my.foo = true;
+		};
+
+		my.beforeEach = function() {
+			my.super();
+			that.isB = true;
+		};
 
 		// Keep track of the number of tests run.
 		my.describe = function(name, callback) {
-			bTestCaseCount = 0;
 			my.super(name, callback);
 		};
 
@@ -76,14 +115,14 @@ define(function(require) {
 				my.expect(my.foo).toBe(true);
 			});
 		};
-
-		my.initialize = function(spec) {
-			my.super(spec);
-			my.foo = true;
-		};
 	});
 
 	test('b testCase should have run 2 test cases', function() {
 		assert.equal(bTestCaseCount, 2);
+	});
+
+	test('beforeEach is inherited', function() {
+		assert.ok(b.instance().isA);
+		assert.ok(b.instance().isB);
 	});
 });
