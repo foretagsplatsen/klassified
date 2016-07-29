@@ -1,6 +1,7 @@
 var gulp = require("gulp");
 var del = require("del");
 var Server = require("karma").Server;
+var fs = require("fs");
 
 var plugins = require("gulp-load-plugins")({
 	rename: {
@@ -13,6 +14,21 @@ var plugins = require("gulp-load-plugins")({
 		"gulp-bump": "bump"
 	}
 });
+
+var almond = fs.readFileSync(__dirname + "/node_modules/almond/almond.js");
+
+var wrap = {
+	start: "(function(root, factory) {\n" +
+	"    if (typeof define === \"function\" && define.amd) {\n" +
+	"        define(factory);\n" +
+	"    } else {\n" +
+	"        root.objectjs = factory(root.$);" +
+	"    }\n" +
+	"}(this, function ($) {\n" + almond,
+	end: "    define(function() { return $; });\n" +
+	"    return require(\"objectjs\");\n" +
+	"}));"
+};
 
 var sources = ["./src/**/*.js"];
 var misc = ["./gulpfile.js", "./eslintrc.js"];
@@ -56,8 +72,7 @@ gulp.task("strip", function() {
 
 var requireJSOptions = {
 	mainConfigFile: "./config.js",
-	name: "../node_modules/almond/almond",
-	wrap: true,
+	wrap: wrap,
 	findNestedDependencies: true
 };
 
