@@ -1,4 +1,4 @@
-# ObjectJS
+# ObjectJS [![Build Status](https://travis-ci.org/foretagsplatsen/objectjs.svg?branch=master)](https://travis-ci.org/foretagsplatsen/objectjs)
 
 A simple object model for JavaScript.
 
