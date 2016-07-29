@@ -1,6 +1,6 @@
 {
 	"name": "objectjs",
-	"version": "1.0.3",
+	"version": "1.5.1",
 	"description": "A simple object model for JavaScript",
 	"main": "src/object.js",
 	"directories": {
