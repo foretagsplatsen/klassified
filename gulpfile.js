@@ -9,7 +9,8 @@ var plugins = require("gulp-load-plugins")({
 		"gulp-phantom": "phantom",
 		"gulp-strip-code": "stripCode",
 		"gulp-sequence": "sequence",
-		"gulp-requirejs-optimize": "optimizer"
+		"gulp-requirejs-optimize": "optimizer",
+		"gulp-bump": "bump"
 	}
 });
 
@@ -89,6 +90,32 @@ gulp.task("build", plugins.sequence(
 	"optimize:minify",
 	"clean:strip"
 ));
+
+//
+// Release
+//
+
+gulp.task("bump:patch", function() {
+	return gulp.src("./package.json")
+		.pipe(plugins.bump({type: "patch"}))
+		.pipe(gulp.dest("./"));
+});
+
+gulp.task("bump:minor", function() {
+	return gulp.src("./package.json")
+		.pipe(plugins.bump({type: "minor"}))
+		.pipe(gulp.dest("./"));
+});
+
+gulp.task("bump:major", function() {
+	return gulp.src("./package.json")
+		.pipe(plugins.bump({type: "major"}))
+		.pipe(gulp.dest("./"));
+});
+
+gulp.task("release:patch", ["bump:patch", "build"], function() {});
+gulp.task("release:minor", ["bump:minor", "build"], function() {});
+gulp.task("release:major", ["bump:major", "build"], function() {});
 
 //
 // Clean
