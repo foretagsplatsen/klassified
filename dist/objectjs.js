@@ -1,4 +1,9 @@
-(function () {
+(function(root, factory) {
+    if (typeof define === "function" && define.amd) {
+        define(factory);
+    } else {
+        root.objectjs = factory(root.$);    }
+}(this, function ($) {
 /**
  * @license almond 0.3.2 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, http://github.com/requirejs/almond/LICENSE
@@ -425,9 +430,6 @@ var requirejs, require, define;
         jQuery: true
     };
 }());
-
-define("../node_modules/almond/almond", function(){});
-
 define('object',[], function() {
 
 	/**
@@ -863,4 +865,6 @@ define('objectjs',[
 
 
 require(["objectjs"]);
-}());
+    define(function() { return $; });
+    return require("objectjs");
+}));
