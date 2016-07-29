@@ -865,6 +865,5 @@ define('objectjs',[
 
 
 require(["objectjs"]);
-    define(function() { return $; });
     return require("objectjs");
 }));

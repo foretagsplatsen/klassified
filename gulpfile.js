@@ -25,8 +25,7 @@ var wrap = {
 	"        root.objectjs = factory(root.$);" +
 	"    }\n" +
 	"}(this, function ($) {\n" + almond,
-	end: "    define(function() { return $; });\n" +
-	"    return require(\"objectjs\");\n" +
+	end: "    return require(\"objectjs\");\n" +
 	"}));"
 };
 
