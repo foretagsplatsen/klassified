@@ -31,7 +31,7 @@ var wrap = {
 
 var sources = ["./src/**/*.js"];
 var misc = ["./gulpfile.js", "./eslintrc.js"];
-var tests = ["./test/**/*.js"];
+var tests = ["./test/**/*.js", "!./test/custom-boot.js"];
 var all = sources.slice().concat(misc).concat(tests);
 
 gulp.task("default", ["lint", "test"]);

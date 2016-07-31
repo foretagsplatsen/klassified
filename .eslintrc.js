@@ -24,6 +24,8 @@
                 error,
                 "inside"
             ],
+			"indent": ["error", "tab"],
+			"no-mixed-spaces-and-tabs": error,
             "no-useless-call": error,
             "no-self-compare": error,
             "no-sequences": error,

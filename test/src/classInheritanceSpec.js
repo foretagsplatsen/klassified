@@ -1,109 +1,109 @@
 define(["src/object"], function(object) {
 
-    describe("class-inheritance", function() {
+	describe("class-inheritance", function() {
 
-        it("Cannot add class-side methods to Object", function() {
+		it("Cannot add class-side methods to Object", function() {
 			var addMethod = function() {
-                object.class(function(that) {
-                    that.foo = function() {
-                        return true;
-                    };
-                });
+				object.class(function(that) {
+					that.foo = function() {
+						return true;
+					};
+				});
 			};
 
 			expect(addMethod).toThrow();
 		});
 
-        it("Class-side methods are inherited in direct subclasses", function() {
-            var animal = object.subclass(function() {});
-            animal.class(function(that) {
-                that.bar = function() {
-                    return true;
-                };
-            });
+		it("Class-side methods are inherited in direct subclasses", function() {
+			var animal = object.subclass(function() {});
+			animal.class(function(that) {
+				that.bar = function() {
+					return true;
+				};
+			});
 
-            var dog = animal.subclass(function() {});
+			var dog = animal.subclass(function() {});
 
-            expect(dog.bar()).toBe(true);
+			expect(dog.bar()).toBe(true);
 		});
 
-        it("Class-side methods are inherited in direct subclasses", function() {
-            var animal = object.subclass(function() {});
-            animal.class(function(that) {
-                that.bar = function() {
-                    return true;
-                };
-            });
+		it("Class-side methods are inherited in direct subclasses", function() {
+			var animal = object.subclass(function() {});
+			animal.class(function(that) {
+				that.bar = function() {
+					return true;
+				};
+			});
 
-            var dog = animal.subclass(function() {});
+			var dog = animal.subclass(function() {});
 
-            expect(dog.bar()).toBe(true);
+			expect(dog.bar()).toBe(true);
 		});
 
-        it("Class-side methods are not propagated to the superclass", function() {
-            var animal = object.subclass(function() {});
-            animal.class(function(that) {
-                that.bar = function() {
-                    return true;
-                };
-            });
+		it("Class-side methods are not propagated to the superclass", function() {
+			var animal = object.subclass(function() {});
+			animal.class(function(that) {
+				that.bar = function() {
+					return true;
+				};
+			});
 
-            var dog = animal.subclass(function() {});
-            dog.class(function(that) {
-                that.baz = function() {
-                    return true;
-                };
-            });
+			var dog = animal.subclass(function() {});
+			dog.class(function(that) {
+				that.baz = function() {
+					return true;
+				};
+			});
 
-            expect(object.bar).toEqual(undefined);
-            expect(animal.baz).toEqual(undefined);
-        });
-
-        it("Class-side method reference the correct class when inherited", function() {
-            var animal = object.subclass(function() {});
-            animal.class(function(that) {
-                that.foo = function() {
-                    return that.bar();
-                };
-
-                that.bar = function() {
-                    return false;
-                };
-            });
-
-            var dog = animal.subclass(function() {});
-            dog.class(function(that) {
-                that.bar = function() {
-                    return true;
-                };
-            });
-
-            expect(dog.foo()).toBe(true);
+			expect(object.bar).toEqual(undefined);
+			expect(animal.baz).toEqual(undefined);
 		});
 
-        it("Custom constructors instantiate objects of the correct class", function() {
-            var animal = object.subclass(function(that, my) {
-                my.initialize = function(spec) {
-                    my.name = spec.name;
-                };
+		it("Class-side method reference the correct class when inherited", function() {
+			var animal = object.subclass(function() {});
+			animal.class(function(that) {
+				that.foo = function() {
+					return that.bar();
+				};
 
-                that.getName = function() {
-                    return my.name;
-                };
-            });
+				that.bar = function() {
+					return false;
+				};
+			});
 
-            animal.class(function(that) {
-                that.named = function(name) {
+			var dog = animal.subclass(function() {});
+			dog.class(function(that) {
+				that.bar = function() {
+					return true;
+				};
+			});
+
+			expect(dog.foo()).toBe(true);
+		});
+
+		it("Custom constructors instantiate objects of the correct class", function() {
+			var animal = object.subclass(function(that, my) {
+				my.initialize = function(spec) {
+					my.name = spec.name;
+				};
+
+				that.getName = function() {
+					return my.name;
+				};
+			});
+
+			animal.class(function(that) {
+				that.named = function(name) {
 					return that.new({
-                        name: name
-                    });
-                };
-            });
+						name: name
+					});
+				};
+			});
 
-            var dog = animal.subclass(function() {});
+			var dog = animal.subclass(function() {});
 
-            expect(dog.named("milou").getClass()).toEqual(dog);
-            expect(animal.named("babar").getClass()).toEqual(animal);
-        });
-    });
+			expect(dog.named("milou").getClass()).toEqual(dog);
+			expect(animal.named("babar").getClass()).toEqual(animal);
+		});
+	});
 });

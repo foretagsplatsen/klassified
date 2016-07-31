@@ -1,81 +1,81 @@
 define(["src/object"], function(object) {
 
-    describe("initialization", function() {
+	describe("initialization", function() {
 
-        it("initialize should be called upon object creation", function() {
-            var initialized = false;
+		it("initialize should be called upon object creation", function() {
+			var initialized = false;
 
-            var animal = object.subclass(function(that, my) {
-                my.initialize = function() {
-                    initialized = true;
-                };
-            });
+			var animal = object.subclass(function(that, my) {
+				my.initialize = function() {
+					initialized = true;
+				};
+			});
 
-            expect(!initialized).toBe(true);
+			expect(!initialized).toBe(true);
 			animal.new();
-            expect(initialized).toBe(true);
-        });
+			expect(initialized).toBe(true);
+		});
 
-        it("initialize should be called only once", function() {
-            var initializeCalls = 0;
+		it("initialize should be called only once", function() {
+			var initializeCalls = 0;
 
-            var animal = object.subclass(function(that, my) {
-                my.initialize = function() {
-                    initializeCalls += 1;
-                };
-            });
+			var animal = object.subclass(function(that, my) {
+				my.initialize = function() {
+					initializeCalls += 1;
+				};
+			});
 
-            var dog = animal.subclass(function(that, my) {
-                my.initialize = function() {
-                    initializeCalls += 1;
-                };
-            });
+			var dog = animal.subclass(function(that, my) {
+				my.initialize = function() {
+					initializeCalls += 1;
+				};
+			});
 
 			dog.new();
-            expect(initializeCalls).toEqual(1);
-        });
+			expect(initializeCalls).toEqual(1);
+		});
 
-        it("can use overrides within initialize", function() {
-            var animal = object.subclass(function(that, my) {
-                my.initialize = function() {
-                    that.foo();
-                };
+		it("can use overrides within initialize", function() {
+			var animal = object.subclass(function(that, my) {
+				my.initialize = function() {
+					that.foo();
+				};
 
-                that.foo = function() {
-                    that.bar = "animal";
-                };
-            });
+				that.foo = function() {
+					that.bar = "animal";
+				};
+			});
 
-            var dog = animal.subclass(function(that, my) {
-                that.foo = function() {
-                    that.bar = "dog";
-                };
-            });
+			var dog = animal.subclass(function(that, my) {
+				that.foo = function() {
+					that.bar = "dog";
+				};
+			});
 
 			var d = dog.new();
 			var a = animal.new();
-            expect(a.bar).toEqual("animal");
-            expect(d.bar).toEqual("dog");
-        });
+			expect(a.bar).toEqual("animal");
+			expect(d.bar).toEqual("dog");
+		});
 
-        it("can call super from initialize", function() {
-            var animal = object.subclass(function(that, my) {
-                my.initialize = function() {
-                    my.super();
-                    that.foo = 1;
-                };
-            });
+		it("can call super from initialize", function() {
+			var animal = object.subclass(function(that, my) {
+				my.initialize = function() {
+					my.super();
+					that.foo = 1;
+				};
+			});
 
-            var dog = animal.subclass(function(that, my) {
-                my.initialize = function() {
-                    my.super();
-                    that.bar = 2;
-                };
-            });
+			var dog = animal.subclass(function(that, my) {
+				my.initialize = function() {
+					my.super();
+					that.bar = 2;
+				};
+			});
 
 			var d = dog.new();
-            expect(d.foo).toEqual(1);
-            expect(d.bar).toEqual(2);
-        });
-    });
+			expect(d.foo).toEqual(1);
+			expect(d.bar).toEqual(2);
+		});
+	});
 });
