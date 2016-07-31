@@ -83,7 +83,7 @@ define([
 		that.subclass = (function(superSubclass) {
 			return function(builder) {
 				var klass = superSubclass.apply(that, [builder]);
-				var instance = klass();
+				var instance = klass.new();
 				klass.isSingleton = true;
 				klass.instance = function() {
 					return instance;

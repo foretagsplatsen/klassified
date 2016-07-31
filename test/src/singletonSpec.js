@@ -9,7 +9,7 @@ define(["src/object"], function(object) {
 		it("cannot create instances of singleton classes", function() {
 			var animal = object.singletonSubclass(function(that, my) { });
 			expect(function() {
-				animal();
+				animal.new();
 			}).toThrowError("Cannot create new instances of a singleton class, use `instance` instead.");
 		});
 
@@ -56,10 +56,10 @@ define(["src/object"], function(object) {
 				my.get("name");
 			});
 			var dog = animal.subclass(function() {});
-			var instance1 = dog({
+			var instance1 = dog.new({
 				name: "Milou"
 			});
-			var instance2 = dog({
+			var instance2 = dog.new({
 				name: "Rantanplan"
 			});
 

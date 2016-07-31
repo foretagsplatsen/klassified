@@ -12,7 +12,7 @@ define(["src/object"], function(object) {
             });
 
             expect(!initialized).toBe(true);
-            animal();
+			animal.new();
             expect(initialized).toBe(true);
         });
 
@@ -31,7 +31,7 @@ define(["src/object"], function(object) {
                 };
             });
 
-            dog();
+			dog.new();
             expect(initializeCalls).toEqual(1);
         });
 
@@ -52,8 +52,8 @@ define(["src/object"], function(object) {
                 };
             });
 
-            var d = dog();
-            var a = animal();
+			var d = dog.new();
+			var a = animal.new();
             expect(a.bar).toEqual("animal");
             expect(d.bar).toEqual("dog");
         });
@@ -73,7 +73,7 @@ define(["src/object"], function(object) {
                 };
             });
 
-            var d = dog();
+			var d = dog.new();
             expect(d.foo).toEqual(1);
             expect(d.bar).toEqual(2);
         });

@@ -9,7 +9,7 @@ define(["src/object"], function(object) {
 				my.get("name");
 			});
 
-			var a = animal({name: "milou"});
+			var a = animal.new({name: "milou"});
 			expect(a.getName()).toBe("milou");
 		});
 
@@ -20,7 +20,7 @@ define(["src/object"], function(object) {
 				});
 			});
 
-			var a = animal();
+			var a = animal.new();
 			expect(a.getName()).toBe("milou");
 		});
 
@@ -37,7 +37,7 @@ define(["src/object"], function(object) {
 				my.set("name");
 			});
 
-			var a = animal({name: "milou"});
+			var a = animal.new({name: "milou"});
 			a.setName("Charlie");
 			expect(a.getName()).toBe("Charlie");
 		});
@@ -53,7 +53,7 @@ define(["src/object"], function(object) {
 				});
 			});
 
-			var a = animal();
+			var a = animal.new();
 			a.setName("milou");
 			expect(a.getName()).toBe("animal named milou");
 		});
@@ -66,7 +66,7 @@ define(["src/object"], function(object) {
 
 			var dog = animal.subclass(function(that, my) {});
 
-			var d = dog();
+			var d = dog.new();
 			d.setName("milou");
 			expect(d.getName()).toBe("milou");
 		});

@@ -12,7 +12,7 @@ define(["src/object"], function(object) {
 		it("Cannot instantiate abstract classes", function() {
 			var abstractClass = object.abstractSubclass(function(that, my) {});
 
-			expect(abstractClass).toThrow();
+			expect(abstractClass.new).toThrow();
 		});
 
 		it("Abstract classes should be abstract", function() {
@@ -24,7 +24,7 @@ define(["src/object"], function(object) {
 			var abstractClass = object.abstractSubclass(function(that, my) {});
 			var concreteSubclass = abstractClass.subclass(function(that, my) {});
 
-			expect(concreteSubclass).not.toThrow();
+			expect(concreteSubclass.new).not.toThrow();
 		});
 
 		it("Can create abstract subclasses of abstract classes", function() {

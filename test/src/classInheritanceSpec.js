@@ -3,18 +3,15 @@ define(["src/object"], function(object) {
     describe("class-inheritance", function() {
 
         it("Cannot add class-side methods to Object", function() {
-            var exception;
-            try {
+			var addMethod = function() {
                 object.class(function(that) {
                     that.foo = function() {
                         return true;
                     };
                 });
-            } catch (e) {
-                exception = true;
-            }
+			};
 
-            expect(exception).toBe(true);
+			expect(addMethod).toThrow();
 		});
 
         it("Class-side methods are inherited in direct subclasses", function() {
@@ -97,7 +94,7 @@ define(["src/object"], function(object) {
 
             animal.class(function(that) {
                 that.named = function(name) {
-                    return that({
+					return that.new({
                         name: name
                     });
                 };

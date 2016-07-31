@@ -3,7 +3,7 @@ define(["src/object"], function(object) {
     describe("class-reference", function() {
 
         it("Instance of object can access their class", function() {
-            var o = object();
+            var o = object.new();
 
             expect(o.getClass()).toEqual(object);
         });
@@ -11,7 +11,7 @@ define(["src/object"], function(object) {
         it("Instances of subclasses of object reference the correct class", function() {
             var animal = object.subclass(function(that, my) {});
 
-            var a = animal();
+            var a = animal.new();
 
             expect(a.getClass()).toEqual(animal);
         });
@@ -20,7 +20,7 @@ define(["src/object"], function(object) {
             var animal = object.subclass(function(that, my) {});
             var dog = animal.subclass(function(that, my) {});
 
-            var d = dog();
+            var d = dog.new();
 
             expect(d.getClass()).toEqual(dog);
         });
@@ -38,7 +38,7 @@ define(["src/object"], function(object) {
                 };
             });
 
-            var a = animal();
+            var a = animal.new();
 
             expect(a.foo()).toBe(true);
         });

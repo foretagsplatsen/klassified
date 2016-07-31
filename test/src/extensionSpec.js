@@ -9,7 +9,7 @@ define(["src/object"], function(object) {
 				};
 			});
 
-			var o = object();
+			var o = object.new();
 
 			expect(o.isObject()).toBe(true);
 		});
@@ -23,7 +23,7 @@ define(["src/object"], function(object) {
 
 			var animal = object.subclass(function() {});
 
-			var a = animal();
+			var a = animal.new();
 
 			expect(!a.isDog()).toBe(true);
 		});
@@ -47,8 +47,8 @@ define(["src/object"], function(object) {
 				};
 			});
 
-			var a = animal();
-			var d = dog();
+			var a = animal.new();
+			var d = dog.new();
 
 			expect(a.isAnimal()).toBe(true);
 			expect(!a.isDog()).toBe(true);
@@ -75,7 +75,7 @@ define(["src/object"], function(object) {
 				};
 			});
 
-			var a = animal();
+			var a = animal.new();
 			expect(a.foo()).toBe(true);
 		});
 
@@ -92,7 +92,7 @@ define(["src/object"], function(object) {
 				};
 			});
 
-			var a = animal();
+			var a = animal.new();
 			expect(!a.foo()).toBe(true);
 		});
 	});

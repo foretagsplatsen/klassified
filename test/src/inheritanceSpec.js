@@ -17,7 +17,7 @@ define(["src/object"], function(object) {
 
 			var dog = animal.subclass(function(that, my) {});
 
-			var milou = dog({name: "milou"});
+			var milou = dog.new({name: "milou"});
 
 			expect(milou.toString()).toEqual("milou");
 		});
@@ -41,7 +41,7 @@ define(["src/object"], function(object) {
 				};
 			});
 
-			var milou = dog({name: "milou"});
+			var milou = dog.new({name: "milou"});
 
 			expect(milou.toString()).toEqual("Woof");
 		});
@@ -61,7 +61,7 @@ define(["src/object"], function(object) {
 
 			var dog = animal.subclass(function(that, my) {});
 
-			var milou = dog({name: "milou"});
+			var milou = dog.new({name: "milou"});
 
 			expect(milou.toString()).toEqual("milou");
 		});
@@ -85,7 +85,7 @@ define(["src/object"], function(object) {
 				};
 			});
 
-			var milou = dog({name: "milou"});
+			var milou = dog.new({name: "milou"});
 
 			expect(milou.toString()).toEqual("Woof");
 		});
@@ -101,7 +101,7 @@ define(["src/object"], function(object) {
 			var dog = mammal.abstractSubclass(function() {});
 			var shepherd = dog.subclass(function() {});
 
-			var milou = shepherd();
+			var milou = shepherd.new();
 
 			expect(milou.notPreviouslyDefinedFunction()).toBeTruthy();
 		});

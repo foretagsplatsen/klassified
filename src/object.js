@@ -1,4 +1,6 @@
-define([], function() {
+define([
+	"./polyfills"
+], function() {
 
 	/**
 	 * `object` is the base class of the object model.
@@ -46,56 +48,56 @@ define([], function() {
 	 * @param{{}} my
 	 * @return {object}
 	 */
-	function object(spec, my) {
-		spec = spec || {};
-		my = my || {};
+	var object = {
+		new: function(spec, my) {
+			my = my || {};
+			var that = {};
 
-		var that = {};
+			that.getClass = function() {
+				return object;
+			};
 
-		that.getClass = function() {
-			return object;
-		};
+			/**
+			 * initialize is called by the framework upon object instantiation.
+			 */
+			my.initialize = function() {};
 
-		/**
-		 * initialize is called by the framework upon object instantiation.
-		 */
-		my.initialize = function() {};
+			/**
+			 * Throws an error because the method should have been overridden.
+			 */
+			my.subclassResponsibility = subclassResponsibility;
 
-		/**
-		 * Throws an error because the method should have been overridden.
-		 */
-		my.subclassResponsibility = subclassResponsibility;
+			/**
+			 * Getter/Setter generation
+			 */
+			my.get = function(propName, getter) {
+				if (!getter) {
+					getter = function() {
+						return my[propName];
+					};
+				}
+				that["get" + capitalized(propName)] = getter;
+			};
 
-		/**
-		 * Getter/Setter generation
-		 */
-		my.get = function(propName, getter) {
-			if(!getter) {
-				getter = function() {
-					return my[propName];
-				};
-			}
-			that["get" + capitalized(propName)] = getter;
-		};
+			my.set = function(propName, setter) {
+				if (!setter) {
+					setter = function(value) {
+						my[propName] = value;
+						return value;
+					};
+				}
+				that["set" + capitalized(propName)] = setter;
+			};
 
-		my.set = function(propName, setter) {
-			if(!setter) {
-				setter = function(value) {
-					my[propName] = value;
-					return value;
-				};
-			}
-			that["set" + capitalized(propName)] = setter;
-		};
+			// install extensions by hand for object, since we do not have the
+			// extension installation of the subclasses
+			that.getClass().extensions.forEach(function(extension) {
+				extension(that, my);
+			});
 
-		// install extensions by hand for object, since we do not have the
-		// extension installation of the subclasses
-		that.getClass().extensions.forEach(function(extension) {
-			extension(that, my);
-		});
-
-		return that;
-	}
+			return that;
+		}
+	};
 
 	/**
 	 * Return an array of direct subclasses.
@@ -132,20 +134,21 @@ define([], function() {
 	 */
 	object.subclass = function(builder) {
 		var that = this;
+		var klass = {};
 
-		function klass(spec, my, notFinal) {
+		function klassBuilder(spec, my, notFinal) {
 			spec = spec || {};
 			my = my || {};
 
-			if(klass.isAbstract && !notFinal) {
+			if (klass.isAbstract && !notFinal) {
 				throwAbstractClassError(that);
 			}
 
-			if(klass.isSingleton && !notFinal) {
+			if (klass.isSingleton && !notFinal) {
 				throwSingletonClassError(that);
 			}
 
-			var instance = that(spec, my, true);
+			var instance = that.new(spec, my, true);
 
 			instance.getClass = function() {
 				return klass;
@@ -171,6 +174,8 @@ define([], function() {
 			return instance;
 		}
 
+		klass.new = klassBuilder;
+
 		klass.superclass = that;
 		klass.subclasses = [];
 		that.subclasses.push(klass);
@@ -184,7 +189,7 @@ define([], function() {
 
 	object.singletonSubclass = function(builder) {
 		var klass = this.subclass(builder);
-		var instance = klass();
+		var instance = klass.new();
 		klass.isSingleton = true;
 		klass.instance = function() {
 			return instance;
@@ -236,8 +241,7 @@ define([], function() {
 		Object.keys(obj).forEach(function(name) {
 			if (typeof proto[name] === "function" &&
 				typeof obj[name] === "function" &&
-				superCallRegex.test(obj[name]) &&
-				!obj[name].superInstalled) {
+				superCallRegex.test(obj[name]) && !obj[name].superInstalled) {
 				var superFn = proto[name];
 				obj[name] = (function(name, fn) {
 					return function() {
@@ -275,32 +279,6 @@ define([], function() {
 
 	function throwSingletonClassError(klass) {
 		throw new Error("Cannot create new instances of a singleton class, use `instance` instead.");
-	}
-
-	/**
-	 * Polyfill for Object.assign
-	 */
-	if (typeof Object.assign !== "function") {
-		(function() {
-			Object.assign = function(target) {
-				if (target === undefined || target === null) {
-					throw new TypeError("Cannot convert undefined or null to object");
-				}
-
-				var output = Object(target);
-				for (var index = 1; index < arguments.length; index++) {
-					var source = arguments[index];
-					if (source !== undefined && source !== null) {
-						for (var nextKey in source) {
-							if (source.hasOwnProperty(nextKey)) {
-								output[nextKey] = source[nextKey];
-							}
-						}
-					}
-				}
-				return output;
-			};
-		})();
 	}
 
 	/**

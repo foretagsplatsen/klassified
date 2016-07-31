@@ -19,7 +19,7 @@ define(["src/object"], function(object) {
                 };
             });
 
-            var milou = dog({name: "milou"});
+			var milou = dog.new({name: "milou"});
 
             expect(milou.getName()).toEqual("dog named milou");
         });
@@ -46,7 +46,7 @@ define(["src/object"], function(object) {
                 };
             });
 
-            var milou = dog({name: "milou"});
+			var milou = dog.new({name: "milou"});
 
             expect(milou.toString()).toEqual("dog named milou");
         });
@@ -73,7 +73,7 @@ define(["src/object"], function(object) {
                 };
             });
 
-            var milou = dog();
+			var milou = dog.new();
 
             expect(milou.toString()).toEqual("a dog named: milou");
         });
@@ -92,7 +92,7 @@ define(["src/object"], function(object) {
                 };
             });
 
-            var milou = dog();
+			var milou = dog.new();
             var foo = milou.foo(4);
 
             expect(foo).toEqual(5);
@@ -110,7 +110,7 @@ define(["src/object"], function(object) {
 				};
 			});
 
-			var milou = dog();
+			var milou = dog.new();
 			milou.foo();
 
 			var keys = Object.keys(milou);
@@ -132,7 +132,7 @@ define(["src/object"], function(object) {
 
 			var baz = bar.subclass(function(that, my) {});
 
-			expect(baz().foo()).toBe(2);
+			expect(baz.new().foo()).toBe(2);
 		});
     });
 });
