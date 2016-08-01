@@ -23,7 +23,6 @@ define(["src/object"], function(object) {
 			});
 
 			var dog = animal.subclass(function() {});
-
 			expect(dog.bar()).toBe(true);
 		});
 
@@ -104,6 +103,27 @@ define(["src/object"], function(object) {
 
 			expect(dog.named("milou").getClass()).toEqual(dog);
 			expect(animal.named("babar").getClass()).toEqual(animal);
+		});
+
+		it("support supercalls on class side", function() {
+			var sentinel = false;
+			var animal = object.subclass();
+			animal.class(function(that) {
+				that.foo = function() {
+					sentinel = true;
+				};
+			});
+			var dog = animal.subclass();
+			dog.class(function(that) {
+				that.foo = function() {
+					sentinel = false;
+					that.super();
+				};
+			});
+
+			dog.foo();
+
+			expect(sentinel).toBeTruthy();
 		});
 	});
 });
