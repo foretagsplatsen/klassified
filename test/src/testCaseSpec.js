@@ -11,16 +11,12 @@ define(["src/testCase"], function(testCase) {
 				that.isA = true;
 			};
 
-			my.isFoo = function() {
-				my.it("isFoo", function() {
-					my.expect(my.foo).toBe(false);
-				});
+			my.isFooTest = function() {
+				my.expect(my.foo).toBe(false);
 			};
 
-			my.isBar = function() {
-				my.it("isBar", function() {
-					my.expect(my.bar).toBe(true);
-				});
+			my.isBarTest = function() {
+				my.expect(my.bar).toBe(true);
 			};
 
 			my.initialize = function(spec) {
@@ -40,6 +36,7 @@ define(["src/testCase"], function(testCase) {
 
 			my.beforeEach = function() {
 				my.super();
+				bTestCaseCount++;
 				that.isB = true;
 			};
 
@@ -48,19 +45,12 @@ define(["src/testCase"], function(testCase) {
 				my.super(name, callback);
 			};
 
-			my.it = function(name, callback) {
-				bTestCaseCount++;
-				my.super(name, callback);
-			};
-
 			my.name = function() {
 				return "TestCase - B";
 			};
 
-			my.isFoo = function() {
-				my.it("isFoo", function() {
-					my.expect(my.foo).toBe(true);
-				});
+			my.isFooTest = function() {
+				my.expect(my.foo).toBe(true);
 			};
 		});
 

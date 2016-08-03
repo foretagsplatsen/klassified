@@ -20,7 +20,7 @@ define([
 				beforeAll(my.beforeAll);
 				afterAll(my.afterAll);
 				tests.forEach(function(test) {
-					test();
+					it(test.name, test.fn);
 				});
 			});
 		};
@@ -38,26 +38,32 @@ define([
 			return my.subclassResponsibility;
 		};
 
-		my.it = function(name, callback) {
-			it(name, callback);
-		};
-
-		my.expect = function(object) {
-			return expect(object);
-		};
+		my.expect = expect;
+		my.spyOn = spyOn;
 
 		my.registeredTests = function() {
 			var result = [];
-			var testRegex = /\bmy.it\b/;
+			var testRegex = /Test$/;
 
 			Object.keys(my).forEach(function(name) {
 				if (typeof my[name] === "function" &&
-					testRegex.test(my[name])) {
-					result.push(my[name]);
+					testRegex.test(name)) {
+					result.push({
+						name: my.buildTestName(name),
+						fn: my[name]
+					});
 				}
 			});
 
 			return result;
+		};
+
+		my.buildTestName = function(name) {
+			name = name.slice(0, -4);
+			var regexp = /([A-Z][^A-Z]*)/g;
+			name = name.replace(regexp, " $1");
+			name = name.toLowerCase();
+			return name;
 		};
 
 		function suite(name, callback) {
