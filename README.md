@@ -63,7 +63,7 @@ methods or `my.super` for protected methods.
 `object` provides the following instance methods and properties:
 
 - `that.klass` returns the class of the instance
-- `that.subclassResponsibility` method throwing an exception because a method
+- `my.subclassResponsibility` method throwing an exception because a method
   should have been overridden.
 - `my.initialize` initialization method, takes a literal spec object.
 
