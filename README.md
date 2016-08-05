@@ -94,6 +94,21 @@ animal(); // => Error: Cannot instantiate an instance of an abstract class
 dog(); // => New dog instance
 ```
 
+## Singleton classes
+
+ObjectJS support singleton classes using `singletonSubclass`:
+
+```js
+var service = object.singletonSubclass(function(that, my) {
+
+    // [...]
+
+});
+
+service.instance(); // Return the single instance of the class
+service(); // => Error: Cannot create new instances of a singleton class, use `instance` instead.
+```
+
 ## Getters and setters generation
 
 ObjectJS can generate getters and setters for protected properties on `my`, as
