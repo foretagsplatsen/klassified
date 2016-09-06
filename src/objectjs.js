@@ -1,9 +1,13 @@
 define([
 	"./object",
-	"./testCase"
-], function(object, testCase) {
+	"./testCase",
+	"./property",
+	"./globalPropertyEventEmitter"
+], function(object, testCase, property, propertyEventEmitter) {
 	return {
 		object: object,
-		testCase: testCase
+		testCase: testCase,
+		property: property,
+		propertyEventEmitter: propertyEventEmitter
 	};
 });

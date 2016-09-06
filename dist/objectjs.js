@@ -859,13 +859,174 @@ define('testCase',[
 	return testCase;
 });
 
+define('propertiesEventEmitter',[
+	"./object"
+], function(object) {
+	return object.subclass(function(that, my) {
+		my.initialize = function(spec) {
+			my.super(spec);
+			my.instance = spec.instance;
+
+			my.accessListeners = {};
+			my.changeListeners = {};
+		};
+
+		that.onAccess = function(propName, listener) {
+			if (!my.accessListeners[propName]) {
+				my.accessListeners[propName] = [];
+			}
+			if (my.accessListeners[propName].indexOf(listener) === -1) {
+				my.accessListeners[propName].push(listener);
+			}
+		};
+
+		that.onChange = function(propName, listener) {
+			if (!my.changeListeners[propName]) {
+				my.changeListeners[propName] = [];
+			}
+			if (my.changeListeners[propName].indexOf(listener) === -1) {
+				my.changeListeners[propName].push(listener);
+			}
+		};
+
+		that.emitAccess = function(propName) {
+			if (!my.accessListeners[propName]) {
+				return;
+			}
+
+			my.accessListeners[propName].forEach(function(listener) {
+				listener(my.instance, propName);
+			});
+		};
+
+		that.emitChange = function(propName, value) {
+			if (!my.changeListeners[propName]) {
+				return;
+			}
+
+			my.changeListeners[propName].forEach(function(listener) {
+				listener(my.instance, propName, value);
+			});
+		};
+	});
+});
+
+define('globalPropertyEventEmitter',[
+	"./object"
+], function(object) {
+
+	/**
+	 * Central property events emitter.
+	 *
+	 * All properties will trigger events when accessed or changed.
+	 */
+	return object.singletonSubclass(function(that, my) {
+		my.initialize = function(spec) {
+			my.super(spec);
+			my.accessListeners = [];
+			my.changeListeners = [];
+		};
+
+		that.onAccess = function(listener) {
+			my.accessListeners.push(listener);
+		};
+
+		that.onChange = function(listener) {
+			my.changeListeners.push(listener);
+		};
+
+		that.emitAccess = function(instance, propName) {
+			my.accessListeners.forEach(function(listener) {
+				listener(instance, propName);
+			});
+		};
+
+		that.emitChange = function(instance, propName, value) {
+			my.changeListeners.forEach(function(listener) {
+				listener(instance, propName, value);
+			});
+		};
+	});
+});
+
+define('property',[
+	"./object",
+	"./propertiesEventEmitter",
+	"./globalPropertyEventEmitter"
+], function(object, propertiesEventEmitter, globalPropertyEventEmitter) {
+	/**
+	 * A property represent an observable attribute of an object, with optional
+	 * getters and setters.
+	 *
+	 * @param{string} spec.owner - Instance on which the property is installed.
+	 * @param{string} spec.name - Name of the property, which value of the same
+	 * name is installed on `my` on the instance.
+	 z     */
+	object.extend(function(that, my) {
+
+		that.onPropertyAccess = function(propName, listener) {
+			var emitter = my.ensurePropertiesEventEmitter();
+			emitter.onAccess(propName, listener);
+		};
+
+		that.onPropertyChange = function(propName, listener) {
+			var emitter = my.ensurePropertiesEventEmitter();
+			emitter.onChange(propName, listener);
+		};
+
+		my.property = function(propName, initialValue) {
+			var value = initialValue;
+			Object.defineProperty(my, propName, {
+				configurable: true,
+				enumerable: true,
+				get: function() {
+					emitPropertyAccess(propName);
+					return value;
+				},
+				set: function(newValue) {
+					value = newValue;
+					emitPropertyChange(propName, value);
+				}
+			});
+		};
+
+		my.ensurePropertiesEventEmitter = function() {
+			if (my.propertiesEventEmitter) {
+				return my.propertiesEventEmitter;
+			}
+
+			my.propertiesEventEmitter = propertiesEventEmitter({
+				instance: that
+			});
+
+			return my.propertiesEventEmitter;
+		};
+
+		function emitPropertyAccess(propName) {
+			var emitter = my.ensurePropertiesEventEmitter();
+			emitter.emitAccess(propName);
+			globalPropertyEventEmitter.instance().emitAccess(that, propName);
+		}
+
+		function emitPropertyChange(propName, value) {
+			var emitter = my.ensurePropertiesEventEmitter();
+			emitter.emitChange(propName, value);
+			globalPropertyEventEmitter.instance().emitChange(that, propName, value);
+		}
+	});
+});
+
 define('objectjs',[
 	"./object",
-	"./testCase"
-], function(object, testCase) {
+	"./testCase",
+	"./property",
+	"./globalPropertyEventEmitter"
+], function(object, testCase, property, propertyEventEmitter) {
 	return {
 		object: object,
-		testCase: testCase
+		testCase: testCase,
+		property: property,
+		propertyEventEmitter: propertyEventEmitter
 	};
 });
 
