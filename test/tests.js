@@ -11,7 +11,8 @@ define([], function() {
 		"test/src/abstractSubclassSpec",
 		"test/src/getterSetterSpec",
 		"test/src/singletonSpec",
-		"test/src/testCaseSpec"
+		"test/src/testCaseSpec",
+		"test/src/propertyListenersSpec"
 	];
 	return {
 		files: files,

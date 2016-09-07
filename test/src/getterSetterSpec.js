@@ -1,4 +1,7 @@
-define(["src/object"], function(object) {
+define([
+	"src/object",
+	"src/property"
+], function(object) {
 	describe("getter/setter", function() {
 		it("can generate getters", function() {
 			var animal = object.subclass(function(that, my) {
