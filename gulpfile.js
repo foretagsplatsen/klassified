@@ -22,10 +22,10 @@ var wrap = {
 	"    if (typeof define === \"function\" && define.amd) {\n" +
 	"        define(factory);\n" +
 	"    } else {\n" +
-	"        root.objectjs = factory(root.$);" +
+	"        root.klassified = factory(root.$);" +
 	"    }\n" +
 	"}(this, function ($) {\n" + almond,
-	end: "    return require(\"objectjs\");\n" +
+	end: "    return require(\"klassified\");\n" +
 	"}));"
 };
 
@@ -78,11 +78,11 @@ var requireJSOptions = {
 gulp.task("optimize", ["strip"], function() {
 	var options = Object.assign(requireJSOptions);
 	options.optimize = "none";
-	options.include = ["objectjs"];
-	options.insertRequire = ["objectjs"];
-	options.out = "objectjs.js";
+	options.include = ["klassified"];
+	options.insertRequire = ["klassified"];
+	options.out = "klassified.js";
 
-	return gulp.src("strip/objectjs.js")
+	return gulp.src("strip/klassified.js")
 		.pipe(plugins.optimizer(options))
 		.pipe(gulp.dest("dist"));
 });
@@ -90,11 +90,11 @@ gulp.task("optimize", ["strip"], function() {
 gulp.task("optimize:minify", ["strip"], function() {
 	var options = Object.assign(requireJSOptions);
 	delete options.optimize;
-	options.include = ["objectjs"];
-	options.insertRequire = ["objectjs"];
-	options.out = "objectjs.min.js";
+	options.include = ["klassified"];
+	options.insertRequire = ["klassified"];
+	options.out = "klassified.min.js";
 
-	return gulp.src("strip/objectjs.js")
+	return gulp.src("strip/klassified.js")
 		.pipe(plugins.optimizer(options))
 		.pipe(gulp.dest("dist"));
 });
