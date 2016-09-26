@@ -2,7 +2,7 @@
     if (typeof define === "function" && define.amd) {
         define(factory);
     } else {
-        root.objectjs = factory(root.$);    }
+        root.klassified = factory(root.$);    }
 }(this, function ($) {
 /**
  * @license almond 0.3.2 Copyright jQuery Foundation and other contributors.
@@ -1016,7 +1016,7 @@ define('property',[
 	});
 });
 
-define('objectjs',[
+define('klassified',[
 	"./object",
 	"./testCase",
 	"./property",
@@ -1031,6 +1031,6 @@ define('objectjs',[
 });
 
 
-require(["objectjs"]);
-    return require("objectjs");
+require(["klassified"]);
+    return require("klassified");
 }));

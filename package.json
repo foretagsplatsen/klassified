@@ -1,5 +1,5 @@
 {
-	"name": "objectjs",
+	"name": "klassified",
 	"version": "1.6.0",
 	"description": "A simple object model for JavaScript",
 	"main": "src/object.js",
@@ -11,7 +11,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/foretagsplatsen/objectjs.git"
+		"url": "git+https://github.com/foretagsplatsen/klassified.git"
 	},
 	"keywords": [
 		"js",
@@ -45,9 +45,9 @@
 	],
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/foretagsplatsen/objectjs/issues"
+		"url": "https://github.com/foretagsplatsen/klassified/issues"
 	},
-	"homepage": "https://github.com/foretagsplatsen/objectjs#readme",
+	"homepage": "https://github.com/foretagsplatsen/klassified#readme",
 	"engines": {},
 	"devDependencies": {
 		"almond": "^0.3.2",

@@ -1,8 +1,8 @@
-# ObjectJS [![Build Status](https://travis-ci.org/foretagsplatsen/objectjs.svg?branch=master)](https://travis-ci.org/foretagsplatsen/objectjs)
+# Klassified [![Build Status](https://travis-ci.org/foretagsplatsen/klassified.svg?branch=master)](https://travis-ci.org/foretagsplatsen/klassified)
 
 A simple object model for JavaScript.
 
-Objectjs provides a base class `object` that can be subclassed using its
+Klassified provides a base class `object` that can be subclassed using its
 `subclass` class method, as in the following example:
 
 ```js
@@ -55,7 +55,7 @@ instance creation.
 
 ## Super calls
 
-Objectjs has support for super calls using either `that.super` for public
+Klassified has support for super calls using either `that.super` for public
 methods or `my.super` for protected methods.
 
 ## Default methods in `object`
@@ -75,7 +75,7 @@ methods or `my.super` for protected methods.
 
 ## Abstract classes
 
-ObjectJS supports abstract classes using `abstractSubclass`:
+Klassified supports abstract classes using `abstractSubclass`:
 
 ```js
 var animal = object.abstractSubclass(function(that, my) {
@@ -96,7 +96,7 @@ dog(); // => New dog instance
 
 ## Singleton classes
 
-ObjectJS support singleton classes using `singletonSubclass`:
+Klassified support singleton classes using `singletonSubclass`:
 
 ```js
 var service = object.singletonSubclass(function(that, my) {
@@ -111,7 +111,7 @@ service(); // => Error: Cannot create new instances of a singleton class, use `i
 
 ## Getters and setters generation
 
-ObjectJS can generate getters and setters for protected properties on `my`, as
+Klassified can generate getters and setters for protected properties on `my`, as
 below:
 
 ```js
