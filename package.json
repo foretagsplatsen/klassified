@@ -1,6 +1,6 @@
 {
 	"name": "klassified",
-	"version": "1.6.0",
+	"version": "2.0.0",
 	"description": "A simple object model for JavaScript",
 	"main": "src/object.js",
 	"directories": {
