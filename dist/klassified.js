@@ -494,6 +494,15 @@ define('object',[], function() {
 		my.initialize = function() {};
 
 		/**
+		 * Offer a hook for subclasses to allow them to control more
+		 * specifically the initialization process (especially the order).
+		 */
+		my.basicInitialize = function() {
+			var args = Array.prototype.slice.apply(arguments);
+			my.initialize.apply(this, args);
+		};
+
+		/**
 		 * Throws an error because the method should have been overridden.
 		 */
 		my.subclassResponsibility = subclassResponsibility;
@@ -597,7 +606,7 @@ define('object',[], function() {
 			}
 
 			if (!notFinal) {
-				my.initialize(spec);
+				my.basicInitialize(spec);
 			}
 
 			return instance;
