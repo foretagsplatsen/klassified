@@ -90,7 +90,7 @@ var dog = animal.subclass(function(that, my) {
 
 });
 
-animal(); // => Error: Cannot instantiate an instance of an abstract class
+animal(); // => Error: Cannot instantiate an abstract class
 dog(); // => New dog instance
 ```
 
