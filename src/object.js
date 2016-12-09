@@ -57,17 +57,33 @@ define([], function() {
 		};
 
 		/**
+		 * preInitialize is called by the framework at the beginning
+		 * of object instantiation.
+		 */
+		my.preInitialize = function() {};
+
+		/**
 		 * initialize is called by the framework upon object instantiation.
 		 */
 		my.initialize = function() {};
 
 		/**
-		 * Offer a hook for subclasses to allow them to control more
-		 * specifically the initialization process (especially the order).
+		 * postInitialize is called by the framework at the end of
+		 * object instantiation.
+		 */
+		my.postInitialize = function() {};
+
+		/**
+		 * Private method handling initialization of new
+		 * instances. Prefer overriding one of `preInitialize`,
+		 * `initialize` or `postInitialize` instead of overriding this
+		 * method.
 		 */
 		my.basicInitialize = function() {
 			var args = Array.prototype.slice.apply(arguments);
+			my.preInitialize.apply(this, args);
 			my.initialize.apply(this, args);
+			my.postInitialize.apply(this, args);
 		};
 
 		/**
