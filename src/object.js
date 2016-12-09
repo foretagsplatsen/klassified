@@ -270,7 +270,7 @@ define([], function() {
 	};
 
 	function throwAbstractClassError(klass) {
-		throw new Error("Cannot instantiate an instance of an abstract class");
+		throw new Error("Cannot instantiate an abstract class");
 	}
 
 	function throwSingletonClassError(klass) {
