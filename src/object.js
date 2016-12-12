@@ -57,18 +57,21 @@ define([], function() {
 		};
 
 		/**
+		 * preInitialize is called by the framework at the beginning
+		 * of object instantiation.
+		 */
+		my.preInitialize = function() {};
+
+		/**
 		 * initialize is called by the framework upon object instantiation.
 		 */
 		my.initialize = function() {};
 
 		/**
-		 * Offer a hook for subclasses to allow them to control more
-		 * specifically the initialization process (especially the order).
+		 * postInitialize is called by the framework at the end of
+		 * object instantiation.
 		 */
-		my.basicInitialize = function() {
-			var args = Array.prototype.slice.apply(arguments);
-			my.initialize.apply(this, args);
-		};
+		my.postInitialize = function() {};
 
 		/**
 		 * Throws an error because the method should have been overridden.
@@ -174,7 +177,9 @@ define([], function() {
 			}
 
 			if (!notFinal) {
-				my.basicInitialize(spec);
+				my.preInitialize(spec);
+				my.initialize(spec);
+				my.postInitialize(spec);
 			}
 
 			return instance;

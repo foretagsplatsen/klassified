@@ -77,5 +77,34 @@ define(["src/object"], function(object) {
             expect(d.foo).toEqual(1);
             expect(d.bar).toEqual(2);
         });
+
+        it("initialization hooks are called in order", function() {
+            // TODO: refactor that when
+            // https://github.com/jasmine/jasmine/pull/1242 is merged.
+            var spy = jasmine.createSpy("spy");
+
+            var animal = object.subclass(function(that, my) {
+                my.preInitialize = function() {
+                    my.super();
+                    expect(spy.calls.count()).toBe(0);
+                    spy();
+                };
+
+                my.initialize = function() {
+                    my.super();
+                    expect(spy.calls.count()).toBe(1);
+                    spy();
+                };
+
+                my.postInitialize = function() {
+                    my.super();
+                    expect(spy.calls.count()).toBe(2);
+                    spy();
+                };
+            });
+
+            animal();
+            expect(spy.calls.count()).toEqual(3);
+        });
     });
 });
