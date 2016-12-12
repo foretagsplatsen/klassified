@@ -74,19 +74,6 @@ define([], function() {
 		my.postInitialize = function() {};
 
 		/**
-		 * Private method handling initialization of new
-		 * instances. Prefer overriding one of `preInitialize`,
-		 * `initialize` or `postInitialize` instead of overriding this
-		 * method.
-		 */
-		my.basicInitialize = function() {
-			var args = Array.prototype.slice.apply(arguments);
-			my.preInitialize.apply(this, args);
-			my.initialize.apply(this, args);
-			my.postInitialize.apply(this, args);
-		};
-
-		/**
 		 * Throws an error because the method should have been overridden.
 		 */
 		my.subclassResponsibility = subclassResponsibility;
@@ -190,7 +177,9 @@ define([], function() {
 			}
 
 			if (!notFinal) {
-				my.basicInitialize(spec);
+				my.preInitialize(spec);
+				my.initialize(spec);
+				my.postInitialize(spec);
 			}
 
 			return instance;
