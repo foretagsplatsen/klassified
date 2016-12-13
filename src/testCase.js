@@ -15,10 +15,10 @@ define([
 			my.super(spec);
 			var tests = my.registeredTests();
 			suite(my.name(), function() {
-				beforeEach(my.beforeEach);
-				afterEach(my.afterEach);
-				beforeAll(my.beforeAll);
-				afterAll(my.afterAll);
+				beforeEach(my.beforeEach); // eslint-disable-line jasmine/no-global-setup
+				afterEach(my.afterEach); // eslint-disable-line jasmine/no-global-setup
+				beforeAll(my.beforeAll); // eslint-disable-line jasmine/no-global-setup
+				afterAll(my.afterAll); // eslint-disable-line jasmine/no-global-setup
 				tests.forEach(function(test) {
 					it(test.name, test.fn);
 				});
@@ -68,7 +68,7 @@ define([
 
 		function suite(name, callback) {
 			if (my.force()) {
-				fdescribe(name, function() {
+				fdescribe(name, function() { // eslint-disable-line jasmine/no-focused-tests
 					callback();
 				});
 			} else {

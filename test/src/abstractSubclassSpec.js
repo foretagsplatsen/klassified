@@ -2,9 +2,9 @@ define(["src/object"], function(object) {
 	describe("abstract subclass", function() {
 
 		it("Can create abstract subclasses", function() {
-			var builder = function() {
+			function builder() {
 				object.abstractSubclass(function(that, my) {});
-			};
+			}
 
 			expect(builder).not.toThrow();
 		});

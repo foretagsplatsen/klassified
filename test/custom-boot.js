@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  Copyright (c) 2008-2015 Pivotal Labs
 
