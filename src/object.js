@@ -82,7 +82,7 @@ define([], function() {
 		 * Getter/Setter generation
 		 */
 		my.get = function(propName, getter) {
-			if(!getter) {
+			if (!getter) {
 				getter = function() {
 					return my[propName];
 				};
@@ -91,7 +91,7 @@ define([], function() {
 		};
 
 		my.set = function(propName, setter) {
-			if(!setter) {
+			if (!setter) {
 				setter = function(value) {
 					my[propName] = value;
 					return value;
@@ -149,11 +149,11 @@ define([], function() {
 			spec = spec || {};
 			my = my || {};
 
-			if(klass.isAbstract && !notFinal) {
+			if (klass.isAbstract && !notFinal) {
 				throwAbstractClassError(that);
 			}
 
-			if(klass.isSingleton && !notFinal) {
+			if (klass.isSingleton && !notFinal) {
 				throwSingletonClassError(that);
 			}
 
