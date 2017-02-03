@@ -35,7 +35,7 @@ define([
 		my.afterAll = function() {};
 
 		my.name = function() {
-			return my.subclassResponsibility;
+			return my.subclassResponsibility();
 		};
 
 		my.expect = expect;
