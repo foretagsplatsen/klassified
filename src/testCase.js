@@ -86,9 +86,14 @@ define([
 
 		// All test classes are singletons.
 		// TODO: Refactor with a super call when we"ll have super on class-side.
-		that.subclass = (function(superSubclass) {
+		that.subclass = (function(superSubclass, options) {
 			return function(builder) {
 				var klass = superSubclass.apply(that, [builder]);
+
+				if (options && options.isAbstract) {
+					return klass;
+				}
+
 				var instance = klass();
 				klass.isSingleton = true;
 				klass.instance = function() {
@@ -98,6 +103,16 @@ define([
 				return klass;
 			};
 		})(that.subclass);
+
+		// We need this to ensure we don't have abstract & singleton classes
+		that.abstractSubclass = (function(superAbstractSubclass) {
+			return function(builder) {
+				var klass = this.subclass(builder, {isAbstract: true});
+				klass.isAbstract = true;
+				return klass;
+			};
+
+		})(that.abstractSubclass);
 	});
 
 	return testCase;
