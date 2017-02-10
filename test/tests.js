@@ -12,6 +12,7 @@ define([], function() {
 		"test/src/getterSetterSpec",
 		"test/src/singletonSpec",
 		"test/src/testCaseSpec",
+		"test/src/abstractTestCaseSpec",
 		"test/src/propertyListenersSpec"
 	];
 	return {
