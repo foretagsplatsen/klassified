@@ -522,7 +522,7 @@ define('object',[], function() {
 		 * Getter/Setter generation
 		 */
 		my.get = function(propName, getter) {
-			if(!getter) {
+			if (!getter) {
 				getter = function() {
 					return my[propName];
 				};
@@ -531,7 +531,7 @@ define('object',[], function() {
 		};
 
 		my.set = function(propName, setter) {
-			if(!setter) {
+			if (!setter) {
 				setter = function(value) {
 					my[propName] = value;
 					return value;
@@ -589,11 +589,11 @@ define('object',[], function() {
 			spec = spec || {};
 			my = my || {};
 
-			if(klass.isAbstract && !notFinal) {
+			if (klass.isAbstract && !notFinal) {
 				throwAbstractClassError(that);
 			}
 
-			if(klass.isSingleton && !notFinal) {
+			if (klass.isSingleton && !notFinal) {
 				throwSingletonClassError(that);
 			}
 
@@ -793,10 +793,10 @@ define('testCase',[
 			my.super(spec);
 			var tests = my.registeredTests();
 			suite(my.name(), function() {
-				beforeEach(my.beforeEach);
-				afterEach(my.afterEach);
-				beforeAll(my.beforeAll);
-				afterAll(my.afterAll);
+				beforeEach(my.beforeEach); // eslint-disable-line jasmine/no-global-setup
+				afterEach(my.afterEach); // eslint-disable-line jasmine/no-global-setup
+				beforeAll(my.beforeAll); // eslint-disable-line jasmine/no-global-setup
+				afterAll(my.afterAll); // eslint-disable-line jasmine/no-global-setup
 				tests.forEach(function(test) {
 					it(test.name, test.fn);
 				});
@@ -813,7 +813,7 @@ define('testCase',[
 		my.afterAll = function() {};
 
 		my.name = function() {
-			return my.subclassResponsibility;
+			return my.subclassResponsibility();
 		};
 
 		my.expect = expect;
@@ -846,7 +846,7 @@ define('testCase',[
 
 		function suite(name, callback) {
 			if (my.force()) {
-				fdescribe(name, function() {
+				fdescribe(name, function() { // eslint-disable-line jasmine/no-focused-tests
 					callback();
 				});
 			} else {
@@ -865,8 +865,13 @@ define('testCase',[
 		// All test classes are singletons.
 		// TODO: Refactor with a super call when we"ll have super on class-side.
 		that.subclass = (function(superSubclass) {
-			return function(builder) {
+			return function(builder, options) {
 				var klass = superSubclass.apply(that, [builder]);
+
+				if (options && options.isAbstract) {
+					return klass;
+				}
+
 				var instance = klass();
 				klass.isSingleton = true;
 				klass.instance = function() {
@@ -876,6 +881,16 @@ define('testCase',[
 				return klass;
 			};
 		})(that.subclass);
+
+		// We need this to ensure we don't have abstract & singleton classes
+		that.abstractSubclass = (function(superAbstractSubclass) {
+			return function(builder) {
+				var klass = this.subclass(builder, {isAbstract: true});
+				klass.isAbstract = true;
+				return klass;
+			};
+
+		})(that.abstractSubclass);
 	});
 
 	return testCase;
@@ -1043,12 +1058,12 @@ define('klassified',[
 	"./testCase",
 	"./property",
 	"./globalPropertyEventEmitter"
-], function(object, testCase, property, propertyEventEmitter) {
+], function(object, testCase, property, globalPropertyEventEmitter) {
 	return {
 		object: object,
 		testCase: testCase,
 		property: property,
-		propertyEventEmitter: propertyEventEmitter
+		propertyEventEmitter: globalPropertyEventEmitter
 	};
 });
 
