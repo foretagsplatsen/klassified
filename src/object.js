@@ -127,6 +127,15 @@ define([], function() {
 		return allSubclasses;
 	};
 
+	/**
+	 * Return all concrete subclasses.
+	 */
+	object.allConcreteSubclasses = function() {
+		return this.allSubclasses().filter(function(klass) {
+			return !klass.isAbstract;
+		});
+	};
+
 	object.subclassResponsibility = subclassResponsibility;
 
 	/**
