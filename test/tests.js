@@ -6,6 +6,7 @@ define([], function() {
 		"test/src/superSpec",
 		"test/src/extensionSpec",
 		"test/src/allSubclassesSpec",
+		"test/src/allConcreteSubclassesSpec",
 		"test/src/classInheritanceSpec",
 		"test/src/classReferenceSpec",
 		"test/src/abstractSubclassSpec",
