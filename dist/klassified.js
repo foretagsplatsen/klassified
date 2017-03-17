@@ -567,6 +567,23 @@ define('object',[], function() {
 		return allSubclasses;
 	};
 
+	/**
+	 * Return all concrete subclasses.
+	 */
+	object.allConcreteSubclasses = function() {
+		var allConcreteSubclasses = this.subclasses.filter(function(klass) {
+			return !klass.isAbstract;
+		});
+
+		this.subclasses.forEach(function(klass) {
+			klass.allConcreteSubclasses().forEach(function(subclass) {
+				allConcreteSubclasses.push(subclass);
+			});
+		});
+
+		return allConcreteSubclasses;
+	};
+
 	object.subclassResponsibility = subclassResponsibility;
 
 	/**
@@ -676,6 +693,7 @@ define('object',[], function() {
 		that.singletonSubclass = object.singletonSubclass;
 		that.abstractSubclass = object.abstractSubclass;
 		that.allSubclasses = object.allSubclasses;
+		that.allConcreteSubclasses = object.allConcreteSubclasses;
 		that.subclassResponsibility = subclassResponsibility;
 		that.extend = object.extend;
 		that.extensions = [];
