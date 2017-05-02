@@ -188,9 +188,10 @@ define([], function() {
 			});
 
 			builder(instance, my);
+
 			if (superCallRegex.test(builder)) {
-				installSuper(instance, superInstance);
-				installSuper(my, superMy);
+				installSuper(my, superMy, klass, "my");
+				installSuper(instance, superInstance, klass, "that");
 			}
 
 			if (!notFinal) {
@@ -264,15 +265,12 @@ define([], function() {
 	 * `super` from within each public function of `obj` to the function in
 	 * `proto`.
 	 */
-	function installSuper(obj, proto) {
-		Object.keys(obj).forEach(function(name) {
-			if (typeof proto[name] === "function" &&
-				typeof obj[name] === "function" &&
-				superCallRegex.test(obj[name]) &&
-				!obj[name].superInstalled) {
-				var superFn = proto[name];
-				obj[name] = (function(name, fn) {
+	function installSuper(obj, proto, klass, receiverName) {
+		methodsWithSuperCall(obj, proto, klass, receiverName).forEach(function(name) {
+			if (!obj[name].superInstalled) {
+				obj[name] = (function(obj, fn, superFn) {
 					return function() {
+
 						var tmp = obj.super;
 						obj.super = superFn;
 						var returnValue = fn.apply(obj, arguments);
@@ -286,10 +284,38 @@ define([], function() {
 
 						return returnValue;
 					};
-				})(name, obj[name]);
+				})(obj, obj[name], proto[name]);
 				obj[name].superInstalled = true;
 			}
 		});
+	}
+
+	/**
+	 * Return the list of methods in `obj` that perform a supercall to `proto`.
+	 * The list is cached in `klass`.
+	 *
+	 * `receiverName` is either "that" or "my".
+	 */
+	function methodsWithSuperCall(obj, proto, klass, receiverName) {
+		if (!klass.methodsWithSuperCall) {
+			Object.defineProperty(klass, "methodsWithSuperCall", {
+				enumerable: false,
+				writable: true,
+				value: {}
+			});
+		}
+
+		if (klass.methodsWithSuperCall[receiverName]) {
+			return klass.methodsWithSuperCall[receiverName];
+		}
+
+		klass.methodsWithSuperCall[receiverName] = Object.keys(obj).filter(function(name) {
+			return typeof(proto[name]) === "function" &&
+				typeof(obj[name]) === "function" &&
+				superCallRegex.test(obj[name]);
+		});
+
+		return klass.methodsWithSuperCall[receiverName];
 	}
 
 	/**
