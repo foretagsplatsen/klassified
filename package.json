@@ -52,6 +52,7 @@
 	"devDependencies": {
 		"almond": "^0.3.2",
 		"del": "^2.2.0",
+		"electron": "^1.6.6",
 		"eslint": "^3.12.1",
 		"eslint-config-ftgp": "^1.0.0",
 		"gulp": "^3.9.1",
@@ -67,10 +68,9 @@
 		"jasmine-reporters": "^2.1.1",
 		"karma": "^0.13.22",
 		"karma-coverage": "^0.5.5",
+		"karma-electron": "^5.1.1",
 		"karma-jasmine": "^0.3.8",
-		"karma-phantomjs-launcher": "^1.0.0",
 		"karma-requirejs": "^0.2.6",
-		"phantomjs-prebuilt": "^2.1.6",
 		"requirejs": "^2.2.0"
 	}
 }
