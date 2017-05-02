@@ -22,9 +22,10 @@ var wrap = {
 	"    if (typeof define === \"function\" && define.amd) {\n" +
 	"        define(factory);\n" +
 	"    } else {\n" +
-	"        root.klassified = factory(root.$);" +
+	"        root.klassified = factory();\n" +
+	"        Object.assign(root, root.klassified);\n" +
 	"    }\n" +
-	"}(this, function ($) {\n" + almond,
+	"}(this, function () {\n" + almond,
 	end: "    return require(\"klassified\");\n" +
 	"}));"
 };

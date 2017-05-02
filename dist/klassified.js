@@ -2,8 +2,10 @@
     if (typeof define === "function" && define.amd) {
         define(factory);
     } else {
-        root.klassified = factory(root.$);    }
-}(this, function ($) {
+        root.klassified = factory();
+        Object.assign(root, root.klassified);
+    }
+}(this, function () {
 /**
  * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, http://github.com/requirejs/almond/LICENSE
