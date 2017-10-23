@@ -1,44 +1,42 @@
-define([
-	"src/object",
-	"src/property"
-], function(object) {
-	describe("property listeners", function() {
-		it("can listen to property changes", function() {
-			var animal = object.subclass(function(that, my) {
-				my.initialize = function(spec) {
-					my.property("name", spec.name);
-				};
+import object from "../../src/object";
+import "../../src/property";
 
-				my.get("name");
-				my.set("name");
-			});
+describe("property listeners", function() {
+	it("can listen to property changes", function() {
+		let animal = object.subclass(function(that, my) {
+			my.initialize = function(spec) {
+				my.property("name", spec.name);
+			};
 
-			var a = animal({name: "milou"});
-			var spy = jasmine.createSpy("change");
-
-			a.onPropertyChange("name", spy);
-
-			a.setName("rantamplan");
-
-			expect(spy).toHaveBeenCalledWith(a, "name", "rantamplan");
+			my.get("name");
+			my.set("name");
 		});
 
-		it("can listen to property accesses", function() {
-			var animal = object.subclass(function(that, my) {
-				my.initialize = function(spec) {
-					my.property("name", spec.name);
-				};
+		let a = animal({ name: "milou" });
+		let spy = jasmine.createSpy("change");
 
-				my.get("name");
-			});
+		a.onPropertyChange("name", spy);
 
-			var a = animal({name: "milou"});
+		a.setName("rantamplan");
 
-			var spy = jasmine.createSpy("access");
-			a.onPropertyAccess("name", spy);
-			a.getName();
+		expect(spy).toHaveBeenCalledWith(a, "name", "rantamplan");
+	});
 
-			expect(spy).toHaveBeenCalledWith(a, "name");
+	it("can listen to property accesses", function() {
+		let animal = object.subclass(function(that, my) {
+			my.initialize = function(spec) {
+				my.property("name", spec.name);
+			};
+
+			my.get("name");
 		});
+
+		let a = animal({ name: "milou" });
+
+		let spy = jasmine.createSpy("access");
+		a.onPropertyAccess("name", spy);
+		a.getName();
+
+		expect(spy).toHaveBeenCalledWith(a, "name");
 	});
 });

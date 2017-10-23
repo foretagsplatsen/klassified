@@ -1,13 +1,16 @@
-define([
-	"./object",
-	"./testCase",
-	"./property",
-	"./globalPropertyEventEmitter"
-], function(object, testCase, property, globalPropertyEventEmitter) {
-	return {
-		object: object,
-		testCase: testCase,
-		property: property,
-		propertyEventEmitter: globalPropertyEventEmitter
-	};
-});
+import object from "./object";
+import testCase from "./testCase";
+import propertyEventEmitter from "./globalPropertyEventEmitter";
+import "./property";
+
+export {
+	object,
+	testCase,
+	propertyEventEmitter
+};
+
+export default {
+	object,
+	testCase,
+	propertyEventEmitter
+};
