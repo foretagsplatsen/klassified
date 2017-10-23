@@ -1,28 +1,25 @@
-define([
-	"src/testCase"
-], function(testCase) {
+import testCase from "../../src/testCase";
 
-	var a = testCase.abstractSubclass(function(that, my) {
+let a = testCase.abstractSubclass(function(that, my) {
 
-		my.name = function() {
-			return "Abstract test case";
-		};
+	my.name = function() {
+		return "Abstract test case";
+	};
 
-		my.createObject = function() {
-			return "a";
-		};
+	my.createObject = function() {
+		return "a";
+	};
 
-		my.shouldNotExecuteTestsTest = function() {
-			expect(my.createObject()).toBe("b");
-		};
-	});
-
-	var b = a.subclass(function(that, my) {
-
-		my.createObject = function() {
-			return "b";
-		};
-	});
-
-	return b;
+	my.shouldNotExecuteTestsTest = function() {
+		expect(my.createObject()).toBe("b");
+	};
 });
+
+let b = a.subclass(function(that, my) {
+
+	my.createObject = function() {
+		return "b";
+	};
+});
+
+export default b;

@@ -1,109 +1,108 @@
-define(["src/object"], function(object) {
+import object from "../../src/object";
 
-	describe("inheritance", function() {
+describe("inheritance", function() {
 
-		it("Methods should be inherited", function() {
-			var animal = object.subclass(function(that, my) {
-				my.initialize = function(spec) {
-					my.name = spec.name;
-				};
-				that.getName = function() {
-					return my.name;
-				};
-				that.toString = function() {
-					return that.getName();
-				};
-			});
-
-			var dog = animal.subclass(function(that, my) {});
-
-			var milou = dog({name: "milou"});
-
-			expect(milou.toString()).toEqual("milou");
+	it("Methods should be inherited", function() {
+		let animal = object.subclass(function(that, my) {
+			my.initialize = function(spec) {
+				my.name = spec.name;
+			};
+			that.getName = function() {
+				return my.name;
+			};
+			that.toString = function() {
+				return that.getName();
+			};
 		});
 
-		it("Methods can be overridden", function() {
-			var animal = object.subclass(function(that, my) {
-				my.initialize = function(spec) {
-					my.name = spec.name;
-				};
-				that.getName = function() {
-					return my.name;
-				};
-				that.toString = function() {
-					return that.getName();
-				};
-			});
+		let dog = animal.subclass(function(that, my) {});
 
-			var dog = animal.subclass(function(that, my) {
-				that.getName = function() {
-					return "Woof";
-				};
-			});
+		let milou = dog({ name: "milou" });
 
-			var milou = dog({name: "milou"});
+		expect(milou.toString()).toEqual("milou");
+	});
 
-			expect(milou.toString()).toEqual("Woof");
+	it("Methods can be overridden", function() {
+		let animal = object.subclass(function(that, my) {
+			my.initialize = function(spec) {
+				my.name = spec.name;
+			};
+			that.getName = function() {
+				return my.name;
+			};
+			that.toString = function() {
+				return that.getName();
+			};
 		});
 
-		it("Protected methods should be inherited", function() {
-			var animal = object.subclass(function(that, my) {
-				my.initialize = function(spec) {
-					my.name = spec.name;
-				};
-				that.toString = function() {
-					return my.getName();
-				};
-				my.getName = function() {
-					return my.name;
-				};
-			});
-
-			var dog = animal.subclass(function(that, my) {});
-
-			var milou = dog({name: "milou"});
-
-			expect(milou.toString()).toEqual("milou");
+		let dog = animal.subclass(function(that, my) {
+			that.getName = function() {
+				return "Woof";
+			};
 		});
 
-		it("Protected methods can be overridden", function() {
-			var animal = object.subclass(function(that, my) {
-				my.initialize = function(spec) {
-					my.name = spec.name;
-				};
-				that.toString = function() {
-					return my.getName();
-				};
-				my.getName = function() {
-					return my.name;
-				};
-			});
+		let milou = dog({ name: "milou" });
 
-			var dog = animal.subclass(function(that, my) {
-				my.getName = function() {
-					return "Woof";
-				};
-			});
+		expect(milou.toString()).toEqual("Woof");
+	});
 
-			var milou = dog({name: "milou"});
-
-			expect(milou.toString()).toEqual("Woof");
+	it("Protected methods should be inherited", function() {
+		let animal = object.subclass(function(that, my) {
+			my.initialize = function(spec) {
+				my.name = spec.name;
+			};
+			that.toString = function() {
+				return my.getName();
+			};
+			my.getName = function() {
+				return my.name;
+			};
 		});
 
-		it("Multiple level of inheritance works for abstract classes", function() {
-			var animal = object.subclass(function(that) {
-				that.notPreviouslyDefinedFunction = function() {
-					return true;
-				};
-			});
+		let dog = animal.subclass(function(that, my) {});
 
-			var mammal = animal.abstractSubclass(function() {});
-			var dog = mammal.abstractSubclass(function() {});
-			var shepherd = dog.subclass(function() {});
+		let milou = dog({ name: "milou" });
 
-			var milou = shepherd();
+		expect(milou.toString()).toEqual("milou");
+	});
 
-			expect(milou.notPreviouslyDefinedFunction()).toBeTruthy();
+	it("Protected methods can be overridden", function() {
+		let animal = object.subclass(function(that, my) {
+			my.initialize = function(spec) {
+				my.name = spec.name;
+			};
+			that.toString = function() {
+				return my.getName();
+			};
+			my.getName = function() {
+				return my.name;
+			};
 		});
+
+		let dog = animal.subclass(function(that, my) {
+			my.getName = function() {
+				return "Woof";
+			};
+		});
+
+		let milou = dog({ name: "milou" });
+
+		expect(milou.toString()).toEqual("Woof");
+	});
+
+	it("Multiple level of inheritance works for abstract classes", function() {
+		let animal = object.subclass(function(that) {
+			that.notPreviouslyDefinedFunction = function() {
+				return true;
+			};
+		});
+
+		let mammal = animal.abstractSubclass(function() {});
+		let dog = mammal.abstractSubclass(function() {});
+		let shepherd = dog.subclass(function() {});
+
+		let milou = shepherd();
+
+		expect(milou.notPreviouslyDefinedFunction()).toBeTruthy();
 	});
 });

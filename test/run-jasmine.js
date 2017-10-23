@@ -4,7 +4,7 @@
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 200;
 
 require(["./tests"], function(options) {
-	var config = options.config;
+	let config = options.config;
 	config.baseUrl = "../";
 	require.config(config);
 

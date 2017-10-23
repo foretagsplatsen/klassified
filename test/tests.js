@@ -1,5 +1,5 @@
-define([], function() {
-	var files = [
+module.exports = define([], function() {
+	let files = [
 		"test/src/subclassCreationSpec",
 		"test/src/initializationSpec",
 		"test/src/inheritanceSpec",

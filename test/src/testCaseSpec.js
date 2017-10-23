@@ -1,66 +1,66 @@
-define(["src/testCase"], function(testCase) {
-	describe("testCase", function() {
-		var bTestCaseCount;
+import testCase from "../../src/testCase";
 
-		var a = testCase.subclass(function(that, my) {
-			my.name = function() {
-				return "TestCase - A";
-			};
+describe("testCase", function() {
+	let bTestCaseCount;
 
-			my.beforeEach = function() {
-				that.isA = true;
-			};
+	let a = testCase.subclass(function(that, my) {
+		my.name = function() {
+			return "TestCase - A";
+		};
 
-			my.isFooTest = function() {
-				my.expect(my.foo).toBe(false);
-			};
+		my.beforeEach = function() {
+			that.isA = true;
+		};
 
-			my.isBarTest = function() {
-				my.expect(my.bar).toBe(true);
-			};
+		my.isFooTest = function() {
+			my.expect(my.foo).toBe(false);
+		};
 
-			my.initialize = function(spec) {
-				my.super(spec);
+		my.isBarTest = function() {
+			my.expect(my.bar).toBe(true);
+		};
 
-				my.foo = false;
-				my.bar = true;
-			};
-		});
+		my.initialize = function(spec) {
+			my.super(spec);
 
-		var b = a.subclass(function(that, my) {
-			my.initialize = function(spec) {
-				bTestCaseCount = 0;
-				my.super(spec);
-				my.foo = true;
-			};
+			my.foo = false;
+			my.bar = true;
+		};
+	});
 
-			my.beforeEach = function() {
-				my.super();
-				bTestCaseCount++;
-				that.isB = true;
-			};
+	let b = a.subclass(function(that, my) {
+		my.initialize = function(spec) {
+			bTestCaseCount = 0;
+			my.super(spec);
+			my.foo = true;
+		};
 
-			// Keep track of the number of tests run.
-			my.describe = function(name, callback) {
-				my.super(name, callback);
-			};
+		my.beforeEach = function() {
+			my.super();
+			bTestCaseCount++;
+			that.isB = true;
+		};
 
-			my.name = function() {
-				return "TestCase - B";
-			};
+		// Keep track of the number of tests run.
+		my.describe = function(name, callback) {
+			my.super(name, callback);
+		};
 
-			my.isFooTest = function() {
-				my.expect(my.foo).toBe(true);
-			};
-		});
+		my.name = function() {
+			return "TestCase - B";
+		};
 
-		it("b testCase should have run 2 test cases", function() {
-			expect(bTestCaseCount).toBe(2);
-		});
+		my.isFooTest = function() {
+			my.expect(my.foo).toBe(true);
+		};
+	});
 
-		it("beforeEach is inherited", function() {
-			expect(b.instance().isA).toBeTruthy();
-			expect(b.instance().isB).toBeTruthy();
-		});
+	it("b testCase should have run 2 test cases", function() {
+		expect(bTestCaseCount).toBe(2);
+	});
+
+	it("beforeEach is inherited", function() {
+		expect(b.instance().isA).toBeTruthy();
+		expect(b.instance().isB).toBeTruthy();
 	});
 });

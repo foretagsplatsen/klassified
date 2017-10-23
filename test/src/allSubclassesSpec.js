@@ -1,14 +1,12 @@
-define([
-	"src/object"
-], function(object) {
-	describe("allSubclasses", function() {
-		it("Can get all subclasses of a class", function() {
-			var animal = object.subclass(function() {});
-			var dog = animal.subclass(function() {});
-			var shepherd = dog.subclass(function() {});
-			var cat = animal.subclass(function() {});
+import object from "../../src/object";
 
-			expect(animal.allSubclasses()).toEqual([dog, cat, shepherd]);
-		});
+describe("allSubclasses", function() {
+	it("Can get all subclasses of a class", function() {
+		let animal = object.subclass(function() {});
+		let dog = animal.subclass(function() {});
+		let shepherd = dog.subclass(function() {});
+		let cat = animal.subclass(function() {});
+
+		expect(animal.allSubclasses()).toEqual([dog, cat, shepherd]);
 	});
 });

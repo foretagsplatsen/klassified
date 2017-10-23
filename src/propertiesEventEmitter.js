@@ -1,51 +1,49 @@
-define([
-	"./object"
-], function(object) {
-	return object.subclass(function(that, my) {
-		my.initialize = function(spec) {
-			my.super(spec);
-			my.instance = spec.instance;
+import object from "./object";
 
-			my.accessListeners = {};
-			my.changeListeners = {};
-		};
+export default object.subclass(function(that, my) {
+	my.initialize = function(spec) {
+		my.super(spec);
+		my.instance = spec.instance;
 
-		that.onAccess = function(propName, listener) {
-			if (!my.accessListeners[propName]) {
-				my.accessListeners[propName] = [];
-			}
-			if (my.accessListeners[propName].indexOf(listener) === -1) {
-				my.accessListeners[propName].push(listener);
-			}
-		};
+		my.accessListeners = {};
+		my.changeListeners = {};
+	};
 
-		that.onChange = function(propName, listener) {
-			if (!my.changeListeners[propName]) {
-				my.changeListeners[propName] = [];
-			}
-			if (my.changeListeners[propName].indexOf(listener) === -1) {
-				my.changeListeners[propName].push(listener);
-			}
-		};
+	that.onAccess = function(propName, listener) {
+		if (!my.accessListeners[propName]) {
+			my.accessListeners[propName] = [];
+		}
+		if (my.accessListeners[propName].indexOf(listener) === -1) {
+			my.accessListeners[propName].push(listener);
+		}
+	};
 
-		that.emitAccess = function(propName) {
-			if (!my.accessListeners[propName]) {
-				return;
-			}
+	that.onChange = function(propName, listener) {
+		if (!my.changeListeners[propName]) {
+			my.changeListeners[propName] = [];
+		}
+		if (my.changeListeners[propName].indexOf(listener) === -1) {
+			my.changeListeners[propName].push(listener);
+		}
+	};
 
-			my.accessListeners[propName].forEach(function(listener) {
-				listener(my.instance, propName);
-			});
-		};
+	that.emitAccess = function(propName) {
+		if (!my.accessListeners[propName]) {
+			return;
+		}
 
-		that.emitChange = function(propName, value) {
-			if (!my.changeListeners[propName]) {
-				return;
-			}
+		my.accessListeners[propName].forEach(function(listener) {
+			listener(my.instance, propName);
+		});
+	};
 
-			my.changeListeners[propName].forEach(function(listener) {
-				listener(my.instance, propName, value);
-			});
-		};
-	});
+	that.emitChange = function(propName, value) {
+		if (!my.changeListeners[propName]) {
+			return;
+		}
+
+		my.changeListeners[propName].forEach(function(listener) {
+			listener(my.instance, propName, value);
+		});
+	};
 });
