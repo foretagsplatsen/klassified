@@ -1,7 +1,8 @@
 (function() {
-	var error = 2;
+	let error = 2;
 
 	module.exports = {
+		parser: "babel-eslint",
 		root: true,
 		extends: "ftgp",
 		rules: {

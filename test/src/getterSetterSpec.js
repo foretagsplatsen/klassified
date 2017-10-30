@@ -1,77 +1,80 @@
-define([
-	"src/object",
-	"src/property"
-], function(object) {
-	describe("getter/setter", function() {
-		it("can generate getters", function() {
-			var animal = object.subclass(function(that, my) {
-				my.initialize = function(spec) {
-					my.name = spec.name;
-				};
+import object from "../../src/object";
+import "../../src/property";
 
-				my.get("name");
-			});
+describe("getter/setter", function() {
+	it("can generate getters", function() {
+		let animal = object.subclass(function(that, my) {
+			my.initialize = function(spec) {
+				my.name = spec.name;
+			};
 
-			var a = animal({name: "milou"});
-			expect(a.getName()).toBe("milou");
+			my.get("name");
 		});
 
-		it("can generate custom getters", function() {
-			var animal = object.subclass(function(that, my) {
-				my.get("name", function() {
-					return "milou";
-				});
-			});
+		let a = animal({ name: "milou" });
 
-			var a = animal();
-			expect(a.getName()).toBe("milou");
+		expect(a.getName()).toBe("milou");
+	});
+
+	it("can generate custom getters", function() {
+		let animal = object.subclass(function(that, my) {
+			my.get("name", function() {
+				return "milou";
+			});
 		});
 
-		it("can generate setters", function() {
-			var animal = object.subclass(function(that, my) {
-				my.initialize = function(spec) {
-					my.name = spec.name;
-				};
+		let a = animal();
 
-				that.getName = function() {
-					return my.name;
-				};
+		expect(a.getName()).toBe("milou");
+	});
 
-				my.set("name");
-			});
+	it("can generate setters", function() {
+		let animal = object.subclass(function(that, my) {
+			my.initialize = function(spec) {
+				my.name = spec.name;
+			};
 
-			var a = animal({name: "milou"});
-			a.setName("Charlie");
-			expect(a.getName()).toBe("Charlie");
+			that.getName = function() {
+				return my.name;
+			};
+
+			my.set("name");
 		});
 
-		it("can generate custom setters", function() {
-			var animal = object.subclass(function(that, my) {
-				that.getName = function() {
-					return my.name;
-				};
+		let a = animal({ name: "milou" });
+		a.setName("Charlie");
 
-				my.set("name", function(value) {
-					my.name = "animal named " + value;
-				});
+		expect(a.getName()).toBe("Charlie");
+	});
+
+	it("can generate custom setters", function() {
+		let animal = object.subclass(function(that, my) {
+			that.getName = function() {
+				return my.name;
+			};
+
+			my.set("name", function(value) {
+				my.name = "animal named " + value;
 			});
-
-			var a = animal();
-			a.setName("milou");
-			expect(a.getName()).toBe("animal named milou");
 		});
 
-		it("getters and setters are inherited", function() {
-			var animal = object.subclass(function(that, my) {
-				my.get("name");
-				my.set("name");
-			});
+		let a = animal();
+		a.setName("milou");
 
-			var dog = animal.subclass(function(that, my) {});
+		expect(a.getName()).toBe("animal named milou");
+	});
 
-			var d = dog();
-			d.setName("milou");
-			expect(d.getName()).toBe("milou");
+	it("getters and setters are inherited", function() {
+		let animal = object.subclass(function(that, my) {
+			my.get("name");
+			my.set("name");
 		});
+
+		let dog = animal.subclass(function(that, my) {});
+
+		let d = dog();
+		d.setName("milou");
+
+		expect(d.getName()).toBe("milou");
 	});
 });

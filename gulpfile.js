@@ -1,38 +1,22 @@
-var gulp = require("gulp");
-var del = require("del");
-var Server = require("karma").Server;
-var fs = require("fs");
+require("babel-core/register");
 
-var plugins = require("gulp-load-plugins")({
+const gulp = require("gulp");
+const gutil = require("gulp-util");
+const del = require("del");
+const browserify = require("browserify");
+const source = require("vinyl-source-stream");
+const buffer = require("vinyl-buffer");
+
+const plugins = require("gulp-load-plugins")({
 	rename: {
-		"gulp-eslint": "eslint",
-		"gulp-shell": "shell",
-		"gulp-phantom": "phantom",
-		"gulp-strip-code": "stripCode",
-		"gulp-sequence": "sequence",
-		"gulp-requirejs-optimize": "optimizer",
-		"gulp-bump": "bump"
+		"gulp-babel-istanbul": "istanbul"
 	}
 });
 
-var almond = fs.readFileSync(__dirname + "/node_modules/almond/almond.js");
-
-var wrap = {
-	start: "(function(root, factory) {\n" +
-	"    if (typeof define === \"function\" && define.amd) {\n" +
-	"        define(factory);\n" +
-	"    } else {\n" +
-	"        root.klassified = factory(root.$);" +
-	"    }\n" +
-	"}(this, function ($) {\n" + almond,
-	end: "    return require(\"klassified\");\n" +
-	"}));"
-};
-
-var sources = ["./src/**/*.js"];
-var misc = ["./gulpfile.js", "./eslintrc.js"];
-var tests = ["./test/**/*.js"];
-var all = sources.slice().concat(misc).concat(tests);
+let sources = ["./src/**/*.js"];
+let misc = ["./gulpfile.js", "./eslintrc.js"];
+let tests = ["./test/**/*.js"];
+let all = sources.slice().concat(misc).concat(tests);
 
 gulp.task("default", ["lint", "test"]);
 
@@ -49,53 +33,70 @@ gulp.task("js-lint", function() {
 
 // Test
 
-gulp.task("test", function(done) {
-	new Server({
-		configFile: __dirname + "/karma.conf.js",
-		singleRun: true
-	}, done).start();
+gulp.task("coverage", () => {
+	return gulp.src(sources)
+		.pipe(plugins.istanbul())
+		.pipe(plugins.istanbul.hookRequire());
+});
+
+gulp.task("test", ["coverage"], function(done) {
+	let oldDefine = global.define;
+
+	global.define = (a, fn) => fn();
+
+	let conf = require("./test/tests");
+	let result = gulp.src(conf.files.map((path) => path + ".js"))
+		.pipe(plugins.jasmine({
+			includeStackTrace: true
+		}))
+		.pipe(plugins.istanbul.writeReports())
+		.pipe(plugins.istanbul.enforceThresholds({ thresholds: { global: 75 } }));
+
+	global.define = oldDefine;
+	return result;
 });
 
 //
 // Deploy
 //
 
-gulp.task("strip", function() {
-	return gulp.src(sources)
-		.pipe(plugins.stripCode({
-			start_comment: "start-test",
-			end_comment: "end-test"
-		}))
-		.pipe(gulp.dest("strip"));
-});
+gulp.task("optimize", function() {
+	let babelify = require("babelify");
 
-var requireJSOptions = {
-	mainConfigFile: "./config.js",
-	wrap: wrap,
-	findNestedDependencies: true
-};
+	let b = browserify({
+		standalone: "klassified",
+		entries: "./src/klassified.js",
+		debug: true,
+		transform: [babelify]
+	});
 
-gulp.task("optimize", ["strip"], function() {
-	var options = Object.assign(requireJSOptions);
-	options.optimize = "none";
-	options.include = ["klassified"];
-	options.insertRequire = ["klassified"];
-	options.out = "klassified.js";
-
-	return gulp.src("strip/klassified.js")
-		.pipe(plugins.optimizer(options))
+	return b.bundle()
+		.pipe(source("klassified.js"))
+		.pipe(buffer())
+		.pipe(plugins.sourcemaps.init({ loadMaps: true }))
+		.on("error", gutil.log.bind(gutil, "Browserify Error"))
+		.pipe(plugins.sourcemaps.write("./"))
 		.pipe(gulp.dest("dist"));
 });
 
-gulp.task("optimize:minify", ["strip"], function() {
-	var options = Object.assign(requireJSOptions);
-	delete options.optimize;
-	options.include = ["klassified"];
-	options.insertRequire = ["klassified"];
-	options.out = "klassified.min.js";
+gulp.task("optimize:minify", function() {
+	let babelify = require("babelify");
 
-	return gulp.src("strip/klassified.js")
-		.pipe(plugins.optimizer(options))
+	let b = browserify({
+		standalone: "klassified",
+		entries: "./src/klassified.js",
+		debug: true,
+		transform: [babelify]
+	});
+
+	return b.bundle()
+		.pipe(source("klassified.min.js"))
+		.pipe(buffer())
+		.pipe(plugins.sourcemaps.init({ loadMaps: true }))
+		// Add transformation tasks to the pipeline here.
+		.pipe(plugins.uglify())
+		.on("error", gutil.log.bind(gutil, "Browserify Error"))
+		.pipe(plugins.sourcemaps.write("./"))
 		.pipe(gulp.dest("dist"));
 });
 
@@ -111,19 +112,19 @@ gulp.task("build", plugins.sequence(
 
 gulp.task("bump:patch", function() {
 	return gulp.src("./package.json")
-		.pipe(plugins.bump({type: "patch"}))
+		.pipe(plugins.bump({ type: "patch" }))
 		.pipe(gulp.dest("./"));
 });
 
 gulp.task("bump:minor", function() {
 	return gulp.src("./package.json")
-		.pipe(plugins.bump({type: "minor"}))
+		.pipe(plugins.bump({ type: "minor" }))
 		.pipe(gulp.dest("./"));
 });
 
 gulp.task("bump:major", function() {
 	return gulp.src("./package.json")
-		.pipe(plugins.bump({type: "major"}))
+		.pipe(plugins.bump({ type: "major" }))
 		.pipe(gulp.dest("./"));
 });
 

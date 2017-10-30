@@ -1,99 +1,100 @@
-define(["src/object"], function(object) {
+import object from "../../src/object";
 
-	describe("extension", function() {
+describe("extension", function() {
 
-		it("Can extend Object", function() {
-			object.extend(function(that, my) {
-				that.isObject = function() {
-					return true;
-				};
-			});
-
-			var o = object();
-
-			expect(o.isObject()).toBe(true);
+	it("Can extend Object", function() {
+		object.extend(function(that, my) {
+			that.isObject = function() {
+				return true;
+			};
 		});
 
-		it("Extensions are inherited", function() {
-			object.extend(function(that, my) {
-				that.isDog = function() {
-					return false;
-				};
-			});
+		let o = object();
 
-			var animal = object.subclass(function() {});
+		expect(o.isObject()).toBe(true);
+	});
 
-			var a = animal();
-
-			expect(!a.isDog()).toBe(true);
+	it("Extensions are inherited", function() {
+		object.extend(function(that, my) {
+			that.isDog = function() {
+				return false;
+			};
 		});
 
-		it("Can extend subclasses of object", function() {
-			var animal = object.subclass(function(that, my) {
-				that.isAnimal = function() {
-					return true;
-				};
-			});
+		let animal = object.subclass(function() {});
 
-			animal.extend(function(that, my) {
-				that.isDog = function() {
-					return false;
-				};
-			});
+		let a = animal();
 
-			var dog = animal.subclass(function(that, my) {
-				that.isDog = function() {
-					return true;
-				};
-			});
+		expect(!a.isDog()).toBe(true);
+	});
 
-			var a = animal();
-			var d = dog();
-
-			expect(a.isAnimal()).toBe(true);
-			expect(!a.isDog()).toBe(true);
-			expect(d.isAnimal()).toBe(true);
-			expect(d.isDog()).toBe(true);
+	it("Can extend subclasses of object", function() {
+		let animal = object.subclass(function(that, my) {
+			that.isAnimal = function() {
+				return true;
+			};
 		});
 
-		it("Can extend my on object", function() {
-			var animal = object.subclass(function(that, my) {
-				that.foo = function() {
-					return my.bar();
-				};
-			});
-
-			animal.extend(function(that, my) {
-				that.isDog = function() {
-					return false;
-				};
-			});
-
-			object.extend(function(that, my) {
-				my.bar = function() {
-					return true;
-				};
-			});
-
-			var a = animal();
-			expect(a.foo()).toBe(true);
+		animal.extend(function(that, my) {
+			that.isDog = function() {
+				return false;
+			};
 		});
 
-		it("Can extend my on subclasses of object", function() {
-			var animal = object.subclass(function(that, my) {
-				that.foo = function() {
-					return my.foo();
-				};
-			});
-
-			animal.extend(function(that, my) {
-				my.foo = function() {
-					return false;
-				};
-			});
-
-			var a = animal();
-			expect(!a.foo()).toBe(true);
+		let dog = animal.subclass(function(that, my) {
+			that.isDog = function() {
+				return true;
+			};
 		});
+
+		let a = animal();
+		let d = dog();
+
+		expect(a.isAnimal()).toBe(true);
+		expect(!a.isDog()).toBe(true);
+		expect(d.isAnimal()).toBe(true);
+		expect(d.isDog()).toBe(true);
+	});
+
+	it("Can extend my on object", function() {
+		let animal = object.subclass(function(that, my) {
+			that.foo = function() {
+				return my.bar();
+			};
+		});
+
+		animal.extend(function(that, my) {
+			that.isDog = function() {
+				return false;
+			};
+		});
+
+		object.extend(function(that, my) {
+			my.bar = function() {
+				return true;
+			};
+		});
+
+		let a = animal();
+
+		expect(a.foo()).toBe(true);
+	});
+
+	it("Can extend my on subclasses of object", function() {
+		let animal = object.subclass(function(that, my) {
+			that.foo = function() {
+				return my.foo();
+			};
+		});
+
+		animal.extend(function(that, my) {
+			my.foo = function() {
+				return false;
+			};
+		});
+
+		let a = animal();
+
+		expect(!a.foo()).toBe(true);
 	});
 });
