@@ -3,6 +3,10 @@
 
 	module.exports = {
 		parser: "babel-eslint",
+		parserOptions: {
+			"ecmaVersion": 6,
+			"sourceType": "module"
+		},
 		root: true,
 		extends: "ftgp",
 		rules: {
