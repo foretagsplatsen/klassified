@@ -1,3 +1,5 @@
+# ⚠ The project is archived. No further development is planned.
+
 # Klassified [![Build Status](https://travis-ci.org/foretagsplatsen/klassified.svg?branch=master)](https://travis-ci.org/foretagsplatsen/klassified)
 
 A simple object model for JavaScript.
@@ -119,7 +121,7 @@ var animal = object.subclass(function(that, my) {
 	my.initialize = function(spec) {
 		my.name = spec.name;
 	};
-   
+
 	my.get('name');
     my.set('name');
 });
