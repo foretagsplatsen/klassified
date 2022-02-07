@@ -4,6 +4,7 @@
 	"description": "A simple object model for JavaScript",
 	"main": "dist/klassified.min.js",
 	"module": "src/klassified.js",
+	"type": "module",
 	"directories": {
 		"test": "test"
 	},
