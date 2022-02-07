@@ -1,4 +1,4 @@
-import object from "../../src/object";
+import object from "../../src/object.js";
 
 describe("allConcreteSubclasses", function() {
 	it("Can get all concrete subclasses of a class", function() {

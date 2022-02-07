@@ -1,7 +1,7 @@
-import object from "./object";
-import testCase from "./testCase";
-import propertyEventEmitter from "./globalPropertyEventEmitter";
-import "./property";
+import object from "./object.js";
+import testCase from "./testCase.js";
+import propertyEventEmitter from "./globalPropertyEventEmitter.js";
+import "./property.js";
 
 export {
 	object,

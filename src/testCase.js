@@ -1,5 +1,5 @@
 /* eslint jasmine/no-global-setup: 0 */
-import object from "./object";
+import object from "./object.js";
 
 /**
  * `testCase` implements an abstract test class, using Jasmine behind the

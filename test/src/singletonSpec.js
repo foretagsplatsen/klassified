@@ -1,4 +1,4 @@
-import object from "../../src/object";
+import object from "../../src/object.js";
 
 describe("singleton", function() {
 	it("can create singleton subclass of object", function() {

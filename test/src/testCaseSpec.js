@@ -1,4 +1,4 @@
-import testCase from "../../src/testCase";
+import testCase from "../../src/testCase.js";
 
 describe("testCase", function() {
 	let bTestCaseCount;

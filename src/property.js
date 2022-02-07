@@ -1,6 +1,6 @@
-import object from "./object";
-import propertiesEventEmitter from "./propertiesEventEmitter";
-import globalPropertyEventEmitter from "./globalPropertyEventEmitter";
+import object from "./object.js";
+import propertiesEventEmitter from "./propertiesEventEmitter.js";
+import globalPropertyEventEmitter from "./globalPropertyEventEmitter.js";
 
 /**
  * A property represent an observable attribute of an object, with optional
