@@ -1,5 +1,5 @@
-import object from "../../src/object";
-import "../../src/property";
+import object from "../../src/object.js";
+import "../../src/property.js";
 
 describe("getter/setter", function() {
 	it("can generate getters", function() {

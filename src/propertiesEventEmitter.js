@@ -1,4 +1,4 @@
-import object from "./object";
+import object from "./object.js";
 
 export default object.subclass(function(that, my) {
 	my.initialize = function(spec) {

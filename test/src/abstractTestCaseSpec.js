@@ -1,4 +1,4 @@
-import testCase from "../../src/testCase";
+import testCase from "../../src/testCase.js";
 
 let a = testCase.abstractSubclass(function(that, my) {
 

@@ -1,5 +1,5 @@
-import object from "../../src/object";
-import "../../src/property";
+import object from "../../src/object.js";
+import "../../src/property.js";
 
 describe("property listeners", function() {
 	it("can listen to property changes", function() {
