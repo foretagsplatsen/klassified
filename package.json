@@ -55,6 +55,6 @@
 	"devDependencies": {
 		"eslint": "^8.8.0",
 		"eslint-config-ftgp": "^2.0.1",
-		"jasmine": "^4.0.2"
+		"jasmine": "^5.0.0"
 	}
 }
