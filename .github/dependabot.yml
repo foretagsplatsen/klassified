@@ -1,4 +1,11 @@
 version: 2
+registries:
+  # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#npm-registry
+  npm-github: # Define access for our private NPM registry
+    type: npm-registry
+    url: https://npm.pkg.github.com
+    token: ${{secrets.FINSIT_GITHUB}}
+    replaces-base: true
 updates:
   - package-ecosystem: "npm"
     directory: "/"
@@ -8,3 +15,4 @@ updates:
       day: "sunday"
       time: "19:00"
       timezone: "Europe/Paris"
+    registries: "*"
