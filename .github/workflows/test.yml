@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  FINSIT_GITHUB: ${{ secrets.FINSIT_GITHUB }}
+
 jobs:
   build:
 
