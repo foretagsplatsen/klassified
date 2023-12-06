@@ -16,3 +16,10 @@ updates:
       time: "19:00"
       timezone: "Europe/Paris"
     registries: "*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "19:00"
+      timezone: "Europe/Paris"
