@@ -10,7 +10,7 @@
 	},
 	"scripts": {
 		"test": "jasmine",
-		"lint": "eslint"
+		"lint": "eslint --ext js,cjs --report-unused-disable-directives ."
 	},
 	"repository": {
 		"type": "git",
