@@ -348,7 +348,7 @@ if (typeof Object.assign !== "function") {
 				let source = arguments[index];
 				if (source !== undefined && source !== null) {
 					for (let nextKey in source) {
-						if (source.hasOwnProperty(nextKey)) {
+						if (Object.prototype.hasOwnProperty.call(source, nextKey)) {
 							output[nextKey] = source[nextKey];
 						}
 					}

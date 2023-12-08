@@ -8,7 +8,7 @@ import object from "./object.js";
  * All subclasses of testCase are singletons (so that one instance is
  * created when the class is loaded).
  */
-let testCase = object.abstractSubclass(function(that, my) {
+const testCase = object.abstractSubclass(function(that, my) {
 
 	my.initialize = function(spec) {
 		my.super(spec);
