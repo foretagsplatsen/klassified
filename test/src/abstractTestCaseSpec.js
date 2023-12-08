@@ -15,7 +15,7 @@ let a = testCase.abstractSubclass(function(that, my) {
 	};
 });
 
-let b = a.subclass(function(that, my) {
+const b = a.subclass(function(that, my) {
 
 	my.createObject = function() {
 		return "b";
