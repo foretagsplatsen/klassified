@@ -1,20 +1,19 @@
 import object from "../../src/object.js";
 
-describe("super", function() {
-
-	it("super can be called within public methods", function() {
-		let animal = object.subclass(function(that, my) {
-			my.initialize = function(spec) {
+describe("super", function () {
+	it("super can be called within public methods", function () {
+		let animal = object.subclass(function (that, my) {
+			my.initialize = function (spec) {
 				my.super();
 				my.name = spec.name;
 			};
-			that.getName = function() {
+			that.getName = function () {
 				return my.name;
 			};
 		});
 
-		let dog = animal.subclass(function(that, my) {
-			that.getName = function() {
+		let dog = animal.subclass(function (that, my) {
+			that.getName = function () {
 				return "dog named " + that.super();
 			};
 		});
@@ -24,24 +23,24 @@ describe("super", function() {
 		expect(milou.getName()).toEqual("dog named milou");
 	});
 
-	it("super can be called within protected methods", function() {
-		let animal = object.subclass(function(that, my) {
-			my.initialize = function(spec) {
+	it("super can be called within protected methods", function () {
+		let animal = object.subclass(function (that, my) {
+			my.initialize = function (spec) {
 				my.super();
 				my.name = spec.name;
 			};
 
-			that.toString = function() {
+			that.toString = function () {
 				return my.getName();
 			};
 
-			my.getName = function() {
+			my.getName = function () {
 				return my.name;
 			};
 		});
 
-		let dog = animal.subclass(function(that, my) {
-			my.getName = function() {
+		let dog = animal.subclass(function (that, my) {
+			my.getName = function () {
 				return "dog named " + my.super();
 			};
 		});
@@ -51,24 +50,23 @@ describe("super", function() {
 		expect(milou.toString()).toEqual("dog named milou");
 	});
 
-	it("super rebinds calls to that correctly", function() {
-		let animal = object.subclass(function(that, my) {
-
-			that.toString = function() {
+	it("super rebinds calls to that correctly", function () {
+		let animal = object.subclass(function (that, my) {
+			that.toString = function () {
 				return my.getName();
 			};
 
-			my.getName = function() {
+			my.getName = function () {
 				return my.name;
 			};
 		});
 
-		let dog = animal.subclass(function(that, my) {
-			that.toString = function() {
+		let dog = animal.subclass(function (that, my) {
+			that.toString = function () {
 				return "a dog named: " + that.super();
 			};
 
-			my.getName = function() {
+			my.getName = function () {
 				return "milou";
 			};
 		});
@@ -78,16 +76,15 @@ describe("super", function() {
 		expect(milou.toString()).toEqual("a dog named: milou");
 	});
 
-	it("super can be used with arguments", function() {
-		let animal = object.subclass(function(that, my) {
-
-			that.foo = function(number) {
+	it("super can be used with arguments", function () {
+		let animal = object.subclass(function (that, my) {
+			that.foo = function (number) {
 				return number;
 			};
 		});
 
-		let dog = animal.subclass(function(that, my) {
-			that.foo = function(number) {
+		let dog = animal.subclass(function (that, my) {
+			that.foo = function (number) {
 				return that.super(number) + 1;
 			};
 		});
@@ -98,15 +95,13 @@ describe("super", function() {
 		expect(foo).toEqual(5);
 	});
 
-	it("super should be uninstalled after being used", function() {
-		let animal = object.subclass(function(that, my) {
-
-			that.foo = function() {
-			};
+	it("super should be uninstalled after being used", function () {
+		let animal = object.subclass(function (that, my) {
+			that.foo = function () {};
 		});
 
-		let dog = animal.subclass(function(that, my) {
-			that.foo = function(number) {
+		let dog = animal.subclass(function (that, my) {
+			that.foo = function (number) {
 				that.super();
 			};
 		});
@@ -119,21 +114,20 @@ describe("super", function() {
 		expect(keys).not.toContain("super");
 	});
 
-	it("super calls in inherited methods should bind super for each super call", function() {
-		let foo = object.subclass(function(that, my) {
-			that.foo = function() {
+	it("super calls in inherited methods should bind super for each super call", function () {
+		let foo = object.subclass(function (that, my) {
+			that.foo = function () {
 				return 1;
 			};
 		});
 
-		let bar = foo.subclass(function(that, my) {
-			that.foo = function() {
+		let bar = foo.subclass(function (that, my) {
+			that.foo = function () {
 				return that.super() + 1;
 			};
 		});
 
-		let baz = bar.subclass(function(that, my) {
-		});
+		let baz = bar.subclass(function (that, my) {});
 
 		expect(baz().foo()).toBe(2);
 	});

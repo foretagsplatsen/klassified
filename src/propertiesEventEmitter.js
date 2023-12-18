@@ -1,7 +1,7 @@
 import object from "./object.js";
 
-export default object.subclass(function(that, my) {
-	my.initialize = function(spec) {
+export default object.subclass(function (that, my) {
+	my.initialize = function (spec) {
 		my.super(spec);
 		my.instance = spec.instance;
 
@@ -9,7 +9,7 @@ export default object.subclass(function(that, my) {
 		my.changeListeners = {};
 	};
 
-	that.onAccess = function(propName, listener) {
+	that.onAccess = function (propName, listener) {
 		if (!my.accessListeners[propName]) {
 			my.accessListeners[propName] = [];
 		}
@@ -18,7 +18,7 @@ export default object.subclass(function(that, my) {
 		}
 	};
 
-	that.onChange = function(propName, listener) {
+	that.onChange = function (propName, listener) {
 		if (!my.changeListeners[propName]) {
 			my.changeListeners[propName] = [];
 		}
@@ -27,22 +27,22 @@ export default object.subclass(function(that, my) {
 		}
 	};
 
-	that.emitAccess = function(propName) {
+	that.emitAccess = function (propName) {
 		if (!my.accessListeners[propName]) {
 			return;
 		}
 
-		my.accessListeners[propName].forEach(function(listener) {
+		my.accessListeners[propName].forEach(function (listener) {
 			listener(my.instance, propName);
 		});
 	};
 
-	that.emitChange = function(propName, value) {
+	that.emitChange = function (propName, value) {
 		if (!my.changeListeners[propName]) {
 			return;
 		}
 
-		my.changeListeners[propName].forEach(function(listener) {
+		my.changeListeners[propName].forEach(function (listener) {
 			listener(my.instance, propName, value);
 		});
 	};

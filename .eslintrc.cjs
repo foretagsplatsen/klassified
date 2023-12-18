@@ -1,6 +1,6 @@
 module.exports = {
 	root: true,
-	extends: [ "plugin:@foretagsplatsen/main" ],
+	extends: ["plugin:@foretagsplatsen/main"],
 	rules: {
 		"import/no-unused-modules": [
 			"error",
@@ -12,9 +12,9 @@ module.exports = {
 					"src/klassified.js",
 					// List of files not exporting anything:
 					"**/.eslintrc.cjs",
-					"src/property.js"
+					"src/property.js",
 				],
 			},
-		]
-	}
+		],
+	},
 };

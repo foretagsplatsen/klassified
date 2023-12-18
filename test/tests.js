@@ -1,4 +1,4 @@
-module.exports = define([], function() {
+module.exports = define([], function () {
 	let files = [
 		"test/src/subclassCreationSpec",
 		"test/src/initializationSpec",
@@ -14,10 +14,10 @@ module.exports = define([], function() {
 		"test/src/singletonSpec",
 		"test/src/testCaseSpec",
 		"test/src/abstractTestCaseSpec",
-		"test/src/propertyListenersSpec"
+		"test/src/propertyListenersSpec",
 	];
 	return {
 		files: files,
-		config: {}
+		config: {},
 	};
 });

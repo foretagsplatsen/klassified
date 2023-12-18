@@ -1,5 +1,5 @@
 module.exports = {
 	rules: {
-		"import/no-unused-modules": "off"
-	}
+		"import/no-unused-modules": "off",
+	},
 };
