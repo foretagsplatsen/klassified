@@ -1,13 +1,7 @@
 module.exports = {
-	parserOptions: {
-		"ecmaVersion": 6,
-		"sourceType": "module"
-	},
 	root: true,
 	extends: [ "plugin:@foretagsplatsen/main" ],
 	rules: {
-		"quotes": ["error", "double"],
-		"ftgp/require-class-comment": 0,
 		"import/no-unused-modules": [
 			"error",
 			{
