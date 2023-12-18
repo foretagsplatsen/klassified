@@ -1,13 +1,7 @@
 module.exports = {
-	parserOptions: {
-		"ecmaVersion": 6,
-		"sourceType": "module"
-	},
 	root: true,
-	extends: [ "plugin:@foretagsplatsen/main" ],
+	extends: ["plugin:@foretagsplatsen/main"],
 	rules: {
-		"quotes": ["error", "double"],
-		"ftgp/require-class-comment": 0,
 		"import/no-unused-modules": [
 			"error",
 			{
@@ -18,9 +12,9 @@ module.exports = {
 					"src/klassified.js",
 					// List of files not exporting anything:
 					"**/.eslintrc.cjs",
-					"src/property.js"
+					"src/property.js",
 				],
 			},
-		]
-	}
+		],
+	},
 };
