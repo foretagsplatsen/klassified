@@ -50,7 +50,7 @@ function object(spec, my) {
 
 	let that = {};
 
-	that.getClass = function() {
+	that.getClass = function () {
 		return object;
 	};
 
@@ -58,18 +58,18 @@ function object(spec, my) {
 	 * preInitialize is called by the framework at the beginning
 	 * of object instantiation.
 	 */
-	my.preInitialize = function() {};
+	my.preInitialize = function () {};
 
 	/**
 	 * initialize is called by the framework upon object instantiation.
 	 */
-	my.initialize = function() {};
+	my.initialize = function () {};
 
 	/**
 	 * postInitialize is called by the framework at the end of
 	 * object instantiation.
 	 */
-	my.postInitialize = function() {};
+	my.postInitialize = function () {};
 
 	/**
 	 * Throws an error because the method should have been overridden.
@@ -79,18 +79,18 @@ function object(spec, my) {
 	/**
 	 * Getter/Setter generation
 	 */
-	my.get = function(propName, getter) {
+	my.get = function (propName, getter) {
 		if (!getter) {
-			getter = function() {
+			getter = function () {
 				return my[propName];
 			};
 		}
 		that["get" + capitalized(propName)] = getter;
 	};
 
-	my.set = function(propName, setter) {
+	my.set = function (propName, setter) {
 		if (!setter) {
-			setter = function(value) {
+			setter = function (value) {
 				my[propName] = value;
 				return value;
 			};
@@ -100,7 +100,7 @@ function object(spec, my) {
 
 	// install extensions by hand for object, since we do not have the
 	// extension installation of the subclasses
-	that.getClass().extensions.forEach(function(extension) {
+	that.getClass().extensions.forEach(function (extension) {
 		extension(that, my);
 	});
 
@@ -115,10 +115,10 @@ object.subclasses = [];
 /**
  * Return an array of all subclasses.
  */
-object.allSubclasses = function() {
+object.allSubclasses = function () {
 	let allSubclasses = this.subclasses.slice();
-	this.subclasses.forEach(function(klass) {
-		klass.allSubclasses().forEach(function(subclass) {
+	this.subclasses.forEach(function (klass) {
+		klass.allSubclasses().forEach(function (subclass) {
 			allSubclasses.push(subclass);
 		});
 	});
@@ -128,13 +128,13 @@ object.allSubclasses = function() {
 /**
  * Return all concrete subclasses.
  */
-object.allConcreteSubclasses = function() {
-	let allConcreteSubclasses = this.subclasses.filter(function(klass) {
+object.allConcreteSubclasses = function () {
+	let allConcreteSubclasses = this.subclasses.filter(function (klass) {
 		return !klass.isAbstract;
 	});
 
-	this.subclasses.forEach(function(klass) {
-		klass.allConcreteSubclasses().forEach(function(subclass) {
+	this.subclasses.forEach(function (klass) {
+		klass.allConcreteSubclasses().forEach(function (subclass) {
 			allConcreteSubclasses.push(subclass);
 		});
 	});
@@ -157,7 +157,7 @@ let superCallRegex = /\bsuper\b/;
  * @param{function} builder Function used to build new instances of the
  * subclass.
  */
-object.subclass = function(builder) {
+object.subclass = function (builder) {
 	let that = this;
 
 	function klass(spec, my, notFinal) {
@@ -174,14 +174,14 @@ object.subclass = function(builder) {
 
 		let instance = that(spec, my, true);
 
-		instance.getClass = function() {
+		instance.getClass = function () {
 			return klass;
 		};
 
 		let superInstance = Object.assign({}, instance);
 		let superMy = Object.assign({}, my);
 
-		klass.extensions.forEach(function(extension) {
+		klass.extensions.forEach(function (extension) {
 			extension(instance, my);
 		});
 
@@ -212,24 +212,24 @@ object.subclass = function(builder) {
 	return klass;
 };
 
-object.singletonSubclass = function(builder) {
+object.singletonSubclass = function (builder) {
 	let klass = this.subclass(builder);
 	let instance = klass();
 	klass.isSingleton = true;
-	klass.instance = function() {
+	klass.instance = function () {
 		return instance;
 	};
 
 	return klass;
 };
 
-object.abstractSubclass = function(builder) {
+object.abstractSubclass = function (builder) {
 	let klass = this.subclass(builder);
 	klass.isAbstract = true;
 	return klass;
 };
 
-object.class = function(builder) {
+object.class = function (builder) {
 	let that = this;
 
 	if (that === object) {
@@ -237,7 +237,7 @@ object.class = function(builder) {
 	}
 
 	let superClassBuilder = that.classBuilder;
-	that.classBuilder = function(klass) {
+	that.classBuilder = function (klass) {
 		superClassBuilder(klass);
 		builder(klass);
 	};
@@ -245,7 +245,7 @@ object.class = function(builder) {
 	that.classBuilder(that);
 };
 
-object.classBuilder = function(that) {
+object.classBuilder = function (that) {
 	// TODO: use Object.assign?
 	that.class = object.class;
 	that.subclass = object.subclass;
@@ -264,28 +264,29 @@ object.classBuilder = function(that) {
  * `proto`.
  */
 function installSuper(obj, proto, klass, receiverName) {
-	methodsWithSuperCall(obj, proto, klass, receiverName).forEach(function(name) {
-		if (!obj[name].superInstalled) {
-			obj[name] = (function(obj, fn, superFn) {
-				return function() {
+	methodsWithSuperCall(obj, proto, klass, receiverName).forEach(
+		function (name) {
+			if (!obj[name].superInstalled) {
+				obj[name] = (function (obj, fn, superFn) {
+					return function () {
+						let tmp = obj.super;
+						obj.super = superFn;
+						let returnValue = fn.apply(obj, arguments);
+						obj.super = tmp;
 
-					let tmp = obj.super;
-					obj.super = superFn;
-					let returnValue = fn.apply(obj, arguments);
-					obj.super = tmp;
+						// We reached the top of the stack regarding super
+						// calls, so cleanup the namespace.
+						if (obj.super === undefined) {
+							delete obj.super;
+						}
 
-					// We reached the top of the stack regarding super
-					// calls, so cleanup the namespace.
-					if (obj.super === undefined) {
-						delete obj.super;
-					}
-
-					return returnValue;
-				};
-			})(obj, obj[name], proto[name]);
-			obj[name].superInstalled = true;
-		}
-	});
+						return returnValue;
+					};
+				})(obj, obj[name], proto[name]);
+				obj[name].superInstalled = true;
+			}
+		},
+	);
 }
 
 /**
@@ -299,7 +300,7 @@ function methodsWithSuperCall(obj, proto, klass, receiverName) {
 		Object.defineProperty(klass, "methodsWithSuperCall", {
 			enumerable: false,
 			writable: true,
-			value: {}
+			value: {},
 		});
 	}
 
@@ -307,11 +308,15 @@ function methodsWithSuperCall(obj, proto, klass, receiverName) {
 		return klass.methodsWithSuperCall[receiverName];
 	}
 
-	klass.methodsWithSuperCall[receiverName] = Object.keys(obj).filter(function(name) {
-		return typeof(proto[name]) === "function" &&
-			typeof(obj[name]) === "function" &&
-			superCallRegex.test(obj[name]);
-	});
+	klass.methodsWithSuperCall[receiverName] = Object.keys(obj).filter(
+		function (name) {
+			return (
+				typeof proto[name] === "function" &&
+				typeof obj[name] === "function" &&
+				superCallRegex.test(obj[name])
+			);
+		},
+	);
 
 	return klass.methodsWithSuperCall[receiverName];
 }
@@ -321,7 +326,7 @@ function methodsWithSuperCall(obj, proto, klass, receiverName) {
  * @param{function} builder takes the same arguments as
  * `object.subclass`: `that`, `spec` and `my`.
  */
-object.extend = function(builder) {
+object.extend = function (builder) {
 	this.extensions.push(builder);
 };
 
@@ -330,17 +335,21 @@ function throwAbstractClassError(klass) {
 }
 
 function throwSingletonClassError(klass) {
-	throw new Error("Cannot create new instances of a singleton class, use `instance` instead.");
+	throw new Error(
+		"Cannot create new instances of a singleton class, use `instance` instead.",
+	);
 }
 
 /**
  * Polyfill for Object.assign
  */
 if (typeof Object.assign !== "function") {
-	(function() {
-		Object.assign = function(target) {
+	(function () {
+		Object.assign = function (target) {
 			if (target === undefined || target === null) {
-				throw new TypeError("Cannot convert undefined or null to object");
+				throw new TypeError(
+					"Cannot convert undefined or null to object",
+				);
 			}
 
 			let output = Object(target);
@@ -348,7 +357,12 @@ if (typeof Object.assign !== "function") {
 				let source = arguments[index];
 				if (source !== undefined && source !== null) {
 					for (let nextKey in source) {
-						if (Object.prototype.hasOwnProperty.call(source, nextKey)) {
+						if (
+							Object.prototype.hasOwnProperty.call(
+								source,
+								nextKey,
+							)
+						) {
 							output[nextKey] = source[nextKey];
 						}
 					}

@@ -10,40 +10,40 @@ import globalPropertyEventEmitter from "./globalPropertyEventEmitter.js";
  * @param{string} spec.name - Name of the property, which value of the same
  * name is installed on `my` on the instance.
  */
-object.extend(function(that, my) {
-	that.onPropertyAccess = function(propName, listener) {
+object.extend(function (that, my) {
+	that.onPropertyAccess = function (propName, listener) {
 		let emitter = my.ensurePropertiesEventEmitter();
 		emitter.onAccess(propName, listener);
 	};
 
-	that.onPropertyChange = function(propName, listener) {
+	that.onPropertyChange = function (propName, listener) {
 		let emitter = my.ensurePropertiesEventEmitter();
 		emitter.onChange(propName, listener);
 	};
 
-	my.property = function(propName, initialValue) {
+	my.property = function (propName, initialValue) {
 		let value = initialValue;
 		Object.defineProperty(my, propName, {
 			configurable: true,
 			enumerable: true,
-			get: function() {
+			get: function () {
 				emitPropertyAccess(propName);
 				return value;
 			},
-			set: function(newValue) {
+			set: function (newValue) {
 				value = newValue;
 				emitPropertyChange(propName, value);
-			}
+			},
 		});
 	};
 
-	my.ensurePropertiesEventEmitter = function() {
+	my.ensurePropertiesEventEmitter = function () {
 		if (my.propertiesEventEmitter) {
 			return my.propertiesEventEmitter;
 		}
 
 		my.propertiesEventEmitter = propertiesEventEmitter({
-			instance: that
+			instance: that,
 		});
 
 		return my.propertiesEventEmitter;
