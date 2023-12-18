@@ -67,7 +67,8 @@ const testCase = object.abstractSubclass(function(that, my) {
 
 	function suite(name, callback) {
 		if (my.force()) {
-			fdescribe(name, function() { // eslint-disable-line jasmine/no-focused-tests
+			// eslint-disable-next-line jasmine/no-focused-tests -- false positive, this code is good!
+			fdescribe(name, function() {
 				callback();
 			});
 		} else {
