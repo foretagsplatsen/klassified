@@ -1,42 +1,42 @@
 import object from "../../src/object.js";
 
-describe("singleton", function () {
-	it("can create singleton subclass of object", function () {
-		let animal = object.singletonSubclass(function (that, my) {});
+describe("singleton", () => {
+	it("can create singleton subclass of object", () => {
+		let animal = object.singletonSubclass((that, my) => {});
 
 		expect(animal).toBeTruthy();
 		expect(animal.instance()).toBeTruthy();
 	});
 
-	it("cannot create instances of singleton classes", function () {
-		let animal = object.singletonSubclass(function (that, my) {});
+	it("cannot create instances of singleton classes", () => {
+		let animal = object.singletonSubclass((that, my) => {});
 
-		expect(function () {
+		expect(() => {
 			animal();
 		}).toThrowError(
 			"Cannot create new instances of a singleton class, use `instance` instead.",
 		);
 	});
 
-	it("can create singleton subclass of subclass of object", function () {
-		let animal = object.abstractSubclass(function (that, my) {});
-		let dog = animal.singletonSubclass(function (that, my) {});
+	it("can create singleton subclass of subclass of object", () => {
+		let animal = object.abstractSubclass((that, my) => {});
+		let dog = animal.singletonSubclass((that, my) => {});
 
 		expect(dog).toBeTruthy();
 		expect(dog.instance()).toBeTruthy();
 	});
 
-	it("singleton classes always return the same instance", function () {
-		let animal = object.singletonSubclass(function (that, my) {});
+	it("singleton classes always return the same instance", () => {
+		let animal = object.singletonSubclass((that, my) => {});
 		let instance1 = animal.instance();
 		let instance2 = animal.instance();
 
 		expect(instance1).toBe(instance2);
 	});
 
-	it("singleton initialize is called only once", function () {
+	it("singleton initialize is called only once", () => {
 		let count = 0;
-		let animal = object.singletonSubclass(function (that, my) {
+		let animal = object.singletonSubclass((that, my) => {
 			my.initialize = function (spec) {
 				my.super(spec);
 				count++;
@@ -51,8 +51,8 @@ describe("singleton", function () {
 		expect(count).toBe(1);
 	});
 
-	it("can inherit from a singleton class", function () {
-		let animal = object.singletonSubclass(function (that, my) {
+	it("can inherit from a singleton class", () => {
+		let animal = object.singletonSubclass((that, my) => {
 			my.initialize = function (spec) {
 				my.super(spec);
 				my.name = spec.name;
@@ -60,7 +60,7 @@ describe("singleton", function () {
 
 			my.get("name");
 		});
-		let dog = animal.subclass(function () {});
+		let dog = animal.subclass(() => {});
 		let instance1 = dog({
 			name: "Milou",
 		});

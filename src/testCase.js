@@ -8,16 +8,18 @@ import object from "./object.js";
  * All subclasses of testCase are singletons (so that one instance is
  * created when the class is loaded).
  */
-const testCase = object.abstractSubclass(function (that, my) {
+const testCase = object.abstractSubclass((that, my) => {
 	my.initialize = function (spec) {
 		my.super(spec);
 		let tests = my.registeredTests();
-		suite(my.name(), function () {
+
+		suite(my.name(), () => {
 			beforeEach(my.beforeEach);
 			afterEach(my.afterEach);
 			beforeAll(my.beforeAll);
 			afterAll(my.afterAll);
-			tests.forEach(function (test) {
+
+			tests.forEach((test) => {
 				it(test.name, test.fn);
 			});
 		});
@@ -43,7 +45,7 @@ const testCase = object.abstractSubclass(function (that, my) {
 		let result = [];
 		let testRegex = /Test$/;
 
-		Object.keys(my).forEach(function (name) {
+		Object.keys(my).forEach((name) => {
 			if (typeof my[name] === "function" && testRegex.test(name)) {
 				result.push({
 					name: my.buildTestName(name),
@@ -66,18 +68,18 @@ const testCase = object.abstractSubclass(function (that, my) {
 	function suite(name, callback) {
 		if (my.force()) {
 			// eslint-disable-next-line jasmine/no-focused-tests -- false positive, this code is good!
-			fdescribe(name, function () {
+			fdescribe(name, () => {
 				callback();
 			});
 		} else {
-			describe(name, function () {
+			describe(name, () => {
 				callback();
 			});
 		}
 	}
 });
 
-testCase.class(function (that) {
+testCase.class((that) => {
 	that.isTestCase = function () {
 		return true;
 	};
@@ -94,6 +96,7 @@ testCase.class(function (that) {
 
 			let instance = klass();
 			klass.isSingleton = true;
+
 			klass.instance = function () {
 				return instance;
 			};

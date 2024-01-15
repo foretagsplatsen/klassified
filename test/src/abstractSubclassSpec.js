@@ -1,52 +1,51 @@
 import object from "../../src/object.js";
 
-describe("abstract subclass", function () {
-	it("Can create abstract subclasses", function () {
+describe("abstract subclass", () => {
+	it("Can create abstract subclasses", () => {
 		function builder() {
-			object.abstractSubclass(function (that, my) {});
+			object.abstractSubclass((that, my) => {});
 		}
 
 		expect(builder).not.toThrow();
 	});
 
-	it("Cannot instantiate abstract classes", function () {
-		let abstractClass = object.abstractSubclass(function (that, my) {});
+	it("Cannot instantiate abstract classes", () => {
+		let abstractClass = object.abstractSubclass((that, my) => {});
 
 		expect(abstractClass).toThrow();
 	});
 
-	it("Abstract classes should be abstract", function () {
-		let abstractClass = object.abstractSubclass(function (that, my) {});
+	it("Abstract classes should be abstract", () => {
+		let abstractClass = object.abstractSubclass((that, my) => {});
 
 		expect(abstractClass.isAbstract).toBeTruthy();
 	});
 
-	it("Can subclass abstract classes", function () {
-		let abstractClass = object.abstractSubclass(function (that, my) {});
-		let concreteSubclass = abstractClass.subclass(function (that, my) {});
+	it("Can subclass abstract classes", () => {
+		let abstractClass = object.abstractSubclass((that, my) => {});
+		let concreteSubclass = abstractClass.subclass((that, my) => {});
 
 		expect(concreteSubclass).not.toThrow();
 	});
 
-	it("Can create abstract subclasses of abstract classes", function () {
-		let abstractClass = object.abstractSubclass(function (that, my) {});
-		let abstractSubclass = abstractClass.abstractSubclass(
-			function (that, my) {},
-		);
+	it("Can create abstract subclasses of abstract classes", () => {
+		let abstractClass = object.abstractSubclass((that, my) => {});
+		let abstractSubclass = abstractClass.abstractSubclass((that, my) => {});
 
 		expect(abstractSubclass.isAbstract).toBeTruthy();
 	});
 
-	it("Concrete subclasses should not be abstract", function () {
-		let abstractClass = object.abstractSubclass(function (that, my) {});
-		let concreteSubclass = abstractClass.subclass(function (that, my) {});
+	it("Concrete subclasses should not be abstract", () => {
+		let abstractClass = object.abstractSubclass((that, my) => {});
+		let concreteSubclass = abstractClass.subclass((that, my) => {});
 
 		expect(concreteSubclass.isAbstract).toBeFalsy();
 	});
 
-	it("Abstract methods should throw exceptions", function () {
-		let abstractClass = object.abstractSubclass(function (that, my) {});
-		abstractClass.class(function (that) {
+	it("Abstract methods should throw exceptions", () => {
+		let abstractClass = object.abstractSubclass((that, my) => {});
+
+		abstractClass.class((that) => {
 			that.foo = function () {
 				that.subclassResponsibility();
 			};

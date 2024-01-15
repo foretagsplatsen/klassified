@@ -1,9 +1,9 @@
 import testCase from "../../src/testCase.js";
 
-describe("testCase", function () {
+describe("testCase", () => {
 	let bTestCaseCount;
 
-	let a = testCase.subclass(function (that, my) {
+	let a = testCase.subclass((that, my) => {
 		my.name = function () {
 			return "TestCase - A";
 		};
@@ -28,7 +28,7 @@ describe("testCase", function () {
 		};
 	});
 
-	let b = a.subclass(function (that, my) {
+	let b = a.subclass((that, my) => {
 		my.initialize = function (spec) {
 			bTestCaseCount = 0;
 			my.super(spec);
@@ -55,11 +55,11 @@ describe("testCase", function () {
 		};
 	});
 
-	it("b testCase should have run 2 test cases", function () {
+	it("b testCase should have run 2 test cases", () => {
 		expect(bTestCaseCount).toBe(2);
 	});
 
-	it("beforeEach is inherited", function () {
+	it("beforeEach is inherited", () => {
 		expect(b.instance().isA).toBeTruthy();
 		expect(b.instance().isB).toBeTruthy();
 	});

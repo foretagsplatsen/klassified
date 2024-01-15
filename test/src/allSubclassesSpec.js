@@ -1,11 +1,11 @@
 import object from "../../src/object.js";
 
-describe("allSubclasses", function () {
-	it("Can get all subclasses of a class", function () {
-		let animal = object.subclass(function () {});
-		let dog = animal.subclass(function () {});
-		let shepherd = dog.subclass(function () {});
-		let cat = animal.subclass(function () {});
+describe("allSubclasses", () => {
+	it("Can get all subclasses of a class", () => {
+		let animal = object.subclass(() => {});
+		let dog = animal.subclass(() => {});
+		let shepherd = dog.subclass(() => {});
+		let cat = animal.subclass(() => {});
 
 		expect(animal.allSubclasses()).toEqual([dog, cat, shepherd]);
 	});
