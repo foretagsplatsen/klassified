@@ -1,6 +1,10 @@
 module.exports = {
 	root: true,
 	extends: ["plugin:@foretagsplatsen/main"],
+	parserOptions: {
+		sourceType: "module",
+		ecmaVersion: 2022,
+	},
 	rules: {
 		"import/no-unused-modules": [
 			"error",
@@ -16,5 +20,11 @@ module.exports = {
 				],
 			},
 		],
+		// As this project is deprecated, we are disabling rules we
+		// don't want to fix:
+		"max-params": "off",
+		"no-shadow": "off",
+		"no-unused-vars": "off",
+		"logical-assignment-operators": "off",
 	},
 };

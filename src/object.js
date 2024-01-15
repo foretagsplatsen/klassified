@@ -45,8 +45,8 @@
  * @return {object}
  */
 function object(spec, my) {
-	spec = spec || {};
-	my = my || {};
+	spec ||= {};
+	my ||= {};
 
 	let that = {};
 
@@ -80,27 +80,25 @@ function object(spec, my) {
 	 * Getter/Setter generation
 	 */
 	my.get = function (propName, getter) {
-		if (!getter) {
-			getter = function () {
-				return my[propName];
-			};
-		}
-		that["get" + capitalized(propName)] = getter;
+		getter ||= function () {
+			return my[propName];
+		};
+
+		that[`get${capitalized(propName)}`] = getter;
 	};
 
 	my.set = function (propName, setter) {
-		if (!setter) {
-			setter = function (value) {
-				my[propName] = value;
-				return value;
-			};
-		}
-		that["set" + capitalized(propName)] = setter;
+		setter ||= function (value) {
+			my[propName] = value;
+			return value;
+		};
+
+		that[`set${capitalized(propName)}`] = setter;
 	};
 
 	// install extensions by hand for object, since we do not have the
 	// extension installation of the subclasses
-	that.getClass().extensions.forEach(function (extension) {
+	that.getClass().extensions.forEach((extension) => {
 		extension(that, my);
 	});
 
@@ -117,11 +115,13 @@ object.subclasses = [];
  */
 object.allSubclasses = function () {
 	let allSubclasses = this.subclasses.slice();
-	this.subclasses.forEach(function (klass) {
-		klass.allSubclasses().forEach(function (subclass) {
+
+	this.subclasses.forEach((klass) => {
+		klass.allSubclasses().forEach((subclass) => {
 			allSubclasses.push(subclass);
 		});
 	});
+
 	return allSubclasses;
 };
 
@@ -129,12 +129,12 @@ object.allSubclasses = function () {
  * Return all concrete subclasses.
  */
 object.allConcreteSubclasses = function () {
-	let allConcreteSubclasses = this.subclasses.filter(function (klass) {
-		return !klass.isAbstract;
-	});
+	let allConcreteSubclasses = this.subclasses.filter(
+		(klass) => !klass.isAbstract,
+	);
 
-	this.subclasses.forEach(function (klass) {
-		klass.allConcreteSubclasses().forEach(function (subclass) {
+	this.subclasses.forEach((klass) => {
+		klass.allConcreteSubclasses().forEach((subclass) => {
 			allConcreteSubclasses.push(subclass);
 		});
 	});
@@ -161,8 +161,8 @@ object.subclass = function (builder) {
 	let that = this;
 
 	function klass(spec, my, notFinal) {
-		spec = spec || {};
-		my = my || {};
+		spec ||= {};
+		my ||= {};
 
 		if (klass.isAbstract && !notFinal) {
 			throwAbstractClassError(that);
@@ -178,10 +178,10 @@ object.subclass = function (builder) {
 			return klass;
 		};
 
-		let superInstance = Object.assign({}, instance);
-		let superMy = Object.assign({}, my);
+		let superInstance = { ...instance };
+		let superMy = { ...my };
 
-		klass.extensions.forEach(function (extension) {
+		klass.extensions.forEach((extension) => {
 			extension(instance, my);
 		});
 
@@ -216,6 +216,7 @@ object.singletonSubclass = function (builder) {
 	let klass = this.subclass(builder);
 	let instance = klass();
 	klass.isSingleton = true;
+
 	klass.instance = function () {
 		return instance;
 	};
@@ -237,6 +238,7 @@ object.class = function (builder) {
 	}
 
 	let superClassBuilder = that.classBuilder;
+
 	that.classBuilder = function (klass) {
 		superClassBuilder(klass);
 		builder(klass);
@@ -264,29 +266,28 @@ object.classBuilder = function (that) {
  * `proto`.
  */
 function installSuper(obj, proto, klass, receiverName) {
-	methodsWithSuperCall(obj, proto, klass, receiverName).forEach(
-		function (name) {
-			if (!obj[name].superInstalled) {
-				obj[name] = (function (obj, fn, superFn) {
-					return function () {
-						let tmp = obj.super;
-						obj.super = superFn;
-						let returnValue = fn.apply(obj, arguments);
-						obj.super = tmp;
+	methodsWithSuperCall(obj, proto, klass, receiverName).forEach((name) => {
+		if (!obj[name].superInstalled) {
+			obj[name] = (function (obj, fn, superFn) {
+				return function () {
+					let tmp = obj.super;
+					obj.super = superFn;
+					let returnValue = fn.apply(obj, arguments);
+					obj.super = tmp;
 
-						// We reached the top of the stack regarding super
-						// calls, so cleanup the namespace.
-						if (obj.super === undefined) {
-							delete obj.super;
-						}
+					// We reached the top of the stack regarding super
+					// calls, so cleanup the namespace.
+					if (obj.super === undefined) {
+						delete obj.super;
+					}
 
-						return returnValue;
-					};
-				})(obj, obj[name], proto[name]);
-				obj[name].superInstalled = true;
-			}
-		},
-	);
+					return returnValue;
+				};
+			})(obj, obj[name], proto[name]);
+
+			obj[name].superInstalled = true;
+		}
+	});
 }
 
 /**
@@ -309,13 +310,10 @@ function methodsWithSuperCall(obj, proto, klass, receiverName) {
 	}
 
 	klass.methodsWithSuperCall[receiverName] = Object.keys(obj).filter(
-		function (name) {
-			return (
-				typeof proto[name] === "function" &&
-				typeof obj[name] === "function" &&
-				superCallRegex.test(obj[name])
-			);
-		},
+		(name) =>
+			typeof proto[name] === "function" &&
+			typeof obj[name] === "function" &&
+			superCallRegex.test(obj[name]),
 	);
 
 	return klass.methodsWithSuperCall[receiverName];

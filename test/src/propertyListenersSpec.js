@@ -1,9 +1,9 @@
 import object from "../../src/object.js";
 import "../../src/property.js";
 
-describe("property listeners", function () {
-	it("can listen to property changes", function () {
-		let animal = object.subclass(function (that, my) {
+describe("property listeners", () => {
+	it("can listen to property changes", () => {
+		let animal = object.subclass((that, my) => {
 			my.initialize = function (spec) {
 				my.property("name", spec.name);
 			};
@@ -22,8 +22,8 @@ describe("property listeners", function () {
 		expect(spy).toHaveBeenCalledWith(a, "name", "rantamplan");
 	});
 
-	it("can listen to property accesses", function () {
-		let animal = object.subclass(function (that, my) {
+	it("can listen to property accesses", () => {
+		let animal = object.subclass((that, my) => {
 			my.initialize = function (spec) {
 				my.property("name", spec.name);
 			};

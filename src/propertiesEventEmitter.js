@@ -1,6 +1,6 @@
 import object from "./object.js";
 
-export default object.subclass(function (that, my) {
+export default object.subclass((that, my) => {
 	my.initialize = function (spec) {
 		my.super(spec);
 		my.instance = spec.instance;
@@ -32,7 +32,7 @@ export default object.subclass(function (that, my) {
 			return;
 		}
 
-		my.accessListeners[propName].forEach(function (listener) {
+		my.accessListeners[propName].forEach((listener) => {
 			listener(my.instance, propName);
 		});
 	};
@@ -42,7 +42,7 @@ export default object.subclass(function (that, my) {
 			return;
 		}
 
-		my.changeListeners[propName].forEach(function (listener) {
+		my.changeListeners[propName].forEach((listener) => {
 			listener(my.instance, propName, value);
 		});
 	};

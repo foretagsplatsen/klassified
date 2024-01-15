@@ -1,9 +1,9 @@
 import object from "../../src/object.js";
 import "../../src/property.js";
 
-describe("getter/setter", function () {
-	it("can generate getters", function () {
-		let animal = object.subclass(function (that, my) {
+describe("getter/setter", () => {
+	it("can generate getters", () => {
+		let animal = object.subclass((that, my) => {
 			my.initialize = function (spec) {
 				my.name = spec.name;
 			};
@@ -16,11 +16,9 @@ describe("getter/setter", function () {
 		expect(a.getName()).toBe("milou");
 	});
 
-	it("can generate custom getters", function () {
-		let animal = object.subclass(function (that, my) {
-			my.get("name", function () {
-				return "milou";
-			});
+	it("can generate custom getters", () => {
+		let animal = object.subclass((that, my) => {
+			my.get("name", () => "milou");
 		});
 
 		let a = animal();
@@ -28,8 +26,8 @@ describe("getter/setter", function () {
 		expect(a.getName()).toBe("milou");
 	});
 
-	it("can generate setters", function () {
-		let animal = object.subclass(function (that, my) {
+	it("can generate setters", () => {
+		let animal = object.subclass((that, my) => {
 			my.initialize = function (spec) {
 				my.name = spec.name;
 			};
@@ -47,14 +45,14 @@ describe("getter/setter", function () {
 		expect(a.getName()).toBe("Charlie");
 	});
 
-	it("can generate custom setters", function () {
-		let animal = object.subclass(function (that, my) {
+	it("can generate custom setters", () => {
+		let animal = object.subclass((that, my) => {
 			that.getName = function () {
 				return my.name;
 			};
 
-			my.set("name", function (value) {
-				my.name = "animal named " + value;
+			my.set("name", (value) => {
+				my.name = `animal named ${value}`;
 			});
 		});
 
@@ -64,13 +62,13 @@ describe("getter/setter", function () {
 		expect(a.getName()).toBe("animal named milou");
 	});
 
-	it("getters and setters are inherited", function () {
-		let animal = object.subclass(function (that, my) {
+	it("getters and setters are inherited", () => {
+		let animal = object.subclass((that, my) => {
 			my.get("name");
 			my.set("name");
 		});
 
-		let dog = animal.subclass(function (that, my) {});
+		let dog = animal.subclass((that, my) => {});
 
 		let d = dog();
 		d.setName("milou");

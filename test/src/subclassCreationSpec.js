@@ -1,15 +1,15 @@
 import object from "../../src/object.js";
 
-describe("subclass creation", function () {
-	it("Can create a subclass", function () {
-		let animal = object.subclass(function () {});
+describe("subclass creation", () => {
+	it("Can create a subclass", () => {
+		let animal = object.subclass(() => {});
 
 		expect(object.subclasses).toContain(animal);
 	});
 
-	it("Can create a subclass of a subclass", function () {
-		let animal = object.subclass(function () {});
-		let dog = animal.subclass(function () {});
+	it("Can create a subclass of a subclass", () => {
+		let animal = object.subclass(() => {});
+		let dog = animal.subclass(() => {});
 
 		expect(animal.subclasses).toEqual([dog]);
 	});

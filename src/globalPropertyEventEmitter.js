@@ -5,7 +5,7 @@ import object from "./object.js";
  *
  * All properties will trigger events when accessed or changed.
  */
-export default object.singletonSubclass(function (that, my) {
+export default object.singletonSubclass((that, my) => {
 	my.initialize = function (spec) {
 		my.super(spec);
 		my.accessListeners = [];
@@ -21,13 +21,13 @@ export default object.singletonSubclass(function (that, my) {
 	};
 
 	that.emitAccess = function (instance, propName) {
-		my.accessListeners.forEach(function (listener) {
+		my.accessListeners.forEach((listener) => {
 			listener(instance, propName);
 		});
 	};
 
 	that.emitChange = function (instance, propName, value) {
-		my.changeListeners.forEach(function (listener) {
+		my.changeListeners.forEach((listener) => {
 			listener(instance, propName, value);
 		});
 	};

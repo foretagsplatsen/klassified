@@ -1,6 +1,6 @@
 import testCase from "../../src/testCase.js";
 
-let a = testCase.abstractSubclass(function (that, my) {
+let a = testCase.abstractSubclass((that, my) => {
 	my.name = function () {
 		return "Abstract test case";
 	};
@@ -14,7 +14,7 @@ let a = testCase.abstractSubclass(function (that, my) {
 	};
 });
 
-const b = a.subclass(function (that, my) {
+const b = a.subclass((that, my) => {
 	my.createObject = function () {
 		return "b";
 	};
