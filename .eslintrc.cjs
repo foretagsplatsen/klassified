@@ -20,5 +20,11 @@ module.exports = {
 				],
 			},
 		],
+		// As this project is deprecated, we are disabling rules we
+		// don't want to fix:
+		"max-params": "off",
+		"no-shadow": "off",
+		"no-unused-vars": "off",
+		"logical-assignment-operators": "off",
 	},
 };
