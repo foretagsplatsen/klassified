@@ -53,7 +53,7 @@
 	"homepage": "https://github.com/foretagsplatsen/klassified#readme",
 	"engines": {},
 	"devDependencies": {
-		"@foretagsplatsen/eslint-plugin": "^5.0.0",
+		"@foretagsplatsen/eslint-plugin": "^6.0.0",
 		"eslint": "^8.56.0",
 		"jasmine": "^5.0.0"
 	}

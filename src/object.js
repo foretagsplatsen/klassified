@@ -350,7 +350,7 @@ if (typeof Object.assign !== "function") {
 				);
 			}
 
-			let output = Object(target);
+			let output = new Object(target);
 			for (let index = 1; index < arguments.length; index++) {
 				let source = arguments[index];
 				if (source !== undefined && source !== null) {

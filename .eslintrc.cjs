@@ -1,10 +1,7 @@
 module.exports = {
 	root: true,
 	extends: ["plugin:@foretagsplatsen/main"],
-	parserOptions: {
-		sourceType: "module",
-		ecmaVersion: 2022,
-	},
+	ignorePatterns: ["test/custom-boot.js"],
 	rules: {
 		"import/no-unused-modules": [
 			"error",
