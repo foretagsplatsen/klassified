@@ -1,10 +1,6 @@
 module.exports = {
 	root: true,
 	extends: ["plugin:@foretagsplatsen/main"],
-	parserOptions: {
-		sourceType: "module",
-		ecmaVersion: 2022,
-	},
 	rules: {
 		"import/no-unused-modules": [
 			"error",
