@@ -9,7 +9,7 @@ describe("class-inheritance", () => {
 					return true;
 				};
 			});
-		} catch (e) {
+		} catch {
 			exception = true;
 		}
 
