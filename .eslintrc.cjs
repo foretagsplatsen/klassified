@@ -1,6 +1,7 @@
 module.exports = {
 	root: true,
 	extends: ["plugin:@foretagsplatsen/main"],
+	ignorePatterns: ["test/custom-boot.js"],
 	rules: {
 		"import/no-unused-modules": [
 			"error",
