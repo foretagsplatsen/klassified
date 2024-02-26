@@ -54,7 +54,7 @@
 	"engines": {},
 	"devDependencies": {
 		"@foretagsplatsen/eslint-plugin": "^6.0.0",
-		"eslint": "^8.56.0",
+		"eslint": "^8.57.0",
 		"jasmine": "^5.0.0"
 	}
 }
