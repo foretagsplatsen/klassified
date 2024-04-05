@@ -1,6 +1,6 @@
 {
 	"name": "klassified",
-	"version": "4.0.0",
+	"version": "4.0.1",
 	"description": "A simple object model for JavaScript",
 	"main": "src/klassified.js",
 	"type": "module",
