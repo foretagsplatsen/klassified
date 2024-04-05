@@ -2,8 +2,7 @@
 	"name": "klassified",
 	"version": "4.0.0",
 	"description": "A simple object model for JavaScript",
-	"main": "dist/klassified.min.js",
-	"module": "src/klassified.js",
+	"main": "src/klassified.js",
 	"type": "module",
 	"directories": {
 		"test": "test"
