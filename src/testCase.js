@@ -1,4 +1,4 @@
-/* eslint jasmine/no-global-setup: 0 */
+/* eslint-env jasmine */
 import object from "./object.js";
 
 /**
@@ -67,7 +67,6 @@ const testCase = object.abstractSubclass((that, my) => {
 
 	function suite(name, callback) {
 		if (my.force()) {
-			// eslint-disable-next-line jasmine/no-focused-tests -- false positive, this code is good!
 			fdescribe(name, () => {
 				callback();
 			});
