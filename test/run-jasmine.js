@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 // Jasmine configuration options
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 200;
 
