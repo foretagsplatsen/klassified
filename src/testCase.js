@@ -1,3 +1,4 @@
+/* eslint-env jasmine */
 /* eslint jasmine/no-global-setup: 0 */
 import object from "./object.js";
 

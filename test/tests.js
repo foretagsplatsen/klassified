@@ -1,3 +1,5 @@
+/* eslint-env node, amd */
+
 module.exports = define([], () => {
 	let files = [
 		"test/src/subclassCreationSpec",
