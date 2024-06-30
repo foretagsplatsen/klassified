@@ -55,7 +55,7 @@
 		"@foretagsplatsen/eslint-plugin": "^8.0.0",
 		"eslint": "^9.5.0",
 		"eslint-plugin-jasmine": "^4.2.0",
-		"globals": "^15.6.0",
+		"globals": "^15.7.0",
 		"jasmine": "^5.0.0"
 	}
 }
