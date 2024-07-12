@@ -6,20 +6,3 @@ registries:
     url: https://npm.pkg.github.com
     token: ${{secrets.FINSIT_GITHUB}}
     replaces-base: true
-updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    open-pull-requests-limit: 1000
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "19:00"
-      timezone: "Europe/Paris"
-    registries: "*"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "19:00"
-      timezone: "Europe/Paris"
