@@ -81,10 +81,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/object-schema/-/object-schema-2.1.4.tgz#9e69f8bb4031e11df79e03db09f9dbbae1740843"
   integrity sha512-BsWiH1yFGjXXS2yvrf5LyuoSIIbPrGUWob917o+BTKuZ7qJdxX8aJLRxs1fS9n6r7vESrq1OUqb68dANcFXuQQ==
 
-"@foretagsplatsen/eslint-plugin@^9.0.0":
-  version "9.0.0"
-  resolved "https://npm.pkg.github.com/download/@foretagsplatsen/eslint-plugin/9.0.0/e4ae189916015f0bcae28382e2587b5ca6190d44#e4ae189916015f0bcae28382e2587b5ca6190d44"
-  integrity sha512-EcalaokhW0Osv9WIsMaPqmC8F0p/w14oC/M2bgHiagGVChQDN6c6gthMIVkTl8aqwbSkzNaWw7T5sbUsv+OiZw==
+"@foretagsplatsen/eslint-plugin@^10.0.0":
+  version "10.0.0"
+  resolved "https://npm.pkg.github.com/download/@foretagsplatsen/eslint-plugin/10.0.0/5fd1135a5a8203aae998e1c3f33da883d0199287#5fd1135a5a8203aae998e1c3f33da883d0199287"
+  integrity sha512-acTa3LhX9gJFLeck2U38r2Dw2Niw9dlTqmib1Rz5NFWtth24UEstf9Bb0eAVthQjKINH2VoIj4kYmO4vA8eiGg==
   dependencies:
     "@eslint/compat" "^1.0.3"
     "@eslint/eslintrc" "^3.1.0"
@@ -92,11 +92,13 @@
     "@stylistic/eslint-plugin-js" "^2.1.0"
     eslint-config-prettier "^9.1.0"
     eslint-import-resolver-exports "^1.0.0-beta.5"
+    eslint-plugin-consistent-default-export-name "^0.0.15"
     eslint-plugin-import "^2.29.0"
     eslint-plugin-n "^17.9.0"
     eslint-plugin-prettier "^5.0.1"
     eslint-plugin-promise "^6.1.1"
     eslint-plugin-sort-class-members "^1.19.0"
+    eslint-plugin-sort-imports-es6-autofix "^0.6.0"
     eslint-plugin-unicorn "^54.0.0"
     globals "^15.4.0"
     prettier "^3.1.1"
@@ -701,6 +703,14 @@ eslint-module-utils@^2.8.0:
   dependencies:
     debug "^3.2.7"
 
+eslint-plugin-consistent-default-export-name@^0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-consistent-default-export-name/-/eslint-plugin-consistent-default-export-name-0.0.15.tgz#c2050daf34c96c833cd9b40785cfa64953e8dc3c"
+  integrity sha512-gqW7dnJbWMxI5H6/Pyz6Sl/vBMwOktePMI2iuuKPb4N82uvemUkfaWhsRZCKndSzpIVaCZ9wdspCVO1tm0wXJQ==
+  dependencies:
+    lodash "^4.17.21"
+    pkg-dir "^5.0.0"
+
 eslint-plugin-es-x@^7.5.0:
   version "7.8.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-es-x/-/eslint-plugin-es-x-7.8.0.tgz#a207aa08da37a7923f2a9599e6d3eb73f3f92b74"
@@ -769,6 +779,11 @@ eslint-plugin-sort-class-members@^1.19.0:
   version "1.20.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-sort-class-members/-/eslint-plugin-sort-class-members-1.20.0.tgz#88ea3d53b2ffb319dba1049c28e20797685a0b9e"
   integrity sha512-xNaik4GQ/pRwd1soIVI28HEXZbrWoLR5krau2+E8YcHj7N09UviPg5mYhf/rELG29bIFJdXDOFJazN90+luMOw==
+
+eslint-plugin-sort-imports-es6-autofix@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-sort-imports-es6-autofix/-/eslint-plugin-sort-imports-es6-autofix-0.6.0.tgz#b8cd8639d7a54cefce6b17898b102fd5ec31e52b"
+  integrity sha512-2NVaBGF9NN+727Fyq+jJYihdIeegjXeUUrZED9Q8FVB8MsV3YQEyXG96GVnXqWt0pmn7xfCZOZf3uKnIhBrfeQ==
 
 eslint-plugin-unicorn@^54.0.0:
   version "54.0.0"
@@ -1398,6 +1413,11 @@ lodash.merge@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
+lodash@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+
 lru-cache@^10.2.0:
   version "10.2.2"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-10.2.2.tgz#48206bc114c1252940c41b25b41af5b545aca878"
@@ -1611,6 +1631,13 @@ picocolors@^1.0.0, picocolors@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.1.tgz#a8ad579b571952f0e5d25892de5445bcfe25aaa1"
   integrity sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==
+
+pkg-dir@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-5.0.0.tgz#a02d6aebe6ba133a928f74aec20bafdfe6b8e760"
+  integrity sha512-NPE8TDbzl/3YQYY7CSS228s3g2ollTFnc+Qi3tqmqJp9Vg2ovUpixcJEo2HJScN2Ez+kEaal6y70c0ehqJBJeA==
+  dependencies:
+    find-up "^5.0.0"
 
 pluralize@^8.0.0:
   version "8.0.0"
